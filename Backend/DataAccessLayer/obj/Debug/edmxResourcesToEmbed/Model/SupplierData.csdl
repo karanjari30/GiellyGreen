@@ -53,6 +53,6 @@
     <Property Type="Boolean" Name="Isactive" Nullable="true" />
   </ComplexType>
   <ComplexType Name="InsertUpdateSupplier_Result">
-    <Property Type="Int32" Name="Id" Nullable="true" />
+    <Property Type="Int32" Name="SupplierId" Nullable="true" />
   </ComplexType>
 </Schema>

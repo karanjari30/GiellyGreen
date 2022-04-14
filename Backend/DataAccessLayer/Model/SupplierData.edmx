@@ -67,7 +67,7 @@
         <EntityContainer Name="GiellyGreen_Team1Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
           <FunctionImport Name="DeleteSupplier">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetSuppliers" ReturnType="Collection(GiellyGreen_Team1Model.GetSuppliers_Result)" />
           <FunctionImport Name="InsertUpdateSupplier" ReturnType="Collection(GiellyGreen_Team1Model.InsertUpdateSupplier_Result)">
@@ -100,7 +100,7 @@
           <Property Type="Boolean" Name="Isactive" Nullable="true" />
         </ComplexType>
         <ComplexType Name="InsertUpdateSupplier_Result">
-          <Property Type="Int32" Name="Id" Nullable="true" />
+          <Property Type="Int32" Name="SupplierId" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -148,7 +148,7 @@
           <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateSupplier" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateSupplier_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

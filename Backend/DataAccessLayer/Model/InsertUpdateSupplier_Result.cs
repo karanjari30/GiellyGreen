@@ -13,6 +13,6 @@ namespace DataAccessLayer.Model
     
     public partial class InsertUpdateSupplier_Result
     {
-        public Nullable<int> Id { get; set; }
+        public Nullable<int> SupplierId { get; set; }
     }
 }

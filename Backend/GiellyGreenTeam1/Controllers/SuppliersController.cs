@@ -31,7 +31,32 @@ namespace GiellyGreenTeam1.Controllers
             }
             return objResponse;
         }
-
+        // POST: api/Suppliers
+        public JsonResponse PostSupplier(SupplierViewModel model)
+        {
+            var objResponse = new JsonResponse();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var objectSupplier = objSuppiler.InsertUpdateSupplier(0, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, model.logo, model.Isactive);
+                    if (objectSupplier != null)
+                    {
+                        objResponse = JsonResponseHelper.JsonMessage(1, "Record Created Successfully", objectSupplier);
+                    }
+                }
+                else
+                {
+                    var allError = ModelState.Values.SelectMany(v => v.Errors);
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", allError);
+                }
+            }
+            catch (Exception ex)
+            {
+                objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
+            }
+            return objResponse;
+        }
         // DELETE: api/Suppliers/5
         public JsonResponse DeleteSupplier(int id)
         {
