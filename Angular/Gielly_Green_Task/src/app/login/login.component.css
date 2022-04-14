@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+  padding: 0;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.image-block {
+  background-image: url(/assets/login_banner.png);
+  background-size: cover;
+  height: 41rem;
+  position: relative;
+  background-position: center center;
+}
+.image-block .overlay {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.img-white-logo {
+  width: 60%;
+}
+.image-block .account-testimonial {
+  text-align: center;
+  color: #fff;
+  position: absolute;
+  bottom: 15rem;
+  align-items: center;
+}
+
+.image-block .side_logo {
+  height: 50px;
+  width: 80%;
+}
+
+.btn-custom {
+  background-color: rgb(201, 157, 74);
+  border-color: rgb(201, 157, 74);
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  width: 100%;
+}
+.btn-custom:hover {
+  background-color: rgb(201, 157, 74);
+  border-color: rgb(201, 157, 74);
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.logo_img {
+  margin-top: 5rem;
+  height: auto;
+  width: 100%;
+  margin-left: -8rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .logo_img {
+    margin-top: 0rem;
+    height: 80px;
+    width: 80rem;
+    margin-left: -5rem;
+  }
+}
+
+.login-form {
+  max-width: 100%;
+}
+
+.passwordEyeIcon{
+    cursor: pointer;
+}
