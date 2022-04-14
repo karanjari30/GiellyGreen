@@ -1,0 +1,12 @@
+D:\Gielly Green\Backend\DataAccessLayer\bin\Debug\DataAccessLayer.dll.config
+D:\Gielly Green\Backend\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\Gielly Green\Backend\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\Gielly Green\Backend\DataAccessLayer\bin\Debug\EntityFramework.dll
+D:\Gielly Green\Backend\DataAccessLayer\bin\Debug\EntityFramework.SqlServer.dll
+D:\Gielly Green\Backend\DataAccessLayer\bin\Debug\EntityFramework.xml
+D:\Gielly Green\Backend\DataAccessLayer\bin\Debug\EntityFramework.SqlServer.xml
+D:\Gielly Green\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.AssemblyReference.cache
+D:\Gielly Green\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\Gielly Green\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\Gielly Green\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\Gielly Green\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GiellyGreen_Team1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="SupplierId" />
+    </Key>
+    <Property Name="SupplierId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SupplierName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="SupplierReference" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="BusinessAddress" Type="nvarchar" MaxLength="150" />
+    <Property Name="EmailAddress" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
+    <Property Name="CompanyRegisterNumber" Type="nvarchar" MaxLength="15" />
+    <Property Name="VATNumber" Type="nvarchar" MaxLength="15" />
+    <Property Name="TaxReference" Type="nvarchar" MaxLength="15" />
+    <Property Name="CompanyRegisterAddress" Type="nvarchar" MaxLength="150" />
+    <Property Name="logo" Type="varbinary(max)" />
+    <Property Name="Isactive" Type="bit" />
+  </EntityType>
+  <Function Name="DeleteSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetSuppliers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="InsertUpdateSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="SupplierName" Type="nvarchar" Mode="In" />
+    <Parameter Name="SupplierReference" Type="nvarchar" Mode="In" />
+    <Parameter Name="BusinessAddress" Type="nvarchar" Mode="In" />
+    <Parameter Name="EmailAddress" Type="nvarchar" Mode="In" />
+    <Parameter Name="PhoneNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="CompanyRegisterNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="VATNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="TaxReference" Type="nvarchar" Mode="In" />
+    <Parameter Name="CompanyRegisterAddress" Type="nvarchar" Mode="In" />
+    <Parameter Name="logo" Type="varbinary(max)" Mode="In" />
+    <Parameter Name="Isactive" Type="bit" Mode="In" />
+  </Function>
+  <EntityContainer Name="GiellyGreen_Team1ModelStoreContainer">
+    <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
