@@ -119,3 +119,6 @@ D:\Gielly Green\Backend\GiellyGreenTeam1\bin\System.Web.Http.Cors.dll
 D:\Gielly Green\Backend\GiellyGreenTeam1\bin\System.Web.Http.Cors.xml
 D:\Gielly Green\Backend\GiellyGreenTeam1\bin\Swashbuckle.Core.dll
 D:\Gielly Green\Backend\GiellyGreenTeam1\bin\WebActivatorEx.dll
+D:\Gielly Green\Backend\GiellyGreenTeam1\bin\DataAccessLayer.dll
+D:\Gielly Green\Backend\GiellyGreenTeam1\bin\DataAccessLayer.pdb
+D:\Gielly Green\Backend\GiellyGreenTeam1\bin\DataAccessLayer.dll.config
