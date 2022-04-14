@@ -16,20 +16,16 @@ namespace GiellyGreenTeam1.Controllers
         public JsonResponse LogIn(LogIn model)
         {
             var objectResponse = new JsonResponse();
-            string userName = System.Web.Configuration.WebConfigurationManager.AppSettings["ApiUserName"];
-            string userPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["ApiPassword"];
+            string userEmail = System.Web.Configuration.WebConfigurationManager.AppSettings["Email"];
+            string userPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["Password"];
             try
             {
-                if (model.Email == userName && model.Password == userPassword)
-                {
-                    objectResponse = JsonResponseHelper.JsonMessage(1, "Login Successfully", "Welcome " + userName);
-                }
+                if (model.Email == userEmail && model.Password == userPassword)
+                    objectResponse = JsonResponseHelper.JsonMessage(1, "Login Successfully", "Welcome " + userEmail);
                 else
-                {
                     objectResponse = JsonResponseHelper.JsonMessage(0, "Email and password not match", null);
-                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 objectResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
             }

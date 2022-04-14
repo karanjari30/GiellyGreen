@@ -9,13 +9,14 @@ namespace GiellyGreenTeam1.Helper
 {
     public class JsonResponseHelper
     {
-        public static JsonResponse JsonMessage(int ResponseStatus, string Message, dynamic Result) 
+        public static JsonResponse JsonMessage(int ResponseStatus, string Message, dynamic Result)
         {
-            var objectResponse = new JsonResponse();
-            objectResponse.ResponseStatus = ResponseStatus;
-            objectResponse.Message = Message;
-            objectResponse.Result = Result;
-
+            var objectResponse = new JsonResponse
+            {
+                ResponseStatus = ResponseStatus,
+                Message = Message,
+                Result = Result
+            };
             return objectResponse;
         }
     }

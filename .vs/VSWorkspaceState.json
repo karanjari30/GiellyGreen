@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\Angular",
-    "\\Backend"
+    "\\Backend",
+    "\\Backend\\GiellyGreenTeam1",
+    "\\Backend\\GiellyGreenTeam1\\Controllers"
   ],
-  "SelectedNode": "\\Backend\\Backend.txt",
+  "SelectedNode": "\\Backend\\GiellyGreenTeam1\\Controllers\\LogInController.cs",
   "PreviewInSolutionExplorer": false
 }
