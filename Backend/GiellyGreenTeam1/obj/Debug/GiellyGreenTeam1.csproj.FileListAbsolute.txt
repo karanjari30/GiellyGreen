@@ -114,3 +114,6 @@ D:\Gielly Green\Backend\GiellyGreenTeam1\obj\Debug\GiellyGreenTeam1.csproj.CoreC
 D:\Gielly Green\Backend\GiellyGreenTeam1\obj\Debug\GiellyGreenTeam1.csproj.CopyComplete
 D:\Gielly Green\Backend\GiellyGreenTeam1\obj\Debug\GiellyGreenTeam1.dll
 D:\Gielly Green\Backend\GiellyGreenTeam1\obj\Debug\GiellyGreenTeam1.pdb
+D:\Gielly Green\Backend\GiellyGreenTeam1\bin\System.Web.Cors.dll
+D:\Gielly Green\Backend\GiellyGreenTeam1\bin\System.Web.Http.Cors.dll
+D:\Gielly Green\Backend\GiellyGreenTeam1\bin\System.Web.Http.Cors.xml

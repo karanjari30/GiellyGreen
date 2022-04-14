@@ -6,9 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace GiellyGreenTeam1.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LogInController : ApiController
     {
         public JsonResponse LogIn(LogIn model)
@@ -24,12 +26,12 @@ namespace GiellyGreenTeam1.Controllers
                 }
                 else
                 {
-                    objectResponse = JsonResponseHelper.JsonMessage(1, "Email and password not match", null);
+                    objectResponse = JsonResponseHelper.JsonMessage(0, "Email and password not match", null);
                 }
             }
             catch(Exception ex)
             {
-                objectResponse = JsonResponseHelper.JsonMessage(1, "Error", ex.Message);
+                objectResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
             }
             return objectResponse;
         }
