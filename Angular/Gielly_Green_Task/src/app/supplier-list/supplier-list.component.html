@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12 mt-5">
                             <div class="table-responsive">
-                                <nz-table #sortTable [nzPageSize]="100" [nzData]="listOfData" nzTableLayout="auto">
+                                <nz-table #sortTable [nzPageSize]="100" [nzData]="supplierListData" nzTableLayout="fixed">
                                     <thead class="customTableHead">
                                         <tr>
                                             <th>Supplier Reference</th>
@@ -53,172 +53,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>Jhon Doe</td>
+                                        <tr *ngFor="let data of sortTable.data">
+                                            <td>{{data.SupplierReference}}</td>
+                                            <td>{{data.SupplierName}}</td>
                                             <td>
-                                                <nz-switch></nz-switch>
+                                                <nz-switch [(ngModel)]='data.Isactive'></nz-switch>
                                             </td>
                                             <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
+                                                <a (click)="deleteSupplier(data.SupplierId)"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
                                                 <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>James Smith</td>
-                                            <td>
-                                                <nz-switch></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>Jhon Miller</td>
-                                            <td>
-                                                <nz-switch></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>Marry Smith</td>
-                                            <td>
-                                                <nz-switch></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>Maria Gracia</td>
-                                            <td>
-                                                <nz-switch></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>Sarah Jones</td>
-                                            <td>
-                                                <nz-switch></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>Jhonathan Smith</td>
-                                            <td>
-                                                <nz-switch></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>Lisa Anderson</td>
-                                            <td>
-                                                <nz-switch></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>Paul Robinson</td>
-                                            <td>
-                                                <nz-switch></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>Barbara Lee</td>
-                                            <td>
-                                                <nz-switch></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>Kimberly Martin</td>
-                                            <td>
-                                                <nz-switch></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>Laura Jackson</td>
-                                            <td>
-                                                <nz-switch></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>Charles Moore</td>
-                                            <td>
-                                                <nz-switch></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>RT9896KK44</td>
-                                            <td>Tasha Tapia</td>
-                                            <td>
-                                                <nz-switch></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a href="#"><fa-icon [icon]="editIcon" class="text-dark"></fa-icon></a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a href="#"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
+                                                <a (click)="editSupplier(data.SupplierId)"><fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon></a>
                                             </td>
                                         </tr>
                                     </tbody>

@@ -15,11 +15,11 @@
                     </div>
                     <div class="col-md-5 p-5">
                         <img src="assets/logo.png" class="img-fluid logo_img">
-                        <p class="text-muted mt-2 mb-5"><b>WELCOME, LET'S GET STARTED</b></p>
+                        <p class="customText mt-2 mb-5"><b>WELCOME, LET'S GET STARTED</b></p>
                         <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
                             <nz-form-item>
                                 <nz-form-control nzErrorTip="Please enter your email address">
-                                    <label>EMAIL ADDRESS</label>
+                                    <label class="customText">EMAIL ADDRESS</label>
                                     <nz-input-group>
                                         <input type="email" nz-input class="form-control p-1" formControlName="email" />
                                     </nz-input-group>
@@ -27,7 +27,7 @@
                             </nz-form-item>
                             <nz-form-item class="mt-3">
                                 <nz-form-control nzErrorTip="Please input your Password!">
-                                    <label>PASSWORD</label>
+                                    <label class="customText">PASSWORD</label>
                                     <nz-input-group class="p-1" [nzSuffix]="suffixTemplate">
                                         <input [type]="passwordVisible ? 'text' : 'password'" class="form-control" nz-input formControlName="password" />
                                     </nz-input-group>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faPen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-
+import { ApiDataService } from '../api-data.service';
 @Component({
   selector: 'app-supplier-list',
   templateUrl: './supplier-list.component.html',
@@ -11,87 +11,28 @@ export class SupplierListComponent implements OnInit {
   editIcon = faPen;
   plusIcon = faPlus;
   deleteIcon = faTrash;
+  supplierListData:any;
   isCollapsed = false;
-  constructor() { }
+  constructor(private apiService: ApiDataService) { }
 
   
   ngOnInit(): void {
+    this.getDataInTable();
   }
-  
-  listOfData: any[] = [
-    {
-      name: 'John Brown',
-      chinese: 98,
-      math: 60,
-      english: 70
-    },
-    {
-      name: 'Jim Green',
-      chinese: 98,
-      math: 66,
-      english: 89
-    },
-    {
-      name: 'Joe Black',
-      chinese: 98,
-      math: 90,
-      english: 70
-    },
-    {
-      name: 'Jim Red',
-      chinese: 88,
-      math: 99,
-      english: 89
-    },
-    {
-      name: 'Jim Red',
-      chinese: 88,
-      math: 99,
-      english: 89
-    },
-    {
-      name: 'Jim Red',
-      chinese: 88,
-      math: 99,
-      english: 89
-    },
-    {
-      name: 'Jim Red',
-      chinese: 88,
-      math: 99,
-      english: 89
-    },
-    {
-      name: 'Jim Red',
-      chinese: 88,
-      math: 99,
-      english: 89
-    },
-    {
-      name: 'Jim Red',
-      chinese: 88,
-      math: 99,
-      english: 89
-    },
-    {
-      name: 'Jim Red',
-      chinese: 88,
-      math: 99,
-      english: 89
-    },
-    {
-      name: 'Jim Red',
-      chinese: 88,
-      math: 99,
-      english: 89
-    },
-    {
-      name: 'Jim Red',
-      chinese: 88,
-      math: 99,
-      english: 89
-    },
 
-  ];
+  getDataInTable(){
+    this.apiService.getDataSuppliers().subscribe((data:any) => {
+      this.supplierListData = data.Result;
+      console.log(this.supplierListData);
+    })
+  }
 
+  deleteSupplier(supplierId:number){
+    alert(supplierId);
+  }
+
+  editSupplier(supplierId:number){
+    alert(supplierId);
+  }
+ 
 }

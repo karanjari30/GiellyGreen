@@ -26,4 +26,8 @@ export class ApiDataService {
     let header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     return this.http.post<LoginModel>(`https://f2e7-106-201-236-89.ngrok.io/Token`, body, { headers: header });
   }
+
+  getDataSuppliers(){
+    return this.http.get(`https://f2e7-106-201-236-89.ngrok.io/api/Suppliers`);
+  }
 }
