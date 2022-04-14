@@ -1,0 +1,88 @@
+/* 
+  .sideMenu{
+    background-color: #2C2B29;
+  }
+
+  .customMenuColor{
+    background-color: #2C2B29;
+  }
+
+  .menuItemCustomColor{
+      color: #C99D4A !important;
+  }
+  
+
+  .logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px;
+  }
+
+  nz-header {
+    background: #fff;
+    padding: 0;
+  }
+
+  nz-content {
+    background: #fff;
+  }
+
+  .inner-content {
+    background: #fff;
+    min-height: 83vh;
+  }
+
+  nz-footer {
+    background: #fff;
+    text-align: center;
+  } */
+
+.sideMenu {
+  background-color: #2c2b29;
+}
+
+.customMenu {
+  background-color: #2c2b29;
+  margin-top: 120px;
+}
+
+.menuItemCustomColor {
+  color: #c99d4a !important;
+}
+
+.logo {
+  position: absolute;
+  width: 382px;
+  height: 78px;
+  left: -45%;
+  top: 30px;
+}
+
+nz-header {
+  background: #fff;
+  padding: 0;
+}
+
+nz-content {
+  background: #fff;
+}
+
+.inner-content {
+  background: #fff;
+  min-height: 100vh;
+}
+
+.customSearchInput {
+  margin-left: 50%;
+}
+
+.addSupplierBtn {
+  margin-left: 115%;
+  background-color: #c99d4a;
+  color: white;
+  border-color: #c99d4a;
+}
+
+thead > tr > th {
+  background-color: #2c2b29 !important;
+}
