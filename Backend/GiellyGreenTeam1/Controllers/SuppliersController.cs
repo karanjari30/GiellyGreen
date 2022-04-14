@@ -11,7 +11,7 @@ namespace GiellyGreenTeam1.Controllers
 {
     public class SuppliersController : ApiController
     {
-        private GiellyGreen_Team1Entities objSuppiler = new GiellyGreen_Team1Entities();
+        public GiellyGreen_Team1Entities objSuppiler = new GiellyGreen_Team1Entities();
 
         // GET: api/Suppliers
         public JsonResponse GetSuppliers()
@@ -32,39 +32,23 @@ namespace GiellyGreenTeam1.Controllers
             return objResponse;
         }
 
-        // PUT: api/Suppliers/5
-        public IHttpActionResult PutSupplier(int id, Supplier supplier)
-        {
-            if (!ModelState.IsValid)
-            {
-            }
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Suppliers
-        public IHttpActionResult PostSupplier(Supplier supplier)
-        {
-            if (!ModelState.IsValid)
-            {
-              
-            }
-            return CreatedAtRoute("DefaultApi", new { id = supplier.SupplierId }, supplier);
-        }
-
         // DELETE: api/Suppliers/5
-        [ResponseType(typeof(Supplier))]
-        public IHttpActionResult DeleteSupplier(int id)
+        public JsonResponse DeleteSupplier(int id)
         {
-            Supplier supplier = objSuppiler.Suppliers.Find(id);
-            if (supplier == null)
+            var objResponse = new JsonResponse();
+            try
             {
-                return NotFound();
+                var objSuppilerData = objSuppiler.DeleteSupplier(id);
+                if (objSuppilerData == 1)
+                    objResponse = JsonResponseHelper.JsonMessage(1, "Record deleted successfully.", objSuppilerData);
+                else
+                    objResponse = JsonResponseHelper.JsonMessage(1, "Record Not Found.", null);
             }
-
-            objSuppiler.Suppliers.Remove(supplier);
-            objSuppiler.SaveChanges();
-
-            return Ok(supplier);
+            catch (Exception)
+            {
+                objResponse = JsonResponseHelper.JsonMessage(0, "Error.", ModelState.Values.SelectMany(x => x.Errors));
+            }
+            return objResponse;
         }
 
         private bool SupplierExists(int id)
