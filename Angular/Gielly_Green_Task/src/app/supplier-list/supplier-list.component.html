@@ -56,10 +56,18 @@
                     <div class="col-6">
                         <nz-form-label [nzSpan]="7">E-mail Address</nz-form-label>
                         <nz-form-item>
-                            <nz-form-control [nzSpan]="24" nzErrorTip="Enter valid email">
+                            <nz-form-control [nzSpan]="24" [nzErrorTip]="emailErr">
                                 <input nz-input class="form-control" formControlName="emailAddress" id="emailAddress"
                                     email="true" />
                             </nz-form-control>
+                            <ng-template #emailErr let-control>
+                                <ng-container *ngIf="control.hasError('required')">
+                                    Please enter email
+                                </ng-container>
+                                <ng-container *ngIf="control.hasError('email')">
+                                    Please enter valid email
+                                </ng-container>
+                            </ng-template>
                         </nz-form-item>
                     </div>
                     <div class="col-6">
