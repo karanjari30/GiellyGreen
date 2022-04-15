@@ -23,7 +23,11 @@ import { MonthlyInvoiceComponent } from './monthly-invoice/monthly-invoice.compo
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 registerLocaleData(en);
 
@@ -33,7 +37,6 @@ registerLocaleData(en);
     LoginComponent,
     SupplierListComponent,
     MonthlyInvoiceComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -53,7 +56,11 @@ registerLocaleData(en);
     NzSwitchModule,
     NzDividerModule,
     FontAwesomeModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NzModalModule,
+    NzInputNumberModule,
+    NzUploadModule,
+    NzNotificationModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
