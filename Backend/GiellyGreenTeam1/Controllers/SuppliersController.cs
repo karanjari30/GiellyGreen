@@ -32,6 +32,7 @@ namespace GiellyGreenTeam1.Controllers
             return objResponse;
         }
         // POST: api/Suppliers
+        [HttpPost]
         public JsonResponse PostSupplier(SupplierViewModel model)
         {
             var objResponse = new JsonResponse();
@@ -53,10 +54,57 @@ namespace GiellyGreenTeam1.Controllers
             }
             catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
+                if (ex.InnerException.Message != null)
+                {
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
+                }
             }
             return objResponse;
         }
+
+        public JsonResponse PutSupplier(int id, SupplierViewModel model)
+        {
+            var objResponse = new JsonResponse();
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var objectSupplier = objSuppiler.Suppliers.Find(id);
+                    if (objectSupplier != null)
+                    {
+                        var supplierObject = objSuppiler.InsertUpdateSupplier(id, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, model.logo, model.Isactive).FirstOrDefault();
+                        objResponse = JsonResponseHelper.JsonMessage(1, "Record Updated Successfully", supplierObject);
+                    }
+                    else
+                    {
+                        objResponse = JsonResponseHelper.JsonMessage(2, "No Record found", null);
+                    }
+                }
+                else
+                {
+                    var allError = ModelState.Values.SelectMany(v => v.Errors);
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", allError);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException.Message != null)
+                {
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
+                }
+            }
+            return objResponse;
+        }
+
         // DELETE: api/Suppliers/5
         public JsonResponse DeleteSupplier(int id)
         {
@@ -75,6 +123,30 @@ namespace GiellyGreenTeam1.Controllers
             }
             return objResponse;
         }
+
+        public JsonResponse PatchStatus(int id, bool isActive)
+        {
+            var objResponse = new JsonResponse();
+            try
+            {
+                var objectSupplier = objSuppiler.Suppliers.Find(id);
+                if (objectSupplier != null)
+                {
+                    var supplierObject = objSuppiler.ChangeIsActive(id,isActive );
+                    objResponse = JsonResponseHelper.JsonMessage(1, "Status Updated Successfully", supplierObject);
+                }
+                else
+                {
+                    objResponse = JsonResponseHelper.JsonMessage(2, "No Record found", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
+            }
+            return objResponse;
+        }
+
 
         private bool SupplierExists(int id)
         {

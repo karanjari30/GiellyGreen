@@ -95,5 +95,18 @@ namespace DataAccessLayer.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertUpdateSupplier_Result>("InsertUpdateSupplier", idParameter, supplierNameParameter, supplierReferenceParameter, businessAddressParameter, emailAddressParameter, phoneNumberParameter, companyRegisterNumberParameter, vATNumberParameter, taxReferenceParameter, companyRegisterAddressParameter, logoParameter, isactiveParameter);
         }
+    
+        public virtual int ChangeIsActive(Nullable<int> id, Nullable<bool> isActive)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangeIsActive", idParameter, isActiveParameter);
+        }
     }
 }

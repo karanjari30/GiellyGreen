@@ -37,6 +37,10 @@
       <Parameter Name="logo" Mode="In" Type="Binary" />
       <Parameter Name="Isactive" Mode="In" Type="Boolean" />
     </FunctionImport>
+    <FunctionImport Name="ChangeIsActive">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="GetSuppliers_Result">
     <Property Type="Int32" Name="SupplierId" Nullable="false" />

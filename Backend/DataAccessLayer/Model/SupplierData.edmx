@@ -22,6 +22,10 @@
           <Property Name="logo" Type="varbinary(max)" />
           <Property Name="Isactive" Type="bit" />
         </EntityType>
+        <Function Name="ChangeIsActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="IsActive" Type="bit" Mode="In" />
+        </Function>
         <Function Name="DeleteSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -83,6 +87,10 @@
             <Parameter Name="CompanyRegisterAddress" Mode="In" Type="String" />
             <Parameter Name="logo" Mode="In" Type="Binary" />
             <Parameter Name="Isactive" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="ChangeIsActive">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="IsActive" Mode="In" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetSuppliers_Result">
@@ -152,6 +160,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ChangeIsActive" FunctionName="GiellyGreen_Team1Model.Store.ChangeIsActive" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
