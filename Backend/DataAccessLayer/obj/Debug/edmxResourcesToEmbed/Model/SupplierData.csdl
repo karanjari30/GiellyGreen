@@ -37,6 +37,10 @@
       <Parameter Name="logo" Mode="In" Type="Binary" />
       <Parameter Name="Isactive" Mode="In" Type="Boolean" />
     </FunctionImport>
+    <FunctionImport Name="ChangeIsActive">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="GetSuppliers_Result">
     <Property Type="Int32" Name="SupplierId" Nullable="false" />
@@ -53,6 +57,6 @@
     <Property Type="Boolean" Name="Isactive" Nullable="true" />
   </ComplexType>
   <ComplexType Name="InsertUpdateSupplier_Result">
-    <Property Type="Int32" Name="Id" Nullable="true" />
+    <Property Type="Int32" Name="SupplierId" Nullable="true" />
   </ComplexType>
 </Schema>

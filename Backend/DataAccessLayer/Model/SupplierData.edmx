@@ -22,6 +22,10 @@
           <Property Name="logo" Type="varbinary(max)" />
           <Property Name="Isactive" Type="bit" />
         </EntityType>
+        <Function Name="ChangeIsActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="IsActive" Type="bit" Mode="In" />
+        </Function>
         <Function Name="DeleteSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -67,7 +71,7 @@
         <EntityContainer Name="GiellyGreen_Team1Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
           <FunctionImport Name="DeleteSupplier">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetSuppliers" ReturnType="Collection(GiellyGreen_Team1Model.GetSuppliers_Result)" />
           <FunctionImport Name="InsertUpdateSupplier" ReturnType="Collection(GiellyGreen_Team1Model.InsertUpdateSupplier_Result)">
@@ -83,6 +87,10 @@
             <Parameter Name="CompanyRegisterAddress" Mode="In" Type="String" />
             <Parameter Name="logo" Mode="In" Type="Binary" />
             <Parameter Name="Isactive" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="ChangeIsActive">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="IsActive" Mode="In" Type="Boolean" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetSuppliers_Result">
@@ -100,7 +108,7 @@
           <Property Type="Boolean" Name="Isactive" Nullable="true" />
         </ComplexType>
         <ComplexType Name="InsertUpdateSupplier_Result">
-          <Property Type="Int32" Name="Id" Nullable="true" />
+          <Property Type="Int32" Name="SupplierId" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -148,10 +156,11 @@
           <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateSupplier" >
             <ResultMapping>
               <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateSupplier_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ChangeIsActive" FunctionName="GiellyGreen_Team1Model.Store.ChangeIsActive" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
