@@ -20,9 +20,6 @@
   </EntityType>
   <EntityContainer Name="GiellyGreen_Team1Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
-    <FunctionImport Name="DeleteSupplier">
-      <Parameter Name="id" Mode="In" Type="Int32" />
-    </FunctionImport>
     <FunctionImport Name="GetSuppliers" ReturnType="Collection(GiellyGreen_Team1Model.GetSuppliers_Result)" />
     <FunctionImport Name="ChangeIsActive">
       <Parameter Name="id" Mode="In" Type="Int32" />
@@ -42,6 +39,9 @@
       <Parameter Name="logo" Mode="In" Type="Binary" />
       <Parameter Name="Isactive" Mode="In" Type="Boolean" />
     </FunctionImport>
+    <FunctionImport Name="DeleteSupplier" ReturnType="Collection(GiellyGreen_Team1Model.DeleteSupplier_Result)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="InsertUpdateSupplier_Result">
     <Property Type="Int32" Name="SupplierId" Nullable="true" />
@@ -60,5 +60,8 @@
     <Property Type="Binary" Name="logo" Nullable="true" />
     <Property Type="Boolean" Name="Isactive" Nullable="true" />
     <Property Type="Boolean" Name="IsInvoice" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="DeleteSupplier_Result">
+    <Property Type="Int32" Name="result" Nullable="true" />
   </ComplexType>
 </Schema>

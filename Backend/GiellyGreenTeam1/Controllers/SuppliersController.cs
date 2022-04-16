@@ -111,13 +111,13 @@ namespace GiellyGreenTeam1.Controllers
             var objResponse = new JsonResponse();
             try
             {
-                var objSuppilerData = objSuppiler.DeleteSupplier(id);
+                var objSuppilerData = objSuppiler.DeleteSupplier(id).FirstOrDefault().result;
                 if (objSuppilerData == 1)
                     objResponse = JsonResponseHelper.JsonMessage(1, "Record deleted successfully.", objSuppilerData);
                 else if(objSuppilerData == 2)
                     objResponse = JsonResponseHelper.JsonMessage(1, "Invoice already exist. can't deleted record.", objSuppilerData);
                 else
-                    objResponse = JsonResponseHelper.JsonMessage(1, "Record Not Found.", null);
+                    objResponse = JsonResponseHelper.JsonMessage(2, "Record Not Found.", null);
             }
             catch (Exception ex)
             {

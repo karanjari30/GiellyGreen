@@ -29,15 +29,6 @@ namespace DataAccessLayer.Model
     
         public virtual DbSet<Supplier> Suppliers { get; set; }
     
-        public virtual int DeleteSupplier(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteSupplier", idParameter);
-        }
-    
         public virtual ObjectResult<GetSuppliers_Result> GetSuppliers()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSuppliers_Result>("GetSuppliers");
@@ -107,6 +98,15 @@ namespace DataAccessLayer.Model
                 new ObjectParameter("Isactive", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertUpdateSupplier_Result>("InsertUpdateSupplier", idParameter, supplierNameParameter, supplierReferenceParameter, businessAddressParameter, emailAddressParameter, phoneNumberParameter, companyRegisterNumberParameter, vATNumberParameter, taxReferenceParameter, companyRegisterAddressParameter, logoParameter, isactiveParameter);
+        }
+    
+        public virtual ObjectResult<DeleteSupplier_Result> DeleteSupplier(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DeleteSupplier_Result>("DeleteSupplier", idParameter);
         }
     }
 }
