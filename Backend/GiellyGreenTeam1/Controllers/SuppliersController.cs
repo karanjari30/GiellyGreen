@@ -40,7 +40,7 @@ namespace GiellyGreenTeam1.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var objectSupplier = objSuppiler.InsertUpdateSupplier(0, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, model.logo, model.Isactive);
+                    var objectSupplier = objSuppiler.InsertUpdateSupplier(0, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, model.logo, model.Isactive) ;
                     if (objectSupplier != null)
                     {
                         objResponse = JsonResponseHelper.JsonMessage(1, "Record Created Successfully", objectSupplier);
@@ -114,12 +114,14 @@ namespace GiellyGreenTeam1.Controllers
                 var objSuppilerData = objSuppiler.DeleteSupplier(id);
                 if (objSuppilerData == 1)
                     objResponse = JsonResponseHelper.JsonMessage(1, "Record deleted successfully.", objSuppilerData);
+                else if(objSuppilerData == 2)
+                    objResponse = JsonResponseHelper.JsonMessage(1, "Invoice already exist. can't deleted record.", objSuppilerData);
                 else
                     objResponse = JsonResponseHelper.JsonMessage(1, "Record Not Found.", null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.JsonMessage(0, "Error.", ModelState.Values.SelectMany(x => x.Errors));
+                objResponse = JsonResponseHelper.JsonMessage(0, "Error.", ex.Message);
             }
             return objResponse;
         }

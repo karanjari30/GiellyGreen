@@ -16,6 +16,7 @@
     <Property Name="CompanyRegisterAddress" Type="nvarchar" MaxLength="150" />
     <Property Name="logo" Type="varbinary(max)" />
     <Property Name="Isactive" Type="bit" />
+    <Property Name="IsInvoice" Type="bit" />
   </EntityType>
   <Function Name="ChangeIsActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="id" Type="int" Mode="In" />

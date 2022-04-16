@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Suppliers">
       <EntityTypeMapping TypeName="GiellyGreen_Team1Model.Supplier">
         <MappingFragment StoreEntitySet="Supplier">
+          <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
           <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
           <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
           <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
@@ -35,9 +36,11 @@
           <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
           <ScalarProperty Name="logo" ColumnName="logo" />
           <ScalarProperty Name="Isactive" ColumnName="Isactive" />
+          <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ChangeIsActive" FunctionName="GiellyGreen_Team1Model.Store.ChangeIsActive" />
     <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateSupplier">
       <ResultMapping>
         <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateSupplier_Result">
@@ -45,6 +48,5 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="ChangeIsActive" FunctionName="GiellyGreen_Team1Model.Store.ChangeIsActive" />
   </EntityContainerMapping>
 </Mapping>
