@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using DataAccessLayer.Model;
@@ -40,6 +42,19 @@ namespace GiellyGreenTeam1.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    String path = HttpContext.Current.Server.MapPath("~/ImageStorage"); //Path
+                    //Check if directory exist
+                    if (!System.IO.Directory.Exists(path))
+                    {
+                        System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
+                    }
+                    string imageName = model.SupplierName + ".jpg";
+                    //set the image path
+                    string imgPath = Path.Combine(path, imageName);
+                    byte[] imageBytes = Convert.FromBase64String(model.logo);
+                    System.IO.File.WriteAllBytes(imgPath, imageBytes);
+
+                    model.logo = imgPath;
                     var objectSupplier = objSuppiler.InsertUpdateSupplier(0, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, model.logo, model.Isactive) ;
                     if (objectSupplier != null)
                     {
