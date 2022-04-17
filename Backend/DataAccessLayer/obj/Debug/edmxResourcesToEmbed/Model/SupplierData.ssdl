@@ -14,7 +14,7 @@
     <Property Name="VATNumber" Type="nvarchar" MaxLength="15" />
     <Property Name="TaxReference" Type="nvarchar" MaxLength="15" />
     <Property Name="CompanyRegisterAddress" Type="nvarchar" MaxLength="150" />
-    <Property Name="logo" Type="varbinary(max)" />
+    <Property Name="logo" Type="nvarchar(max)" />
     <Property Name="Isactive" Type="bit" />
     <Property Name="IsInvoice" Type="bit" />
   </EntityType>
@@ -37,7 +37,7 @@
     <Parameter Name="VATNumber" Type="nvarchar" Mode="In" />
     <Parameter Name="TaxReference" Type="nvarchar" Mode="In" />
     <Parameter Name="CompanyRegisterAddress" Type="nvarchar" Mode="In" />
-    <Parameter Name="logo" Type="varbinary(max)" Mode="In" />
+    <Parameter Name="logo" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="Isactive" Type="bit" Mode="In" />
   </Function>
   <EntityContainer Name="GiellyGreen_Team1ModelStoreContainer">

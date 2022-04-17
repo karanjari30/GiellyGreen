@@ -47,7 +47,7 @@ namespace DataAccessLayer.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangeIsActive", idParameter, isActiveParameter);
         }
     
-        public virtual ObjectResult<InsertUpdateSupplier_Result> InsertUpdateSupplier(Nullable<int> id, string supplierName, string supplierReference, string businessAddress, string emailAddress, string phoneNumber, string companyRegisterNumber, string vATNumber, string taxReference, string companyRegisterAddress, byte[] logo, Nullable<bool> isactive)
+        public virtual ObjectResult<InsertUpdateSupplier_Result> InsertUpdateSupplier(Nullable<int> id, string supplierName, string supplierReference, string businessAddress, string emailAddress, string phoneNumber, string companyRegisterNumber, string vATNumber, string taxReference, string companyRegisterAddress, string logo, Nullable<bool> isactive)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -91,7 +91,7 @@ namespace DataAccessLayer.Model
     
             var logoParameter = logo != null ?
                 new ObjectParameter("logo", logo) :
-                new ObjectParameter("logo", typeof(byte[]));
+                new ObjectParameter("logo", typeof(string));
     
             var isactiveParameter = isactive.HasValue ?
                 new ObjectParameter("Isactive", isactive) :

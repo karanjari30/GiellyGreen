@@ -155,7 +155,7 @@ namespace GiellyGreenTeam1.Models
             }
         }
 
-        public byte[] logo { get; set; }
+        public string logo { get; set; }
 
         public Nullable<bool> Isactive { get; set; }
 
