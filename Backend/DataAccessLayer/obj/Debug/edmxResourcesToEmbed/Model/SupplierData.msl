@@ -30,7 +30,7 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="DeleteSupplier" FunctionName="GiellyGreen_Team1Model.Store.DeleteSupplier">
       <ResultMapping>
-        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.DeleteSupplier_Result">
+        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.DeleteSupplier_Result1">
           <ScalarProperty Name="result" ColumnName="result" />
         </ComplexTypeMapping>
       </ResultMapping>

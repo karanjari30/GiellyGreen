@@ -72,7 +72,7 @@
             <Parameter Name="logo" Mode="In" Type="String" />
             <Parameter Name="Isactive" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="DeleteSupplier" ReturnType="Collection(GiellyGreen_Team1Model.DeleteSupplier_Result)">
+          <FunctionImport Name="DeleteSupplier" ReturnType="Collection(GiellyGreen_Team1Model.DeleteSupplier_Result1)">
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="Suppliers" EntityType="GiellyGreen_Team1Model.Supplier" />
@@ -116,6 +116,9 @@
           <Property Type="Boolean" Name="Isactive" Nullable="true" />
           <Property Type="Boolean" Name="IsInvoice" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="DeleteSupplier_Result1">
+          <Property Type="Int32" Name="result" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -150,8 +153,8 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DeleteSupplier" FunctionName="GiellyGreen_Team1Model.Store.DeleteSupplier" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.DeleteSupplier_Result">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.DeleteSupplier_Result1">
                 <ScalarProperty Name="result" ColumnName="result" />
               </ComplexTypeMapping>
             </ResultMapping>

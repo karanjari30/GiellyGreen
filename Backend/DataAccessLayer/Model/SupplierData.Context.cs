@@ -100,13 +100,13 @@ namespace DataAccessLayer.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertUpdateSupplier_Result>("InsertUpdateSupplier", idParameter, supplierNameParameter, supplierReferenceParameter, businessAddressParameter, emailAddressParameter, phoneNumberParameter, companyRegisterNumberParameter, vATNumberParameter, taxReferenceParameter, companyRegisterAddressParameter, logoParameter, isactiveParameter);
         }
     
-        public virtual ObjectResult<DeleteSupplier_Result> DeleteSupplier(Nullable<int> id)
+        public virtual ObjectResult<DeleteSupplier_Result1> DeleteSupplier(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DeleteSupplier_Result>("DeleteSupplier", idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DeleteSupplier_Result1>("DeleteSupplier", idParameter);
         }
     }
 }
