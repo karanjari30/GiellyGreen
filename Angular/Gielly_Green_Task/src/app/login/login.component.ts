@@ -17,6 +17,11 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private apiService: ApiDataService) { }
 
   ngOnInit(): void {
+    if(sessionStorage.getItem('userSessionToken')){
+      this.router.navigate(['/suppliers-list']);
+    } else{
+      this.router.navigate(['/login']);
+    }
     this.validateForm = this.fb.group({
       email: [null, [Validators.required]],
       password: [null, [Validators.required]],
