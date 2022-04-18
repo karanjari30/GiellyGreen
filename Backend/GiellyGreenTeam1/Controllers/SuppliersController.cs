@@ -78,12 +78,12 @@ namespace GiellyGreenTeam1.Controllers
                         objResponse = JsonResponseHelper.JsonMessage(1, "Record Created Successfully", objectSupplier);
                 }
                 else
-                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ModelState.Values.SelectMany(v => v.Errors).ToArray()[0]);
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ModelState.Values.SelectMany(E => E.Errors).Select(E => E.ErrorMessage).ToList());
             }
             catch (Exception ex)
             {
                 if (ex.InnerException.Message != null)
-                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message);
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message.Split('.')[0] + ((System.Runtime.InteropServices.ExternalException)ex.InnerException).ErrorCode);
                 else
                     objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
             }
@@ -98,6 +98,21 @@ namespace GiellyGreenTeam1.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (!String.IsNullOrEmpty(model.logo))
+                    {
+                        String path = HttpContext.Current.Server.MapPath("~/ImageStorage"); //Path
+                                                                                            //Check if directory exist
+                        if (!System.IO.Directory.Exists(path))
+                            System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
+
+                        string imageName = model.SupplierName + ".jpg";
+                        //set the image path
+                        string imgPath = Path.Combine(path, imageName);
+                        byte[] imageBytes = Convert.FromBase64String(model.logo);
+                        System.IO.File.WriteAllBytes(imgPath, imageBytes);
+                        model.logo = imageName;
+                    }
+
                     var objectSupplier = objSuppiler.Suppliers.Find(id);
                     if (objectSupplier != null)
                     {
@@ -105,26 +120,17 @@ namespace GiellyGreenTeam1.Controllers
                         objResponse = JsonResponseHelper.JsonMessage(1, "Record Updated Successfully", supplierObject);
                     }
                     else
-                    {
                         objResponse = JsonResponseHelper.JsonMessage(2, "No Record found", null);
-                    }
                 }
                 else
-                {
-                    var allError = ModelState.Values.SelectMany(v => v.Errors);
-                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", allError);
-                }
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ModelState.Values.SelectMany(E => E.Errors).Select(E => E.ErrorMessage).ToList());
             }
             catch (Exception ex)
             {
                 if (ex.InnerException.Message != null)
-                {
                     objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message);
-                }
                 else
-                {
                     objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
-                }
             }
             return objResponse;
         }
@@ -162,9 +168,7 @@ namespace GiellyGreenTeam1.Controllers
                     objResponse = JsonResponseHelper.JsonMessage(1, "Status Updated Successfully", supplierObject);
                 }
                 else
-                {
                     objResponse = JsonResponseHelper.JsonMessage(2, "No Record found", null);
-                }
             }
             catch (Exception ex)
             {
