@@ -82,7 +82,10 @@ namespace GiellyGreenTeam1.Controllers
             }
             catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
+                if(ex.InnerException.Message != null)
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message.Split('.')[0]);
+                else
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
             }
             return objResponse;
         }
@@ -123,7 +126,10 @@ namespace GiellyGreenTeam1.Controllers
             }
             catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
+                if (ex.InnerException.Message != null)
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message);
+                else
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
             }
             return objResponse;
         }
