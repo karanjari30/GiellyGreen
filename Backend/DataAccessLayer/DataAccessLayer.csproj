@@ -53,9 +53,6 @@
     <Compile Include="Model\DeleteSupplier_Result.cs">
       <DependentUpon>SupplierData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\DeleteSupplier_Result1.cs">
-      <DependentUpon>SupplierData.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\GetSuppliers_Result.cs">
       <DependentUpon>SupplierData.tt</DependentUpon>
     </Compile>
