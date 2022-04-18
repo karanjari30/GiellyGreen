@@ -28,6 +28,8 @@ namespace DataAccessLayer.Model
         }
     
         public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
+        public virtual DbSet<MonthlyInvoice> MonthlyInvoices { get; set; }
     
         public virtual ObjectResult<GetSuppliers_Result> GetSuppliers()
         {

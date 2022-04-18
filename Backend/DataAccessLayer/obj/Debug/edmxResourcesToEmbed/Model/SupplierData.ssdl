@@ -1,5 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="GiellyGreen_Team1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Custom1" Type="nvarchar" MaxLength="80" />
+    <Property Name="Custom2" Type="nvarchar" MaxLength="80" />
+    <Property Name="Custom3" Type="nvarchar" MaxLength="80" />
+    <Property Name="Custom4" Type="nvarchar" MaxLength="80" />
+    <Property Name="Custom5" Type="nvarchar" MaxLength="80" />
+    <Property Name="InvoiceReferenceId" Type="nvarchar" MaxLength="15" />
+    <Property Name="InvoiceDate" Type="date" />
+  </EntityType>
+  <EntityType Name="MonthlyInvoice">
+    <Key>
+      <PropertyRef Name="MontlyInvoiceId" />
+    </Key>
+    <Property Name="MontlyInvoiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HairService" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="BeautyService" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="CustomHeader1" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="CustomHeader2" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="CustomHeader3" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="CustomHeader4" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="CustomHeader5" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="NetAmount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="VATAmount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="GrossAmount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="AdvancePay" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="BalanceDue" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="IsApprove" Type="bit" />
+    <Property Name="SupplierId" Type="int" />
+  </EntityType>
   <EntityType Name="Supplier">
     <Key>
       <PropertyRef Name="SupplierId" />
@@ -18,6 +51,18 @@
     <Property Name="Isactive" Type="bit" />
     <Property Name="IsInvoice" Type="bit" />
   </EntityType>
+  <Association Name="FK__MonthlyIn__Suppl__5629CD9C">
+    <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+    <End Role="MonthlyInvoice" Type="Self.MonthlyInvoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="SupplierId" />
+      </Principal>
+      <Dependent Role="MonthlyInvoice">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="ChangeIsActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="id" Type="int" Mode="In" />
     <Parameter Name="IsActive" Type="bit" Mode="In" />
@@ -41,6 +86,12 @@
     <Parameter Name="Isactive" Type="bit" Mode="In" />
   </Function>
   <EntityContainer Name="GiellyGreen_Team1ModelStoreContainer">
+    <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MonthlyInvoice" EntityType="Self.MonthlyInvoice" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__MonthlyIn__Suppl__5629CD9C" Association="Self.FK__MonthlyIn__Suppl__5629CD9C">
+      <End Role="Supplier" EntitySet="Supplier" />
+      <End Role="MonthlyInvoice" EntitySet="MonthlyInvoice" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

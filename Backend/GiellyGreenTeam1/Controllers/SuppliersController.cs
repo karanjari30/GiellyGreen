@@ -63,9 +63,7 @@ namespace GiellyGreenTeam1.Controllers
                         String path = HttpContext.Current.Server.MapPath("~/ImageStorage"); //Path
                                                                                             //Check if directory exist
                         if (!System.IO.Directory.Exists(path))
-                        {
                             System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
-                        }
 
                         string imageName = model.SupplierName + ".jpg";
                         //set the image path
@@ -77,26 +75,17 @@ namespace GiellyGreenTeam1.Controllers
 
                     var objectSupplier = objSuppiler.InsertUpdateSupplier(0, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, model.logo, model.Isactive);
                     if (objectSupplier != null)
-                    {
                         objResponse = JsonResponseHelper.JsonMessage(1, "Record Created Successfully", objectSupplier);
-                    }
                 }
                 else
-                {
-                    var allError = ModelState.Values.SelectMany(v => v.Errors);
-                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", allError);
-                }
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ModelState.Values.SelectMany(v => v.Errors).ToArray()[0]);
             }
             catch (Exception ex)
             {
                 if (ex.InnerException.Message != null)
-                {
                     objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message);
-                }
                 else
-                {
                     objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
-                }
             }
             return objResponse;
         }

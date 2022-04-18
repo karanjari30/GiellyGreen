@@ -54,5 +54,40 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Invoices">
+      <EntityTypeMapping TypeName="GiellyGreen_Team1Model.Invoice">
+        <MappingFragment StoreEntitySet="Invoice">
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="InvoiceReferenceId" ColumnName="InvoiceReferenceId" />
+          <ScalarProperty Name="Custom5" ColumnName="Custom5" />
+          <ScalarProperty Name="Custom4" ColumnName="Custom4" />
+          <ScalarProperty Name="Custom3" ColumnName="Custom3" />
+          <ScalarProperty Name="Custom2" ColumnName="Custom2" />
+          <ScalarProperty Name="Custom1" ColumnName="Custom1" />
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MonthlyInvoices">
+      <EntityTypeMapping TypeName="GiellyGreen_Team1Model.MonthlyInvoice">
+        <MappingFragment StoreEntitySet="MonthlyInvoice">
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="IsApprove" ColumnName="IsApprove" />
+          <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
+          <ScalarProperty Name="AdvancePay" ColumnName="AdvancePay" />
+          <ScalarProperty Name="GrossAmount" ColumnName="GrossAmount" />
+          <ScalarProperty Name="VATAmount" ColumnName="VATAmount" />
+          <ScalarProperty Name="NetAmount" ColumnName="NetAmount" />
+          <ScalarProperty Name="CustomHeader5" ColumnName="CustomHeader5" />
+          <ScalarProperty Name="CustomHeader4" ColumnName="CustomHeader4" />
+          <ScalarProperty Name="CustomHeader3" ColumnName="CustomHeader3" />
+          <ScalarProperty Name="CustomHeader2" ColumnName="CustomHeader2" />
+          <ScalarProperty Name="CustomHeader1" ColumnName="CustomHeader1" />
+          <ScalarProperty Name="BeautyService" ColumnName="BeautyService" />
+          <ScalarProperty Name="HairService" ColumnName="HairService" />
+          <ScalarProperty Name="MontlyInvoiceId" ColumnName="MontlyInvoiceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
