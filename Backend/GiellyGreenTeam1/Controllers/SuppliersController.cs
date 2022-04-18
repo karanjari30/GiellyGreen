@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using DataAccessLayer.Model;
@@ -20,6 +22,22 @@ namespace GiellyGreenTeam1.Controllers
             try
             {
                 var objSuppilerlists = objSuppiler.GetSuppliers().ToList();
+                String path = HttpContext.Current.Server.MapPath("~/ImageStorage"); //Path Check if directory exist
+                if (!System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
+                }
+
+                objSuppilerlists.ForEach(supplier =>
+                {
+                    if (!String.IsNullOrEmpty(supplier.logo) && supplier.logo != "null")
+                    {
+                        string imgPath = Path.Combine(path, supplier.logo);
+                        byte[] imageByte = File.ReadAllBytes(imgPath);
+                        supplier.logo = Convert.ToBase64String(imageByte);
+                    }
+                });
+
                 if (objSuppilerlists != null)
                     objResponse = JsonResponseHelper.JsonMessage(1, "Total " + objSuppilerlists.Count + " Record Found.", objSuppilerlists);
                 else
@@ -40,28 +58,34 @@ namespace GiellyGreenTeam1.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (!String.IsNullOrEmpty(model.logo))
+                    {
+                        String path = HttpContext.Current.Server.MapPath("~/ImageStorage"); //Path
+                                                                                            //Check if directory exist
+                        if (!System.IO.Directory.Exists(path))
+                            System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
+
+                        string imageName = model.SupplierName + ".jpg";
+                        //set the image path
+                        string imgPath = Path.Combine(path, imageName);
+                        byte[] imageBytes = Convert.FromBase64String(model.logo);
+                        System.IO.File.WriteAllBytes(imgPath, imageBytes);
+                        model.logo = imageName;
+                    }
+
                     var objectSupplier = objSuppiler.InsertUpdateSupplier(0, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, model.logo, model.Isactive);
                     if (objectSupplier != null)
-                    {
                         objResponse = JsonResponseHelper.JsonMessage(1, "Record Created Successfully", objectSupplier);
-                    }
                 }
                 else
-                {
-                    var allError = ModelState.Values.SelectMany(v => v.Errors);
-                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", allError);
-                }
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ModelState.Values.SelectMany(E => E.Errors).Select(E => E.ErrorMessage).ToList());
             }
             catch (Exception ex)
             {
-                if (ex.InnerException.Message != null)
-                {
-                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message);
-                }
+                if(ex.InnerException.Message != null)
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message.Split('.')[0]);
                 else
-                {
                     objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
-                }
             }
             return objResponse;
         }
@@ -69,11 +93,25 @@ namespace GiellyGreenTeam1.Controllers
         public JsonResponse PutSupplier(int id, SupplierViewModel model)
         {
             var objResponse = new JsonResponse();
-
             try
             {
                 if (ModelState.IsValid)
                 {
+                    if (!String.IsNullOrEmpty(model.logo))
+                    {
+                        String path = HttpContext.Current.Server.MapPath("~/ImageStorage"); //Path
+                                                                                            //Check if directory exist
+                        if (!System.IO.Directory.Exists(path))
+                            System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
+
+                        string imageName = model.SupplierName + ".jpg";
+                        //set the image path
+                        string imgPath = Path.Combine(path, imageName);
+                        byte[] imageBytes = Convert.FromBase64String(model.logo);
+                        System.IO.File.WriteAllBytes(imgPath, imageBytes);
+                        model.logo = imageName;
+                    }
+
                     var objectSupplier = objSuppiler.Suppliers.Find(id);
                     if (objectSupplier != null)
                     {
@@ -81,26 +119,17 @@ namespace GiellyGreenTeam1.Controllers
                         objResponse = JsonResponseHelper.JsonMessage(1, "Record Updated Successfully", supplierObject);
                     }
                     else
-                    {
                         objResponse = JsonResponseHelper.JsonMessage(2, "No Record found", null);
-                    }
                 }
                 else
-                {
-                    var allError = ModelState.Values.SelectMany(v => v.Errors);
-                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", allError);
-                }
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ModelState.Values.SelectMany(E => E.Errors).Select(E => E.ErrorMessage).ToList());
             }
             catch (Exception ex)
             {
                 if (ex.InnerException.Message != null)
-                {
                     objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message);
-                }
                 else
-                {
                     objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
-                }
             }
             return objResponse;
         }
@@ -111,15 +140,17 @@ namespace GiellyGreenTeam1.Controllers
             var objResponse = new JsonResponse();
             try
             {
-                var objSuppilerData = objSuppiler.DeleteSupplier(id);
+                var objSuppilerData = objSuppiler.DeleteSupplier(id).FirstOrDefault().result;
                 if (objSuppilerData == 1)
                     objResponse = JsonResponseHelper.JsonMessage(1, "Record deleted successfully.", objSuppilerData);
+                else if (objSuppilerData == 2)
+                    objResponse = JsonResponseHelper.JsonMessage(1, "Invoice already exist. can't deleted record.", objSuppilerData);
                 else
-                    objResponse = JsonResponseHelper.JsonMessage(1, "Record Not Found.", null);
+                    objResponse = JsonResponseHelper.JsonMessage(2, "Record Not Found.", null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                objResponse = JsonResponseHelper.JsonMessage(0, "Error.", ModelState.Values.SelectMany(x => x.Errors));
+                objResponse = JsonResponseHelper.JsonMessage(0, "Error.", ex.Message);
             }
             return objResponse;
         }
@@ -132,13 +163,11 @@ namespace GiellyGreenTeam1.Controllers
                 var objectSupplier = objSuppiler.Suppliers.Find(id);
                 if (objectSupplier != null)
                 {
-                    var supplierObject = objSuppiler.ChangeIsActive(id,isActive );
+                    var supplierObject = objSuppiler.ChangeIsActive(id, isActive);
                     objResponse = JsonResponseHelper.JsonMessage(1, "Status Updated Successfully", supplierObject);
                 }
                 else
-                {
                     objResponse = JsonResponseHelper.JsonMessage(2, "No Record found", null);
-                }
             }
             catch (Exception ex)
             {

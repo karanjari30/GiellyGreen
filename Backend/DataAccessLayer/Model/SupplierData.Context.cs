@@ -28,22 +28,28 @@ namespace DataAccessLayer.Model
         }
     
         public virtual DbSet<Supplier> Suppliers { get; set; }
-    
-        public virtual int DeleteSupplier(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteSupplier", idParameter);
-        }
+        public virtual DbSet<Invoice> Invoices { get; set; }
+        public virtual DbSet<MonthlyInvoice> MonthlyInvoices { get; set; }
     
         public virtual ObjectResult<GetSuppliers_Result> GetSuppliers()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSuppliers_Result>("GetSuppliers");
         }
     
-        public virtual ObjectResult<InsertUpdateSupplier_Result> InsertUpdateSupplier(Nullable<int> id, string supplierName, string supplierReference, string businessAddress, string emailAddress, string phoneNumber, string companyRegisterNumber, string vATNumber, string taxReference, string companyRegisterAddress, byte[] logo, Nullable<bool> isactive)
+        public virtual int ChangeIsActive(Nullable<int> id, Nullable<bool> isActive)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangeIsActive", idParameter, isActiveParameter);
+        }
+    
+        public virtual ObjectResult<InsertUpdateSupplier_Result> InsertUpdateSupplier(Nullable<int> id, string supplierName, string supplierReference, string businessAddress, string emailAddress, string phoneNumber, string companyRegisterNumber, string vATNumber, string taxReference, string companyRegisterAddress, string logo, Nullable<bool> isactive)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -87,7 +93,7 @@ namespace DataAccessLayer.Model
     
             var logoParameter = logo != null ?
                 new ObjectParameter("logo", logo) :
-                new ObjectParameter("logo", typeof(byte[]));
+                new ObjectParameter("logo", typeof(string));
     
             var isactiveParameter = isactive.HasValue ?
                 new ObjectParameter("Isactive", isactive) :
@@ -96,17 +102,13 @@ namespace DataAccessLayer.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertUpdateSupplier_Result>("InsertUpdateSupplier", idParameter, supplierNameParameter, supplierReferenceParameter, businessAddressParameter, emailAddressParameter, phoneNumberParameter, companyRegisterNumberParameter, vATNumberParameter, taxReferenceParameter, companyRegisterAddressParameter, logoParameter, isactiveParameter);
         }
     
-        public virtual int ChangeIsActive(Nullable<int> id, Nullable<bool> isActive)
+        public virtual ObjectResult<DeleteSupplier_Result> DeleteSupplier(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            var isActiveParameter = isActive.HasValue ?
-                new ObjectParameter("IsActive", isActive) :
-                new ObjectParameter("IsActive", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ChangeIsActive", idParameter, isActiveParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DeleteSupplier_Result>("DeleteSupplier", idParameter);
         }
     }
 }

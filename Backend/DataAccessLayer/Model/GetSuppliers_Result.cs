@@ -23,7 +23,8 @@ namespace DataAccessLayer.Model
         public string VATNumber { get; set; }
         public string TaxReference { get; set; }
         public string CompanyRegisterAddress { get; set; }
-        public byte[] logo { get; set; }
+        public string logo { get; set; }
         public Nullable<bool> Isactive { get; set; }
+        public Nullable<bool> IsInvoice { get; set; }
     }
 }

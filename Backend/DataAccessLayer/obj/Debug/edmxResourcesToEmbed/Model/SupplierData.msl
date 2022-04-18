@@ -1,25 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="GiellyGreen_Team1ModelStoreContainer" CdmEntityContainer="GiellyGreen_Team1Entities">
-    <EntitySetMapping Name="Suppliers">
-      <EntityTypeMapping TypeName="GiellyGreen_Team1Model.Supplier">
-        <MappingFragment StoreEntitySet="Supplier">
-          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-          <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
-          <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
-          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-          <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
-          <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
-          <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
-          <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
-          <ScalarProperty Name="logo" ColumnName="logo" />
-          <ScalarProperty Name="Isactive" ColumnName="Isactive" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="DeleteSupplier" FunctionName="GiellyGreen_Team1Model.Store.DeleteSupplier" />
     <FunctionImportMapping FunctionImportName="GetSuppliers" FunctionName="GiellyGreen_Team1Model.Store.GetSuppliers">
       <ResultMapping>
         <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetSuppliers_Result">
@@ -35,9 +16,11 @@
           <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
           <ScalarProperty Name="logo" ColumnName="logo" />
           <ScalarProperty Name="Isactive" ColumnName="Isactive" />
+          <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ChangeIsActive" FunctionName="GiellyGreen_Team1Model.Store.ChangeIsActive" />
     <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateSupplier">
       <ResultMapping>
         <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateSupplier_Result">
@@ -45,6 +28,66 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="ChangeIsActive" FunctionName="GiellyGreen_Team1Model.Store.ChangeIsActive" />
+    <FunctionImportMapping FunctionImportName="DeleteSupplier" FunctionName="GiellyGreen_Team1Model.Store.DeleteSupplier">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.DeleteSupplier_Result">
+          <ScalarProperty Name="result" ColumnName="result" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="Suppliers">
+      <EntityTypeMapping TypeName="GiellyGreen_Team1Model.Supplier">
+        <MappingFragment StoreEntitySet="Supplier">
+          <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
+          <ScalarProperty Name="Isactive" ColumnName="Isactive" />
+          <ScalarProperty Name="logo" ColumnName="logo" />
+          <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
+          <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
+          <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
+          <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
+          <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
+          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invoices">
+      <EntityTypeMapping TypeName="GiellyGreen_Team1Model.Invoice">
+        <MappingFragment StoreEntitySet="Invoice">
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="InvoiceReferenceId" ColumnName="InvoiceReferenceId" />
+          <ScalarProperty Name="Custom5" ColumnName="Custom5" />
+          <ScalarProperty Name="Custom4" ColumnName="Custom4" />
+          <ScalarProperty Name="Custom3" ColumnName="Custom3" />
+          <ScalarProperty Name="Custom2" ColumnName="Custom2" />
+          <ScalarProperty Name="Custom1" ColumnName="Custom1" />
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MonthlyInvoices">
+      <EntityTypeMapping TypeName="GiellyGreen_Team1Model.MonthlyInvoice">
+        <MappingFragment StoreEntitySet="MonthlyInvoice">
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="IsApprove" ColumnName="IsApprove" />
+          <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
+          <ScalarProperty Name="AdvancePay" ColumnName="AdvancePay" />
+          <ScalarProperty Name="GrossAmount" ColumnName="GrossAmount" />
+          <ScalarProperty Name="VATAmount" ColumnName="VATAmount" />
+          <ScalarProperty Name="NetAmount" ColumnName="NetAmount" />
+          <ScalarProperty Name="CustomHeader5" ColumnName="CustomHeader5" />
+          <ScalarProperty Name="CustomHeader4" ColumnName="CustomHeader4" />
+          <ScalarProperty Name="CustomHeader3" ColumnName="CustomHeader3" />
+          <ScalarProperty Name="CustomHeader2" ColumnName="CustomHeader2" />
+          <ScalarProperty Name="CustomHeader1" ColumnName="CustomHeader1" />
+          <ScalarProperty Name="BeautyService" ColumnName="BeautyService" />
+          <ScalarProperty Name="HairService" ColumnName="HairService" />
+          <ScalarProperty Name="MontlyInvoiceId" ColumnName="MontlyInvoiceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
