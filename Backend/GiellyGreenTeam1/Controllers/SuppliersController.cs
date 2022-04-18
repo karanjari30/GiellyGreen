@@ -82,10 +82,7 @@ namespace GiellyGreenTeam1.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException.Message != null)
-                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message.Split('.')[0] + ((System.Runtime.InteropServices.ExternalException)ex.InnerException).ErrorCode);
-                else
-                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
+                objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
             }
             return objResponse;
         }
@@ -93,7 +90,6 @@ namespace GiellyGreenTeam1.Controllers
         public JsonResponse PutSupplier(int id, SupplierViewModel model)
         {
             var objResponse = new JsonResponse();
-
             try
             {
                 if (ModelState.IsValid)
@@ -127,10 +123,7 @@ namespace GiellyGreenTeam1.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException.Message != null)
-                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message);
-                else
-                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
+                objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
             }
             return objResponse;
         }
