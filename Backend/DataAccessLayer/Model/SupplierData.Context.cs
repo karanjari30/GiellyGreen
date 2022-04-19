@@ -110,5 +110,77 @@ namespace DataAccessLayer.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DeleteSupplier_Result>("DeleteSupplier", idParameter);
         }
+    
+        public virtual ObjectResult<IsActive_Result> IsActive()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<IsActive_Result>("IsActive");
+        }
+    
+        public virtual ObjectResult<GetAllInvoice_Result> GetAllInvoice(Nullable<int> invoiceMonth, Nullable<int> invoiceYear)
+        {
+            var invoiceMonthParameter = invoiceMonth.HasValue ?
+                new ObjectParameter("InvoiceMonth", invoiceMonth) :
+                new ObjectParameter("InvoiceMonth", typeof(int));
+    
+            var invoiceYearParameter = invoiceYear.HasValue ?
+                new ObjectParameter("InvoiceYear", invoiceYear) :
+                new ObjectParameter("InvoiceYear", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllInvoice_Result>("GetAllInvoice", invoiceMonthParameter, invoiceYearParameter);
+        }
+    
+        public virtual ObjectResult<GetSupplierByInvoiceMonth_Result> GetSupplierByInvoiceMonth(Nullable<System.DateTime> invoiceMonth)
+        {
+            var invoiceMonthParameter = invoiceMonth.HasValue ?
+                new ObjectParameter("InvoiceMonth", invoiceMonth) :
+                new ObjectParameter("InvoiceMonth", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSupplierByInvoiceMonth_Result>("GetSupplierByInvoiceMonth", invoiceMonthParameter);
+        }
+    
+        public virtual int InsertUpdateInvoice(Nullable<int> invoiceId, string custom1, string custom2, string custom3, string custom4, string custom5, string invoiceReferenceId, Nullable<int> invoiceYear, Nullable<int> invoiceMonth, Nullable<System.DateTime> invoiceDate)
+        {
+            var invoiceIdParameter = invoiceId.HasValue ?
+                new ObjectParameter("InvoiceId", invoiceId) :
+                new ObjectParameter("InvoiceId", typeof(int));
+    
+            var custom1Parameter = custom1 != null ?
+                new ObjectParameter("Custom1", custom1) :
+                new ObjectParameter("Custom1", typeof(string));
+    
+            var custom2Parameter = custom2 != null ?
+                new ObjectParameter("Custom2", custom2) :
+                new ObjectParameter("Custom2", typeof(string));
+    
+            var custom3Parameter = custom3 != null ?
+                new ObjectParameter("Custom3", custom3) :
+                new ObjectParameter("Custom3", typeof(string));
+    
+            var custom4Parameter = custom4 != null ?
+                new ObjectParameter("Custom4", custom4) :
+                new ObjectParameter("Custom4", typeof(string));
+    
+            var custom5Parameter = custom5 != null ?
+                new ObjectParameter("Custom5", custom5) :
+                new ObjectParameter("Custom5", typeof(string));
+    
+            var invoiceReferenceIdParameter = invoiceReferenceId != null ?
+                new ObjectParameter("InvoiceReferenceId", invoiceReferenceId) :
+                new ObjectParameter("InvoiceReferenceId", typeof(string));
+    
+            var invoiceYearParameter = invoiceYear.HasValue ?
+                new ObjectParameter("InvoiceYear", invoiceYear) :
+                new ObjectParameter("InvoiceYear", typeof(int));
+    
+            var invoiceMonthParameter = invoiceMonth.HasValue ?
+                new ObjectParameter("InvoiceMonth", invoiceMonth) :
+                new ObjectParameter("InvoiceMonth", typeof(int));
+    
+            var invoiceDateParameter = invoiceDate.HasValue ?
+                new ObjectParameter("InvoiceDate", invoiceDate) :
+                new ObjectParameter("InvoiceDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdateInvoice", invoiceIdParameter, custom1Parameter, custom2Parameter, custom3Parameter, custom4Parameter, custom5Parameter, invoiceReferenceIdParameter, invoiceYearParameter, invoiceMonthParameter, invoiceDateParameter);
+        }
     }
 }

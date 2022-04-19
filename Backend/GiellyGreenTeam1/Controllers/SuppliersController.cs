@@ -83,7 +83,7 @@ namespace GiellyGreenTeam1.Controllers
             catch (Exception ex)
             {
                 if(ex.InnerException.Message != null)
-                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message.Split('.')[0]);
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message);
                 else
                     objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
             }
