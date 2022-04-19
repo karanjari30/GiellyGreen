@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { DatePipe } from '@angular/common';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
 interface ItemData {
   id: number;
   name: string;
@@ -15,13 +17,15 @@ interface ItemData {
 })
 export class MonthlyInvoiceComponent implements OnInit {
   isCollapsed = false;
+  approveButtonIcon = faCheck;
   month = null;
+  invoiceDate:any;
   customHeader1:any;
   customHeader2:any;
   customHeader3:any;
   customHeader4:any;
   customHeader5:any;
-  invoiceReferenceNumber: number = 0;
+  invoiceReferenceNumber: any;
   isVisible = false;
   dateAndInvoiceForm!:FormGroup;
   checked = false;
@@ -29,7 +33,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   listOfCurrentPageData: readonly ItemData[] = [];
   listOfData: readonly ItemData[] = [];
   setOfCheckedId = new Set<number>();
-
+  counter: number = 0;
   listOfSelection = [
     {
       text: 'Select All Row',
@@ -41,7 +45,12 @@ export class MonthlyInvoiceComponent implements OnInit {
 
   onChange(date: any){
     this.isVisible = true;
-  }
+    date = new Date();
+    (console.log(date.getMonth()))
+    this.invoiceDate = this.datepipe.transform(date, 'yyyy-MM-dd');
+    this.invoiceReferenceNumber = String(date.getMonth() + 1) + String(date.getFullYear()) + String(this.counter);
+    this.counter++;
+  } 
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
@@ -72,26 +81,26 @@ export class MonthlyInvoiceComponent implements OnInit {
     this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
   }
 
+  sendEmail(){
+    Swal.fire({
+      title: 'Mailed Successfully!',
+      text: 'You just sent mail to suppliers',
+      icon: 'success',
+      confirmButtonText: 'Ok',
+    });
+  }
 
-  constructor(private router: Router, private fb: FormBuilder) { }
+  constructor(private router: Router, private fb: FormBuilder, public datepipe: DatePipe) { }
+  
   ngOnInit(): void {
     if(!sessionStorage.getItem('userSessionToken')){
       this.router.navigate(['/login']);
     }
-    this.dateAndInvoiceForm = this.fb.group({
-      invoiceDate: '',
-      invoiceReferenceNumber: ''
-    })
-    this.listOfData = new Array(200).fill(0).map((_, index) => ({
+    this.listOfData = new Array(20).fill(0).map((_, index) => ({
       id: index,
       name: `Edward King ${index}`,
       age: 32,
       address: `London, Park Lane no. ${index}`
     }));
   }
-
-  
-
-
-
 }

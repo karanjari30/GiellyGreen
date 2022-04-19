@@ -159,7 +159,7 @@
                                     <button nz-button (click)="fileUpload.click()">
                                         Upload here
                                     </button><br>
-                                    {{fileName || "No file uploaded yet."}}
+                                    <img [src]="tempLogoData" class="mt-2" height="200" width="200">
                                 </div>
                             </nz-form-control>
                         </nz-form-item>
@@ -188,10 +188,10 @@
             <img src="assets/logo.png" class="logo" alt="logo" cla>
         </div>
         <ul nz-menu class="customMenu">
-            <li nz-menu-item>
+            <li nz-menu-item class="text-center">
                 <a routerLink="/monthly-invoice" class="menuItemCustomColor"><span>MONTHLY INVOICE</span></a>
             </li>
-            <li nz-menu-item class="menuItemCustomColor">
+            <li nz-menu-item class="text-center">
                 <a routerLink="/suppliers-list" class="menuItemCustomColor"><span>SUPPLIERS LIST</span></a>
             </li>
         </ul>
@@ -231,7 +231,7 @@
                         <div class="col-sm-12 col-md-12 col-lg-12 mt-5">
                             <div class="table-responsive">
                                 <nz-table #sortTable [nzPageSize]="100" [nzData]="supplierListData"
-                                    nzTableLayout="fixed">
+                                    nzTableLayout="fixed" [nzScroll]="{ y:'420px'}" class="customTable">
                                     <thead>
                                         <tr>
                                             <th [nzSortFn]="sortReferenceNoFn">Supplier Reference</th>
