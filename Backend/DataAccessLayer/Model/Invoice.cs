@@ -14,6 +14,12 @@ namespace DataAccessLayer.Model
     
     public partial class Invoice
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Invoice()
+        {
+            this.MonthlyInvoices = new HashSet<MonthlyInvoice>();
+        }
+    
         public int InvoiceId { get; set; }
         public string Custom1 { get; set; }
         public string Custom2 { get; set; }
@@ -22,5 +28,9 @@ namespace DataAccessLayer.Model
         public string Custom5 { get; set; }
         public string InvoiceReferenceId { get; set; }
         public Nullable<System.DateTime> InvoiceDate { get; set; }
+        public Nullable<System.DateTime> InvoiceMonth { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MonthlyInvoice> MonthlyInvoices { get; set; }
     }
 }

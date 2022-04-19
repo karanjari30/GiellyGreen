@@ -29,7 +29,9 @@ namespace DataAccessLayer.Model
         public Nullable<decimal> BalanceDue { get; set; }
         public Nullable<bool> IsApprove { get; set; }
         public Nullable<int> SupplierId { get; set; }
+        public Nullable<int> InvoiceId { get; set; }
     
         public virtual Supplier Supplier { get; set; }
+        public virtual Invoice Invoice { get; set; }
     }
 }

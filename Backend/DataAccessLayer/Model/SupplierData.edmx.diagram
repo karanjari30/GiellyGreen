@@ -9,6 +9,7 @@
         <EntityTypeShape EntityType="GiellyGreen_Team1Model.Invoice" Width="1.5" PointX="5.25" PointY="0.625" />
         <EntityTypeShape EntityType="GiellyGreen_Team1Model.MonthlyInvoice" Width="1.5" PointX="3.125" PointY="0.625" />
         <AssociationConnector Association="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__5629CD9C" />
+        <AssociationConnector Association="GiellyGreen_Team1Model.FK__MonthlyIn__Invoi__5AEE82B9" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
