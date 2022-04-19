@@ -29,6 +29,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { ToastrModule } from 'ngx-toastr';
+import { DatePipe } from '@angular/common'
 import { NgxPrintModule } from 'ngx-print';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
@@ -48,6 +50,7 @@ registerLocaleData(en);
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     NzFormModule,
     NzInputModule,
     NzButtonModule,
@@ -66,9 +69,9 @@ registerLocaleData(en);
     NzNotificationModule,
     NgxPrintModule,
     NzPopconfirmModule,
-    NzDatePickerModule
+    NzDatePickerModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [{ provide: NZ_I18N, useValue: en_US}, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

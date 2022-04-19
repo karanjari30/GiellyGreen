@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
           } else{
             this.apiService.getToken(this.validateForm.controls['email'].value, this.validateForm.controls['password'].value).subscribe((response: any) => {
               sessionStorage.setItem('userSessionToken', response.access_token)
-              this.router.navigate(['/monthly-invoice']);
+              this.router.navigate(['/suppliers-list']);
             })
           }
         },

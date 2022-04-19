@@ -23,8 +23,13 @@
                             <h3>Monthly Invoice</h3>
                         </div>
                         <div class="col-sm-12 col-md-5 col-lg-5 mt-3">
-                            <nz-date-picker nzMode="month" [(ngModel)]="month" (ngModelChange)="onChange($event)">
-                            </nz-date-picker>
+                            <nz-form-item>
+                                <nz-form-label class="fs-5 fw-400">Choose Month</nz-form-label>
+                                <nz-form-control>
+                                    <nz-date-picker nzMode="month" [(ngModel)]="month" (ngModelChange)="onChange($event)">
+                                    </nz-date-picker>
+                                </nz-form-control>
+                            </nz-form-item>
                         </div>
                         <div class="col-sm-12 col-md-4 col-lg-4 mt-3 d-flex justify-content-end">
                             <button nz-button class="btn-custom" printSectionId="printSection" ngxPrint>
@@ -36,66 +41,101 @@
                     <div class="row" id="printSection">
                         <div class="col-sm-12 col-md-12 col-lg-12 mt-5" *ngIf="isVisible">
                             <div class="row mb-3">
-                                <form nz-form [formGroup]="dateAndInvoiceForm" nzLayout="inline">
-                                    <div class="col-sm-12 col-md-2 col-lg-2 me-3">
-                                        <nz-form-item>
-                                            <nz-form-label class="fs-5 fw-400 me-2">Date</nz-form-label>
-                                            <nz-form-control>
-                                                <nz-date-picker class="form-control" formControlName="invoiceDate" (ngModelChange)="onChange($event)"></nz-date-picker>
-                                            </nz-form-control>
-                                        </nz-form-item>
-                                    </div>
-                                    <div class="col-sm-12 col-md-3 col-lg-3">
-                                        <nz-form-item>
-                                            <nz-form-label class="fs-5 fw-400 me-2">Invoice Reference</nz-form-label>
-                                            <nz-form-control>
-                                                <input nz-input class="form-control" formControlName="invoiceReferenceNumber">
-                                            </nz-form-control>
-                                        </nz-form-item>
-                                    </div>
-                                </form>
+                                <div class="col-sm-12 col-md-3 col-lg-3 me-3">
+                                    <nz-form-item>
+                                        <nz-form-label class="fs-5 fw-400">Date</nz-form-label>
+                                        <nz-form-control>
+                                            <input type="date" nz-input [(ngModel)]="invoiceDate">
+                                            <!-- <nz-date-picker class="form-control" ></nz-date-picker> -->
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div class="col-sm-12 col-md-5 col-lg-5">
+                                    <nz-form-item>
+                                        <nz-form-label class="fs-5 fw-400 me-2">Invoice Reference</nz-form-label>
+                                        <nz-form-control>
+                                            <input nz-input class="form-control" [(ngModel)]="invoiceReferenceNumber">
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive">
                                         <nz-table #rowSelectionTable nzPagination
-                                            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)">
+                                            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+                                            [nzScroll]="{ x: '1900px', y: '450px'}">
                                             <thead>
                                                 <tr>
-                                                    <th [nzSelections]="listOfSelection" [(nzChecked)]="checked"
+                                                    <th [(nzChecked)]="checked"
                                                         [nzIndeterminate]="indeterminate"
-                                                        (nzCheckedChange)="onAllChecked($event)"></th>
+                                                        (nzCheckedChange)="onAllChecked($event)" nzLeft></th>
                                                     <th>Supplier Name</th>
                                                     <th>Hair Services</th>
                                                     <th>Beauty Services</th>
-                                                    <th><input class="w-100 customHeader" nz-input [(ngModel)]="customHeader1"></th>
-                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader2"></th>
-                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader3"></th>
-                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader4"></th>
-                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader5"></th>
+                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader1" placeholder="Custom-1"></th>
+                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader2" placeholder="Custom-2"></th>
+                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader3" placeholder="Custom-3"></th>
+                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader4" placeholder="Custom-4"></th>
+                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader5" placeholder="Custom-5"></th>
                                                     <th>Net</th>
                                                     <th>VAT</th>
                                                     <th>Gross</th>
                                                     <th>Advance Paid</th>
                                                     <th>Balance Due</th>
-                                                    <th>Approved</th>
+                                                    <th nzRight>Approved</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- <tr *ngFor="let data of rowSelectionTable.data">
-                                                    <td [nzChecked]="setOfCheckedId.has(data.id)"
-                                                        (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
-                                                    <td>{{ data.name }}</td>
-                                                    <td>{{ data.age }}</td>
-                                                    <td>{{ data.address }}</td>
-                                                </tr> -->
+                                                <tr>
+                                                    <td [nzChecked]="setOfCheckedId.has(1)"
+                                                        (nzCheckedChange)="onItemChecked(1, $event)" nzLeft></td>
+                                                    <td>Supplier-1</td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="hairServices"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="beautyServices"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices1"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices2"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices3"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices4"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices5"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="netTotal"></td>
+                                                    <td>450</td>
+                                                    <td>200</td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="advancePaid"></td>
+                                                    <td>650</td>
+                                                    <td nzRight><input type="checkbox" disabled></td>
+                                                </tr>
+                                                <tr>
+                                                    <td [colSpan]="9" class="fs-6"><b>Total</b></td>
+                                                    <td>Example</td>
+                                                    <td>Example</td>
+                                                    <td>Example</td>
+                                                    <td>Example</td>
+                                                    <td>Example</td>
+                                                </tr>
                                             </tbody>
                                         </nz-table>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row mb-2" *ngIf="isVisible">
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <button nz-button class="btn customFooterButton">APPROVE SELECTED INVOICES</button>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <button nz-button class="btn customFooterButton">COMBINE & DOWNLOAD SELECTED INVOICES</button>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3">
+                                    <button nz-button class="btn customFooterButton" (click)="sendEmail()">EMAIL SELECTED INVOICES</button>
+                                </div>
+                                <div class="col-sm-12 col-md-3 col-lg-3 d-flex justify-content-end">
+                                    <button nz-button class="btn saveButton">SAVE</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    
+
                 </div>
             </div>
         </nz-content>
