@@ -11,8 +11,9 @@
     <Property Name="Custom4" Type="nvarchar" MaxLength="80" />
     <Property Name="Custom5" Type="nvarchar" MaxLength="80" />
     <Property Name="InvoiceReferenceId" Type="nvarchar" MaxLength="15" />
+    <Property Name="InvoiceYear" Type="int" />
+    <Property Name="InvoiceMonth" Type="int" />
     <Property Name="InvoiceDate" Type="date" />
-    <Property Name="InvoiceMonth" Type="date" />
   </EntityType>
   <EntityType Name="MonthlyInvoice">
     <Key>
@@ -85,7 +86,11 @@
     <Parameter Name="id" Type="int" Mode="In" />
   </Function>
   <Function Name="GetAllInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="InvoiceMonth" Type="date" Mode="In" />
+    <Parameter Name="InvoiceMonth" Type="int" Mode="In" />
+    <Parameter Name="InvoiceYear" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetSupplierByInvoiceMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="InvoiceMonth" Type="datetime" Mode="In" />
   </Function>
   <Function Name="GetSuppliers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="InsertUpdateInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -96,6 +101,8 @@
     <Parameter Name="Custom4" Type="nvarchar" Mode="In" />
     <Parameter Name="Custom5" Type="nvarchar" Mode="In" />
     <Parameter Name="InvoiceReferenceId" Type="nvarchar" Mode="In" />
+    <Parameter Name="InvoiceYear" Type="int" Mode="In" />
+    <Parameter Name="InvoiceMonth" Type="int" Mode="In" />
     <Parameter Name="InvoiceDate" Type="date" Mode="In" />
   </Function>
   <Function Name="InsertUpdateSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">

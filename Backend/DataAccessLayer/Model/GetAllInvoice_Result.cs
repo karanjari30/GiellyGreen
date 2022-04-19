@@ -10,11 +10,11 @@
 namespace DataAccessLayer.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class MonthlyInvoice
+    public partial class GetAllInvoice_Result
     {
-        public int MontlyInvoiceId { get; set; }
+        public string SupplierName { get; set; }
+        public Nullable<int> MontlyInvoiceId { get; set; }
         public Nullable<decimal> HairService { get; set; }
         public Nullable<decimal> BeautyService { get; set; }
         public Nullable<decimal> CustomHeader1 { get; set; }
@@ -30,8 +30,14 @@ namespace DataAccessLayer.Model
         public Nullable<bool> IsApprove { get; set; }
         public Nullable<int> SupplierId { get; set; }
         public Nullable<int> InvoiceId { get; set; }
-    
-        public virtual Invoice Invoice { get; set; }
-        public virtual Supplier Supplier { get; set; }
+        public string Custom1 { get; set; }
+        public string Custom2 { get; set; }
+        public string Custom3 { get; set; }
+        public string Custom4 { get; set; }
+        public string Custom5 { get; set; }
+        public string InvoiceReferenceId { get; set; }
+        public Nullable<int> InvoiceYear { get; set; }
+        public Nullable<int> InvoiceMonth { get; set; }
+        public Nullable<System.DateTime> InvoiceDate { get; set; }
     }
 }

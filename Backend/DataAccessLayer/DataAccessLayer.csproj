@@ -53,6 +53,12 @@
     <Compile Include="Model\DeleteSupplier_Result.cs">
       <DependentUpon>SupplierData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\GetAllInvoice_Result.cs">
+      <DependentUpon>SupplierData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetSupplierByInvoiceMonth_Result.cs">
+      <DependentUpon>SupplierData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\GetSuppliers_Result.cs">
       <DependentUpon>SupplierData.tt</DependentUpon>
     </Compile>

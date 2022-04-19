@@ -24,17 +24,22 @@
       <Parameter Name="id" Mode="In" Type="Int32" />
     </FunctionImport>
     <EntitySet Name="Suppliers" EntityType="GiellyGreen_Team1Model.Supplier" />
+    <FunctionImport Name="IsActive" ReturnType="Collection(GiellyGreen_Team1Model.IsActive_Result)" />
     <EntitySet Name="Invoices" EntityType="GiellyGreen_Team1Model.Invoice" />
     <EntitySet Name="MonthlyInvoices" EntityType="GiellyGreen_Team1Model.MonthlyInvoice" />
-    <AssociationSet Name="FK__MonthlyIn__Suppl__5629CD9C" Association="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__5629CD9C">
-      <End Role="Supplier" EntitySet="Suppliers" />
-      <End Role="MonthlyInvoice" EntitySet="MonthlyInvoices" />
-    </AssociationSet>
     <AssociationSet Name="FK__MonthlyIn__Invoi__5AEE82B9" Association="GiellyGreen_Team1Model.FK__MonthlyIn__Invoi__5AEE82B9">
       <End Role="Invoice" EntitySet="Invoices" />
       <End Role="MonthlyInvoice" EntitySet="MonthlyInvoices" />
     </AssociationSet>
-    <FunctionImport Name="GetAllInvoice">
+    <AssociationSet Name="FK__MonthlyIn__Suppl__59FA5E80" Association="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__59FA5E80">
+      <End Role="Supplier" EntitySet="Suppliers" />
+      <End Role="MonthlyInvoice" EntitySet="MonthlyInvoices" />
+    </AssociationSet>
+    <FunctionImport Name="GetAllInvoice" ReturnType="Collection(GiellyGreen_Team1Model.GetAllInvoice_Result)">
+      <Parameter Name="InvoiceMonth" Mode="In" Type="Int32" />
+      <Parameter Name="InvoiceYear" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetSupplierByInvoiceMonth" ReturnType="Collection(GiellyGreen_Team1Model.GetSupplierByInvoiceMonth_Result)">
       <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
     </FunctionImport>
     <FunctionImport Name="InsertUpdateInvoice">
@@ -45,9 +50,10 @@
       <Parameter Name="Custom4" Mode="In" Type="String" />
       <Parameter Name="Custom5" Mode="In" Type="String" />
       <Parameter Name="InvoiceReferenceId" Mode="In" Type="String" />
+      <Parameter Name="InvoiceYear" Mode="In" Type="Int32" />
+      <Parameter Name="InvoiceMonth" Mode="In" Type="Int32" />
       <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
     </FunctionImport>
-    <FunctionImport Name="IsActive" ReturnType="Collection(GiellyGreen_Team1Model.IsActive_Result)" />
   </EntityContainer>
   <ComplexType Name="InsertUpdateSupplier_Result">
     <Property Type="Int32" Name="SupplierId" Nullable="true" />
@@ -69,73 +75,11 @@
     <Property Name="logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Isactive" Type="Boolean" />
     <Property Name="IsInvoice" Type="Boolean" />
-    <NavigationProperty Name="MonthlyInvoices" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__5629CD9C" FromRole="Supplier" ToRole="MonthlyInvoice" />
+    <NavigationProperty Name="MonthlyInvoices" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__59FA5E80" FromRole="Supplier" ToRole="MonthlyInvoice" />
   </EntityType>
   <ComplexType Name="DeleteSupplier_Result">
     <Property Type="Int32" Name="result" Nullable="true" />
   </ComplexType>
-  <EntityType Name="Invoice">
-    <Key>
-      <PropertyRef Name="InvoiceId" />
-    </Key>
-    <Property Name="InvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Custom1" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
-    <Property Name="Custom2" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
-    <Property Name="Custom3" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
-    <Property Name="Custom4" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
-    <Property Name="Custom5" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
-    <Property Name="InvoiceReferenceId" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-    <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
-    <Property Name="InvoiceMonth" Type="DateTime" Precision="0" />
-    <NavigationProperty Name="MonthlyInvoices" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Invoi__5AEE82B9" FromRole="Invoice" ToRole="MonthlyInvoice" />
-  </EntityType>
-  <EntityType Name="MonthlyInvoice">
-    <Key>
-      <PropertyRef Name="MontlyInvoiceId" />
-    </Key>
-    <Property Name="MontlyInvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="HairService" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="BeautyService" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="CustomHeader1" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="CustomHeader2" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="CustomHeader3" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="CustomHeader4" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="CustomHeader5" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="NetAmount" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="VATAmount" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="GrossAmount" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="AdvancePay" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="BalanceDue" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="IsApprove" Type="Boolean" />
-    <Property Name="SupplierId" Type="Int32" />
-    <NavigationProperty Name="Supplier" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__5629CD9C" FromRole="MonthlyInvoice" ToRole="Supplier" />
-    <Property Name="InvoiceId" Type="Int32" />
-    <NavigationProperty Name="Invoice" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Invoi__5AEE82B9" FromRole="MonthlyInvoice" ToRole="Invoice" />
-  </EntityType>
-  <Association Name="FK__MonthlyIn__Suppl__5629CD9C">
-    <End Type="GiellyGreen_Team1Model.Supplier" Role="Supplier" Multiplicity="0..1" />
-    <End Type="GiellyGreen_Team1Model.MonthlyInvoice" Role="MonthlyInvoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Supplier">
-        <PropertyRef Name="SupplierId" />
-      </Principal>
-      <Dependent Role="MonthlyInvoice">
-        <PropertyRef Name="SupplierId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__MonthlyIn__Invoi__5AEE82B9">
-    <End Type="GiellyGreen_Team1Model.Invoice" Role="Invoice" Multiplicity="0..1" />
-    <End Type="GiellyGreen_Team1Model.MonthlyInvoice" Role="MonthlyInvoice" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Invoice">
-        <PropertyRef Name="InvoiceId" />
-      </Principal>
-      <Dependent Role="MonthlyInvoice">
-        <PropertyRef Name="InvoiceId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <ComplexType Name="GetSuppliers_Result">
     <Property Type="Int32" Name="SupplierId" Nullable="false" />
     <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
@@ -165,5 +109,108 @@
     <Property Type="String" Name="logo" Nullable="true" />
     <Property Type="Boolean" Name="Isactive" Nullable="true" />
     <Property Type="Boolean" Name="IsInvoice" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Custom1" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="Custom2" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="Custom3" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="Custom4" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="Custom5" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceReferenceId" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceYear" Type="Int32" />
+    <Property Name="InvoiceMonth" Type="Int32" />
+    <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="MonthlyInvoices" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Invoi__5AEE82B9" FromRole="Invoice" ToRole="MonthlyInvoice" />
+  </EntityType>
+  <EntityType Name="MonthlyInvoice">
+    <Key>
+      <PropertyRef Name="MontlyInvoiceId" />
+    </Key>
+    <Property Name="MontlyInvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HairService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="BeautyService" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CustomHeader1" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CustomHeader2" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CustomHeader3" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CustomHeader4" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CustomHeader5" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="NetAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="VATAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="GrossAmount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="AdvancePay" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="BalanceDue" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IsApprove" Type="Boolean" />
+    <Property Name="SupplierId" Type="Int32" />
+    <Property Name="InvoiceId" Type="Int32" />
+    <NavigationProperty Name="Invoice" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Invoi__5AEE82B9" FromRole="MonthlyInvoice" ToRole="Invoice" />
+    <NavigationProperty Name="Supplier" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__59FA5E80" FromRole="MonthlyInvoice" ToRole="Supplier" />
+  </EntityType>
+  <Association Name="FK__MonthlyIn__Invoi__5AEE82B9">
+    <End Type="GiellyGreen_Team1Model.Invoice" Role="Invoice" Multiplicity="0..1" />
+    <End Type="GiellyGreen_Team1Model.MonthlyInvoice" Role="MonthlyInvoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoice">
+        <PropertyRef Name="InvoiceId" />
+      </Principal>
+      <Dependent Role="MonthlyInvoice">
+        <PropertyRef Name="InvoiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MonthlyIn__Suppl__59FA5E80">
+    <End Type="GiellyGreen_Team1Model.Supplier" Role="Supplier" Multiplicity="0..1" />
+    <End Type="GiellyGreen_Team1Model.MonthlyInvoice" Role="MonthlyInvoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="SupplierId" />
+      </Principal>
+      <Dependent Role="MonthlyInvoice">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="GetSupplierByInvoiceMonth_Result">
+    <Property Type="Int32" Name="InvoiceId" Nullable="false" />
+    <Property Type="String" Name="Custom1" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="Custom2" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="Custom3" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="Custom4" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="Custom5" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="InvoiceReferenceId" Nullable="true" MaxLength="15" />
+    <Property Type="Int32" Name="InvoiceYear" Nullable="true" />
+    <Property Type="Int32" Name="InvoiceMonth" Nullable="true" />
+    <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetAllInvoice_Result">
+    <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
+    <Property Type="Int32" Name="MontlyInvoiceId" Nullable="true" />
+    <Property Type="Decimal" Name="HairService" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="BeautyService" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomHeader1" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomHeader2" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomHeader3" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomHeader4" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomHeader5" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="NetAmount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="VATAmount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="GrossAmount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="AdvancePay" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="BalanceDue" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Boolean" Name="IsApprove" Nullable="true" />
+    <Property Type="Int32" Name="SupplierId" Nullable="true" />
+    <Property Type="Int32" Name="InvoiceId" Nullable="true" />
+    <Property Type="String" Name="Custom1" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="Custom2" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="Custom3" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="Custom4" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="Custom5" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="InvoiceReferenceId" Nullable="true" MaxLength="15" />
+    <Property Type="Int32" Name="InvoiceYear" Nullable="true" />
+    <Property Type="Int32" Name="InvoiceMonth" Nullable="true" />
+    <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
   </ComplexType>
 </Schema>

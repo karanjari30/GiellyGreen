@@ -6,11 +6,11 @@
     <edmx:Diagrams>
       <Diagram DiagramId="ac41b8cd93ce4025b68ffd1ae0e86c29" Name="Diagram1" ZoomLevel="113">
         <EntityTypeShape EntityType="GiellyGreen_Team1Model.Supplier" Width="1.5" PointX="1" PointY="0.625" />
-        <EntityTypeShape EntityType="GiellyGreen_Team1Model.Invoice" Width="1.5" PointX="5.25" PointY="0.625" />
-        <EntityTypeShape EntityType="GiellyGreen_Team1Model.MonthlyInvoice" Width="1.5" PointX="3.125" PointY="0.625" />
-        <AssociationConnector Association="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__5629CD9C" />
+        <EntityTypeShape EntityType="GiellyGreen_Team1Model.Invoice" Width="1.5" PointX="6.125" PointY="0.75" />
+        <EntityTypeShape EntityType="GiellyGreen_Team1Model.MonthlyInvoice" Width="1.5" PointX="3.375" PointY="0.5" />
         <AssociationConnector Association="GiellyGreen_Team1Model.FK__MonthlyIn__Invoi__5AEE82B9" />
-      </Diagram>
+        <AssociationConnector Association="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__59FA5E80" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
