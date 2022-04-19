@@ -110,6 +110,24 @@
           <Parameter Name="InvoiceMonth" Type="int" Mode="In" />
           <Parameter Name="InvoiceDate" Type="date" Mode="In" />
         </Function>
+        <Function Name="InsertUpdateMonthlyInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MontlyInvoiceId" Type="int" Mode="In" />
+          <Parameter Name="HairService" Type="decimal" Mode="In" />
+          <Parameter Name="BeautyService" Type="decimal" Mode="In" />
+          <Parameter Name="CustomHeader1" Type="decimal" Mode="In" />
+          <Parameter Name="CustomHeader2" Type="decimal" Mode="In" />
+          <Parameter Name="CustomHeader3" Type="decimal" Mode="In" />
+          <Parameter Name="CustomHeader4" Type="decimal" Mode="In" />
+          <Parameter Name="CustomHeader5" Type="decimal" Mode="In" />
+          <Parameter Name="NetAmount" Type="decimal" Mode="In" />
+          <Parameter Name="VATAmount" Type="decimal" Mode="In" />
+          <Parameter Name="GrossAmount" Type="decimal" Mode="In" />
+          <Parameter Name="AdvancePay" Type="decimal" Mode="In" />
+          <Parameter Name="BalanceDue" Type="decimal" Mode="In" />
+          <Parameter Name="IsApprove" Type="bit" Mode="In" />
+          <Parameter Name="SupplierId" Type="int" Mode="In" />
+          <Parameter Name="InvoiceId" Type="int" Mode="In" />
+        </Function>
         <Function Name="InsertUpdateSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="SupplierName" Type="nvarchar" Mode="In" />
@@ -143,10 +161,61 @@
     <edmx:ConceptualModels>
       <Schema Namespace="GiellyGreen_Team1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="GiellyGreen_Team1Entities" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="GetSuppliers" ReturnType="Collection(GiellyGreen_Team1Model.GetSuppliers_Result)" />
+          <EntitySet Name="Invoices" EntityType="GiellyGreen_Team1Model.Invoice" />
+          <EntitySet Name="MonthlyInvoices" EntityType="GiellyGreen_Team1Model.MonthlyInvoice" />
+          <EntitySet Name="Suppliers" EntityType="GiellyGreen_Team1Model.Supplier" />
+          <AssociationSet Name="FK__MonthlyIn__Invoi__5AEE82B9" Association="GiellyGreen_Team1Model.FK__MonthlyIn__Invoi__5AEE82B9">
+            <End Role="Invoice" EntitySet="Invoices" />
+            <End Role="MonthlyInvoice" EntitySet="MonthlyInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MonthlyIn__Suppl__59FA5E80" Association="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__59FA5E80">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="MonthlyInvoice" EntitySet="MonthlyInvoices" />
+          </AssociationSet>
           <FunctionImport Name="ChangeIsActive">
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="IsActive" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteSupplier" ReturnType="Collection(GiellyGreen_Team1Model.DeleteSupplier_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllInvoice" ReturnType="Collection(GiellyGreen_Team1Model.GetAllInvoice_Result)">
+            <Parameter Name="InvoiceMonth" Mode="In" Type="Int32" />
+            <Parameter Name="InvoiceYear" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetSupplierByInvoiceMonth" ReturnType="Collection(GiellyGreen_Team1Model.GetSupplierByInvoiceMonth_Result)">
+          <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetSuppliers" ReturnType="Collection(GiellyGreen_Team1Model.GetSuppliers_Result)" />
+          <FunctionImport Name="InsertUpdateInvoice" ReturnType="Collection(GiellyGreen_Team1Model.InsertUpdateInvoice_Result)">
+            <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
+            <Parameter Name="Custom1" Mode="In" Type="String" />
+            <Parameter Name="Custom2" Mode="In" Type="String" />
+            <Parameter Name="Custom3" Mode="In" Type="String" />
+            <Parameter Name="Custom4" Mode="In" Type="String" />
+            <Parameter Name="Custom5" Mode="In" Type="String" />
+            <Parameter Name="InvoiceReferenceId" Mode="In" Type="String" />
+            <Parameter Name="InvoiceYear" Mode="In" Type="Int32" />
+            <Parameter Name="InvoiceMonth" Mode="In" Type="Int32" />
+            <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="InsertUpdateMonthlyInvoice" ReturnType="Collection(GiellyGreen_Team1Model.InsertUpdateMonthlyInvoice_Result)">
+            <Parameter Name="MontlyInvoiceId" Mode="In" Type="Int32" />
+            <Parameter Name="HairService" Mode="In" Type="Decimal" />
+            <Parameter Name="BeautyService" Mode="In" Type="Decimal" />
+            <Parameter Name="CustomHeader1" Mode="In" Type="Decimal" />
+            <Parameter Name="CustomHeader2" Mode="In" Type="Decimal" />
+            <Parameter Name="CustomHeader3" Mode="In" Type="Decimal" />
+            <Parameter Name="CustomHeader4" Mode="In" Type="Decimal" />
+            <Parameter Name="CustomHeader5" Mode="In" Type="Decimal" />
+            <Parameter Name="NetAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="VATAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="GrossAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="AdvancePay" Mode="In" Type="Decimal" />
+            <Parameter Name="BalanceDue" Mode="In" Type="Decimal" />
+            <Parameter Name="IsApprove" Mode="In" Type="Boolean" />
+            <Parameter Name="SupplierId" Mode="In" Type="Int32" />
+            <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertUpdateSupplier" ReturnType="Collection(GiellyGreen_Team1Model.InsertUpdateSupplier_Result)">
             <Parameter Name="id" Mode="In" Type="Int32" />
@@ -162,96 +231,8 @@
             <Parameter Name="logo" Mode="In" Type="String" />
             <Parameter Name="Isactive" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="DeleteSupplier" ReturnType="Collection(GiellyGreen_Team1Model.DeleteSupplier_Result)">
-          <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="Suppliers" EntityType="GiellyGreen_Team1Model.Supplier" />
           <FunctionImport Name="IsActive" ReturnType="Collection(GiellyGreen_Team1Model.IsActive_Result)" />
-          <EntitySet Name="Invoices" EntityType="GiellyGreen_Team1Model.Invoice" />
-          <EntitySet Name="MonthlyInvoices" EntityType="GiellyGreen_Team1Model.MonthlyInvoice" />
-          <AssociationSet Name="FK__MonthlyIn__Invoi__5AEE82B9" Association="GiellyGreen_Team1Model.FK__MonthlyIn__Invoi__5AEE82B9">
-            <End Role="Invoice" EntitySet="Invoices" />
-            <End Role="MonthlyInvoice" EntitySet="MonthlyInvoices" />
-          </AssociationSet>
-          <AssociationSet Name="FK__MonthlyIn__Suppl__59FA5E80" Association="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__59FA5E80">
-            <End Role="Supplier" EntitySet="Suppliers" />
-            <End Role="MonthlyInvoice" EntitySet="MonthlyInvoices" />
-          </AssociationSet>
-          <FunctionImport Name="GetAllInvoice" ReturnType="Collection(GiellyGreen_Team1Model.GetAllInvoice_Result)">
-            <Parameter Name="InvoiceMonth" Mode="In" Type="Int32" />
-            <Parameter Name="InvoiceYear" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetSupplierByInvoiceMonth" ReturnType="Collection(GiellyGreen_Team1Model.GetSupplierByInvoiceMonth_Result)">
-          <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="InsertUpdateInvoice">
-            <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
-            <Parameter Name="Custom1" Mode="In" Type="String" />
-            <Parameter Name="Custom2" Mode="In" Type="String" />
-            <Parameter Name="Custom3" Mode="In" Type="String" />
-            <Parameter Name="Custom4" Mode="In" Type="String" />
-            <Parameter Name="Custom5" Mode="In" Type="String" />
-            <Parameter Name="InvoiceReferenceId" Mode="In" Type="String" />
-            <Parameter Name="InvoiceYear" Mode="In" Type="Int32" />
-            <Parameter Name="InvoiceMonth" Mode="In" Type="Int32" />
-            <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
-          </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="InsertUpdateSupplier_Result">
-          <Property Type="Int32" Name="SupplierId" Nullable="true" />
-        </ComplexType>
-        <EntityType Name="Supplier">
-          <Key>
-            <PropertyRef Name="SupplierId" />
-          </Key>
-          <Property Name="SupplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SupplierName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="SupplierReference" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="BusinessAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyRegisterNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="VATNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="TaxReference" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyRegisterAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Isactive" Type="Boolean" />
-          <Property Name="IsInvoice" Type="Boolean" />
-          <NavigationProperty Name="MonthlyInvoices" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__59FA5E80" FromRole="Supplier" ToRole="MonthlyInvoice" />
-        </EntityType>
-        <ComplexType Name="DeleteSupplier_Result">
-          <Property Type="Int32" Name="result" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetSuppliers_Result">
-          <Property Type="Int32" Name="SupplierId" Nullable="false" />
-          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="SupplierReference" Nullable="false" MaxLength="15" />
-          <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="CompanyRegisterNumber" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="VATNumber" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="TaxReference" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="CompanyRegisterAddress" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="logo" Nullable="true" />
-          <Property Type="Boolean" Name="Isactive" Nullable="true" />
-          <Property Type="Boolean" Name="IsInvoice" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="IsActive_Result">
-          <Property Type="Int32" Name="SupplierId" Nullable="false" />
-          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="SupplierReference" Nullable="false" MaxLength="15" />
-          <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="255" />
-          <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="CompanyRegisterNumber" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="VATNumber" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="TaxReference" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="CompanyRegisterAddress" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="logo" Nullable="true" />
-          <Property Type="Boolean" Name="Isactive" Nullable="true" />
-          <Property Type="Boolean" Name="IsInvoice" Nullable="true" />
-        </ComplexType>
         <EntityType Name="Invoice">
           <Key>
             <PropertyRef Name="InvoiceId" />
@@ -291,6 +272,25 @@
           <NavigationProperty Name="Invoice" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Invoi__5AEE82B9" FromRole="MonthlyInvoice" ToRole="Invoice" />
           <NavigationProperty Name="Supplier" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__59FA5E80" FromRole="MonthlyInvoice" ToRole="Supplier" />
         </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierReference" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="BusinessAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyRegisterNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="VATNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="TaxReference" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyRegisterAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Isactive" Type="Boolean" />
+          <Property Name="IsInvoice" Type="Boolean" />
+          <NavigationProperty Name="MonthlyInvoices" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Suppl__59FA5E80" FromRole="Supplier" ToRole="MonthlyInvoice" />
+        </EntityType>
         <Association Name="FK__MonthlyIn__Invoi__5AEE82B9">
           <End Type="GiellyGreen_Team1Model.Invoice" Role="Invoice" Multiplicity="0..1" />
           <End Type="GiellyGreen_Team1Model.MonthlyInvoice" Role="MonthlyInvoice" Multiplicity="*" />
@@ -315,18 +315,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="GetSupplierByInvoiceMonth_Result">
-          <Property Type="Int32" Name="InvoiceId" Nullable="false" />
-          <Property Type="String" Name="Custom1" Nullable="true" MaxLength="80" />
-          <Property Type="String" Name="Custom2" Nullable="true" MaxLength="80" />
-          <Property Type="String" Name="Custom3" Nullable="true" MaxLength="80" />
-          <Property Type="String" Name="Custom4" Nullable="true" MaxLength="80" />
-          <Property Type="String" Name="Custom5" Nullable="true" MaxLength="80" />
-          <Property Type="String" Name="InvoiceReferenceId" Nullable="true" MaxLength="15" />
-          <Property Type="Int32" Name="InvoiceYear" Nullable="true" />
-          <Property Type="Int32" Name="InvoiceMonth" Nullable="true" />
-          <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="GetAllInvoice_Result">
           <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
           <Property Type="Int32" Name="MontlyInvoiceId" Nullable="true" />
@@ -355,84 +343,66 @@
           <Property Type="Int32" Name="InvoiceMonth" Nullable="true" />
           <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetSupplierByInvoiceMonth_Result">
+          <Property Type="Int32" Name="InvoiceId" Nullable="false" />
+          <Property Type="String" Name="Custom1" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="Custom2" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="Custom3" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="Custom4" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="Custom5" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="InvoiceReferenceId" Nullable="true" MaxLength="15" />
+          <Property Type="Int32" Name="InvoiceYear" Nullable="true" />
+          <Property Type="Int32" Name="InvoiceMonth" Nullable="true" />
+          <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetSuppliers_Result">
+          <Property Type="Int32" Name="SupplierId" Nullable="false" />
+          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="SupplierReference" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CompanyRegisterNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="VATNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="TaxReference" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CompanyRegisterAddress" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="logo" Nullable="true" />
+          <Property Type="Boolean" Name="Isactive" Nullable="true" />
+          <Property Type="Boolean" Name="IsInvoice" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="IsActive_Result">
+          <Property Type="Int32" Name="SupplierId" Nullable="false" />
+          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="SupplierReference" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CompanyRegisterNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="VATNumber" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="TaxReference" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="CompanyRegisterAddress" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="logo" Nullable="true" />
+          <Property Type="Boolean" Name="Isactive" Nullable="true" />
+          <Property Type="Boolean" Name="IsInvoice" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="DeleteSupplier_Result">
+          <Property Type="Int32" Name="result" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="InsertUpdateSupplier_Result">
+          <Property Type="Int32" Name="SupplierId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="InsertUpdateMonthlyInvoice_Result">
+          <Property Type="Int32" Name="MontlyInvoiceId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="InsertUpdateInvoice_Result">
+          <Property Type="Int32" Name="Id" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="GiellyGreen_Team1ModelStoreContainer" CdmEntityContainer="GiellyGreen_Team1Entities">
-          <FunctionImportMapping FunctionImportName="GetSuppliers" FunctionName="GiellyGreen_Team1Model.Store.GetSuppliers">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetSuppliers_Result">
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-                <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
-                <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
-                <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
-                <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
-                <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
-                <ScalarProperty Name="logo" ColumnName="logo" />
-                <ScalarProperty Name="Isactive" ColumnName="Isactive" />
-                <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ChangeIsActive" FunctionName="GiellyGreen_Team1Model.Store.ChangeIsActive" />
-          <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateSupplier" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateSupplier_Result">
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="DeleteSupplier" FunctionName="GiellyGreen_Team1Model.Store.DeleteSupplier" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.DeleteSupplier_Result">
-                <ScalarProperty Name="result" ColumnName="result" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="Suppliers">
-            <EntityTypeMapping TypeName="GiellyGreen_Team1Model.Supplier">
-              <MappingFragment StoreEntitySet="Supplier">
-                <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
-                <ScalarProperty Name="Isactive" ColumnName="Isactive" />
-                <ScalarProperty Name="logo" ColumnName="logo" />
-                <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
-                <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
-                <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
-                <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-                <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
-                <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
-                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="IsActive" FunctionName="GiellyGreen_Team1Model.Store.IsActive">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.IsActive_Result">
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-                <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
-                <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
-                <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
-                <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
-                <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
-                <ScalarProperty Name="logo" ColumnName="logo" />
-                <ScalarProperty Name="Isactive" ColumnName="Isactive" />
-                <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="Invoices">
             <EntityTypeMapping TypeName="GiellyGreen_Team1Model.Invoice">
               <MappingFragment StoreEntitySet="Invoice">
@@ -471,6 +441,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="GiellyGreen_Team1Model.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
+                <ScalarProperty Name="Isactive" ColumnName="Isactive" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
+                <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
+                <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
+                <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
+                <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ChangeIsActive" FunctionName="GiellyGreen_Team1Model.Store.ChangeIsActive" />
+          <FunctionImportMapping FunctionImportName="DeleteSupplier" FunctionName="GiellyGreen_Team1Model.Store.DeleteSupplier" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.DeleteSupplier_Result">
+                <ScalarProperty Name="result" ColumnName="result" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetAllInvoice" FunctionName="GiellyGreen_Team1Model.Store.GetAllInvoice">
             <ResultMapping>
               <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetAllInvoice_Result">
@@ -519,7 +516,65 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="InsertUpdateInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateInvoice" />
+          <FunctionImportMapping FunctionImportName="GetSuppliers" FunctionName="GiellyGreen_Team1Model.Store.GetSuppliers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetSuppliers_Result">
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
+                <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
+                <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
+                <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
+                <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="Isactive" ColumnName="Isactive" />
+                <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertUpdateInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateInvoice" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateInvoice_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertUpdateMonthlyInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateMonthlyInvoice" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateMonthlyInvoice_Result">
+                <ScalarProperty Name="MontlyInvoiceId" ColumnName="MontlyInvoiceId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateSupplier" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateSupplier_Result">
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="IsActive" FunctionName="GiellyGreen_Team1Model.Store.IsActive">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.IsActive_Result">
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
+                <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
+                <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
+                <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
+                <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="Isactive" ColumnName="Isactive" />
+                <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,78 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="GiellyGreen_Team1ModelStoreContainer" CdmEntityContainer="GiellyGreen_Team1Entities">
-    <FunctionImportMapping FunctionImportName="GetSuppliers" FunctionName="GiellyGreen_Team1Model.Store.GetSuppliers">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetSuppliers_Result">
-          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-          <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
-          <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
-          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-          <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
-          <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
-          <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
-          <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
-          <ScalarProperty Name="logo" ColumnName="logo" />
-          <ScalarProperty Name="Isactive" ColumnName="Isactive" />
-          <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="ChangeIsActive" FunctionName="GiellyGreen_Team1Model.Store.ChangeIsActive" />
-    <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateSupplier">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateSupplier_Result">
-          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="DeleteSupplier" FunctionName="GiellyGreen_Team1Model.Store.DeleteSupplier">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.DeleteSupplier_Result">
-          <ScalarProperty Name="result" ColumnName="result" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <EntitySetMapping Name="Suppliers">
-      <EntityTypeMapping TypeName="GiellyGreen_Team1Model.Supplier">
-        <MappingFragment StoreEntitySet="Supplier">
-          <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
-          <ScalarProperty Name="Isactive" ColumnName="Isactive" />
-          <ScalarProperty Name="logo" ColumnName="logo" />
-          <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
-          <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
-          <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
-          <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-          <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
-          <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
-          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="IsActive" FunctionName="GiellyGreen_Team1Model.Store.IsActive">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.IsActive_Result">
-          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-          <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
-          <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
-          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-          <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
-          <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
-          <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
-          <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
-          <ScalarProperty Name="logo" ColumnName="logo" />
-          <ScalarProperty Name="Isactive" ColumnName="Isactive" />
-          <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <EntitySetMapping Name="Invoices">
       <EntityTypeMapping TypeName="GiellyGreen_Team1Model.Invoice">
         <MappingFragment StoreEntitySet="Invoice">
@@ -111,6 +39,33 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Suppliers">
+      <EntityTypeMapping TypeName="GiellyGreen_Team1Model.Supplier">
+        <MappingFragment StoreEntitySet="Supplier">
+          <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
+          <ScalarProperty Name="Isactive" ColumnName="Isactive" />
+          <ScalarProperty Name="logo" ColumnName="logo" />
+          <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
+          <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
+          <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
+          <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
+          <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
+          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ChangeIsActive" FunctionName="GiellyGreen_Team1Model.Store.ChangeIsActive" />
+    <FunctionImportMapping FunctionImportName="DeleteSupplier" FunctionName="GiellyGreen_Team1Model.Store.DeleteSupplier">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.DeleteSupplier_Result">
+          <ScalarProperty Name="result" ColumnName="result" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="GetAllInvoice" FunctionName="GiellyGreen_Team1Model.Store.GetAllInvoice">
       <ResultMapping>
         <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetAllInvoice_Result">
@@ -159,6 +114,64 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="InsertUpdateInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateInvoice" />
+    <FunctionImportMapping FunctionImportName="GetSuppliers" FunctionName="GiellyGreen_Team1Model.Store.GetSuppliers">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetSuppliers_Result">
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+          <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
+          <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
+          <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
+          <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
+          <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
+          <ScalarProperty Name="logo" ColumnName="logo" />
+          <ScalarProperty Name="Isactive" ColumnName="Isactive" />
+          <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertUpdateInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateInvoice">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateInvoice_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertUpdateMonthlyInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateMonthlyInvoice">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateMonthlyInvoice_Result">
+          <ScalarProperty Name="MontlyInvoiceId" ColumnName="MontlyInvoiceId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateSupplier">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateSupplier_Result">
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="IsActive" FunctionName="GiellyGreen_Team1Model.Store.IsActive">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.IsActive_Result">
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+          <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
+          <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
+          <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
+          <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
+          <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
+          <ScalarProperty Name="logo" ColumnName="logo" />
+          <ScalarProperty Name="Isactive" ColumnName="Isactive" />
+          <ScalarProperty Name="IsInvoice" ColumnName="IsInvoice" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

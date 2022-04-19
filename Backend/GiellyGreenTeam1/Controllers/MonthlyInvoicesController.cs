@@ -19,8 +19,6 @@ namespace GiellyGreenTeam1.Controllers
     {
         public GiellyGreen_Team1Entities db = new GiellyGreen_Team1Entities();
 
-        
-        // GET: api/MonthlyInvoices
         public JsonResponse GetMonthlyInvoices(int month,int year)
         {
             var objResponse = new JsonResponse();
@@ -28,15 +26,10 @@ namespace GiellyGreenTeam1.Controllers
             {
                 object objSuppilerlists;
                 if (month == 0 && year == 0) 
-                {
                      objSuppilerlists = db.IsActive().ToList();
-                }
                 else
-                {
                      objSuppilerlists = db.GetAllInvoice(month, year).ToList();
-                }
 
-                
                 if (objSuppilerlists != null)
                     objResponse = JsonResponseHelper.JsonMessage(1, "", objSuppilerlists);
                 else
@@ -49,32 +42,33 @@ namespace GiellyGreenTeam1.Controllers
             return objResponse;
         }
 
-        // POST: api/MonthlyInvoices
         public JsonResponse PostMonthlyInvoice(InvoiceViewModel model)
         {
             var objResponse = new JsonResponse();
-            //try
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        var objectSupplier = db.InsertUpdateInvoice(0, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, model.logo, model.Isactive);
-            //        if (objectSupplier != null)
-            //            objResponse = JsonResponseHelper.JsonMessage(1, "Record Created Successfully", objectSupplier);
-            //    }
-            //    else
-            //        objResponse = JsonResponseHelper.JsonMessage(0, "Error", ModelState.Values.SelectMany(E => E.Errors).Select(E => E.ErrorMessage).ToList());
-            //}
-            //catch (Exception ex)
-            //{
-            //    if (ex.InnerException.Message != null)
-            //        objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message);
-            //    else
-            //        objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
-            //}
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var objInvoiceList = model.InvoiceViewList.ToList().FirstOrDefault();
+                    var objectInvoice = db.InsertUpdateInvoice(0, model.Custom1, model.Custom2, model.Custom3, model.Custom4, model.Custom5, model.InvoiceReferenceId, model.InvoiceYear, model.InvoiceMonth, model.InvoiceDate).FirstOrDefault().Id;
+                    var objectMonthlyInvoice = db.InsertUpdateMonthlyInvoice(0, objInvoiceList.HairService , objInvoiceList.BeautyService, objInvoiceList.CustomHeader1, objInvoiceList.CustomHeader2, objInvoiceList.CustomHeader3, objInvoiceList.CustomHeader4, objInvoiceList.CustomHeader5, objInvoiceList.NetAmount, objInvoiceList.VATAmount, objInvoiceList.GrossAmount, objInvoiceList.AdvancePay, objInvoiceList.BalanceDue, objInvoiceList.IsApprove, objInvoiceList.SupplierId, objectInvoice);
+
+                    if (objectInvoice != null && objectMonthlyInvoice != null )
+                        objResponse = JsonResponseHelper.JsonMessage(1, "Record Created Successfully", objectMonthlyInvoice);
+                }
+                else
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ModelState.Values.SelectMany(E => E.Errors).Select(E => E.ErrorMessage).ToList());
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException.Message != null)
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message);
+                else
+                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
+            }
             return objResponse;
         }
 
-        // PUT: api/MonthlyInvoices/5
         public IHttpActionResult PutMonthlyInvoice(int id, MonthlyInvoice monthlyInvoice)
         {
             if (!ModelState.IsValid)
@@ -108,9 +102,6 @@ namespace GiellyGreenTeam1.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        
-
-        // DELETE: api/MonthlyInvoices/5
         public IHttpActionResult DeleteMonthlyInvoice(int id)
         {
             MonthlyInvoice monthlyInvoice = db.MonthlyInvoices.Find(id);
