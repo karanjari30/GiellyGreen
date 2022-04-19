@@ -19,15 +19,15 @@ export class MonthlyInvoiceComponent implements OnInit {
   isCollapsed = false;
   approveButtonIcon = faCheck;
   month = null;
-  invoiceDate:any;
-  customHeader1:any;
-  customHeader2:any;
-  customHeader3:any;
-  customHeader4:any;
-  customHeader5:any;
+  invoiceDate: any;
+  customHeader1: any;
+  customHeader2: any;
+  customHeader3: any;
+  customHeader4: any;
+  customHeader5: any;
   invoiceReferenceNumber: any;
   isVisible = false;
-  dateAndInvoiceForm!:FormGroup;
+  dateAndInvoiceForm!: FormGroup;
   checked = false;
   indeterminate = false;
   listOfCurrentPageData: readonly ItemData[] = [];
@@ -40,22 +40,32 @@ export class MonthlyInvoiceComponent implements OnInit {
       onSelect: () => {
         this.onAllChecked(true);
       }
-    },  
+    },
   ];
 
-  onChange(date: any){
+  hairServices: any;
+  beautyServices: any;
+  customServices1: any;
+  customServices2: any;
+  customServices3: any;
+  customServices4: any;
+  customServices5: any;
+  netTotal: any;
+  advancePaid: any;
+
+  onChange(date: any) {
     this.isVisible = true;
     date = new Date();
     (console.log(date.getMonth()))
     this.invoiceDate = this.datepipe.transform(date, 'yyyy-MM-dd');
     this.invoiceReferenceNumber = String(date.getMonth() + 1) + String(date.getFullYear()) + String(this.counter);
     this.counter++;
-  } 
+  }
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
       this.setOfCheckedId.add(id);
-      console.log(this.setOfCheckedId); 
+      console.log(this.setOfCheckedId);
     } else {
       this.setOfCheckedId.delete(id);
     }
@@ -81,7 +91,7 @@ export class MonthlyInvoiceComponent implements OnInit {
     this.indeterminate = this.listOfCurrentPageData.some(item => this.setOfCheckedId.has(item.id)) && !this.checked;
   }
 
-  sendEmail(){
+  sendEmail() {
     Swal.fire({
       title: 'Mailed Successfully!',
       text: 'You just sent mail to suppliers',
@@ -91,9 +101,9 @@ export class MonthlyInvoiceComponent implements OnInit {
   }
 
   constructor(private router: Router, private fb: FormBuilder, public datepipe: DatePipe) { }
-  
+
   ngOnInit(): void {
-    if(!sessionStorage.getItem('userSessionToken')){
+    if (!sessionStorage.getItem('userSessionToken')) {
       this.router.navigate(['/login']);
     }
     this.listOfData = new Array(20).fill(0).map((_, index) => ({

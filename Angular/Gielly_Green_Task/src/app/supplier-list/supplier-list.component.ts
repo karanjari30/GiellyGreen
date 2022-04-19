@@ -5,7 +5,7 @@ import { ApiDataService } from '../api-data.service';
 // import Swal from 'sweetalert2';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-supplier-list',
   templateUrl: './supplier-list.component.html',
@@ -63,7 +63,6 @@ export class SupplierListComponent implements OnInit {
 
   //This method is called for calling for supplier adding/updating method
   handleOk(): void {
-    this.toastr.info('Init method called');
     if (this.validateForm.valid) {
       if (this.tempData) {
         this.editSupplier(this.tempData.SupplierId);
@@ -309,7 +308,7 @@ export class SupplierListComponent implements OnInit {
     }
   }
 
-  constructor(private apiService: ApiDataService, private fb: FormBuilder, private notification: NzNotificationService, private router: Router, private toastr: ToastrService) {
+  constructor(private apiService: ApiDataService, private fb: FormBuilder, private notification: NzNotificationService, private router: Router) {
     this.validateForm = this.fb.group({
       supplierRefNo: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$'), Validators.maxLength(15)]],
       supplierName: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],

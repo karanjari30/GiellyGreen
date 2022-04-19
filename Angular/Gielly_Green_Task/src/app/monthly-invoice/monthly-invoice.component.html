@@ -64,7 +64,7 @@
                                     <div class="table-responsive">
                                         <nz-table #rowSelectionTable nzPagination
                                             (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
-                                            [nzScroll]="{ x: '1900px', y: '450px'}" [nzData]="listOfData">
+                                            [nzScroll]="{ x: '1900px', y: '450px'}">
                                             <thead>
                                                 <tr>
                                                     <th [(nzChecked)]="checked"
@@ -87,23 +87,23 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let data of rowSelectionTable.data">
-                                                    <td [nzChecked]="setOfCheckedId.has(data.id)"
-                                                        (nzCheckedChange)="onItemChecked(data.id, $event)" nzLeft></td>
-                                                    <td>{{ data.name }}</td>
-                                                    <td>{{ data.age }}</td>
-                                                    <td>{{ data.address }}</td>
-                                                    <td>{{ data.address }}</td>
-                                                    <td>{{ data.address }}</td>
-                                                    <td>{{ data.address }}</td>
-                                                    <td>{{ data.address }}</td>
-                                                    <td>{{ data.address }}</td>
-                                                    <td>{{ data.address }}</td>
-                                                    <td>{{ data.address }}</td>
-                                                    <td>{{ data.address }}</td>
-                                                    <td>{{ data.address }}</td>
-                                                    <td>{{ data.address }}</td>
-                                                    <td nzRight><a>Approved</a></td>
+                                                <tr>
+                                                    <td [nzChecked]="setOfCheckedId.has(1)"
+                                                        (nzCheckedChange)="onItemChecked(1, $event)" nzLeft></td>
+                                                    <td>Supplier-1</td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="hairServices"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="beautyServices"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices1"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices2"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices3"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices4"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="customServices5"></td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="netTotal"></td>
+                                                    <td>450</td>
+                                                    <td>200</td>
+                                                    <td><input class="w-100" nz-input [(ngModel)]="advancePaid"></td>
+                                                    <td>650</td>
+                                                    <td nzRight><input type="checkbox" disabled></td>
                                                 </tr>
                                                 <tr>
                                                     <td [colSpan]="9" class="fs-6"><b>Total</b></td>
@@ -118,7 +118,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-3" *ngIf="isVisible">
+                            <div class="row mb-2" *ngIf="isVisible">
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     <button nz-button class="btn customFooterButton">APPROVE SELECTED INVOICES</button>
                                 </div>
