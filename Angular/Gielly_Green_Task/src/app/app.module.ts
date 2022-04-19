@@ -28,6 +28,9 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NgxPrintModule } from 'ngx-print';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 registerLocaleData(en);
 
@@ -60,7 +63,10 @@ registerLocaleData(en);
     NzModalModule,
     NzInputNumberModule,
     NzUploadModule,
-    NzNotificationModule
+    NzNotificationModule,
+    NgxPrintModule,
+    NzPopconfirmModule,
+    NzDatePickerModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

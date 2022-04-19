@@ -9,8 +9,8 @@
                         <nz-form-item>
                             <nz-form-control [nzSpan]="24" nzValidatingTip="Validating..."
                                 [nzErrorTip]="supplierRefNoError">
-                                <input class="form-control" nz-input formControlName="supplierRefNo"
-                                    name="supplierRefNo" />
+                                <input #supplierReferenceNo class="form-control" nz-input formControlName="supplierRefNo"
+                                    name="supplierRefNo"/>
                                 <ng-template #supplierRefNoError let-control>
                                     <ng-container *ngIf="control.hasError('required')">Please enter supplier reference
                                         number</ng-container>
@@ -58,8 +58,9 @@
                         <nz-form-item>
                             <nz-form-control [nzSpan]="24" [nzErrorTip]="emailErr">
                                 <input nz-input class="form-control" formControlName="emailAddress" id="emailAddress"
-                                    email="true" />
+                                    email="true"/>
                             </nz-form-control>
+                            
                             <ng-template #emailErr let-control>
                                 <ng-container *ngIf="control.hasError('required')">
                                     Please enter email
@@ -69,6 +70,7 @@
                                 </ng-container>
                             </ng-template>
                         </nz-form-item>
+                        <p *ngIf="isEmailDuplicate" class="text-danger">Email already exists</p>
                     </div>
                     <div class="col-6">
                         <nz-form-label [nzSpan]="7">Phone Number</nz-form-label>
@@ -113,10 +115,10 @@
                             </nz-form-control>
                             <ng-template #vatNumberErr let-control>
                                 <ng-container *ngIf="control.hasError('pattern')">
-                                    Only digits are allowed
+                                    Only digits and alphabets are allowed
                                 </ng-container>
                                 <ng-container *ngIf="control.hasError('maxlength')">
-                                    VAT number must be of 15 digits only
+                                    VAT number must be of 15 characters only
                                 </ng-container>
                             </ng-template>
                         </nz-form-item>
@@ -151,7 +153,7 @@
                         <nz-form-label [nzSpan]="12">Upload Invoice Logo</nz-form-label>
                         <nz-form-item>
                             <nz-form-control [nzSpan]="24">
-                                <input nz-input formControlName="invoiceLogo" type="file" class="fileInput" (change)="onFileSelected($event)" #fileUpload>
+                                <input nz-input formControlName="invoiceLogo" type="file" class="fileInput" accept=".png, .jpeg, .jpg" (change)="onFileSelected($event)" #fileUpload>
                                 <div>
                                     <i nz-icon nzType="upload" class="uploadLogo me-1"></i>
                                     <button nz-button (click)="fileUpload.click()">
@@ -208,14 +210,14 @@
                                     <div class="row">
                                         <div class="col-sm-12 col-md-6 col-lg-6 mt-3">
                                             <nz-input-group [nzPrefix]="suffixIconSearch" class="customSearchInput">
-                                                <input type="text" nz-input placeholder="Search here..." />
+                                                <input type="text" [(ngModel)]="searchSupplier" (keyup)="searchBySupplierOrReference()" nz-input placeholder="Search here..." />
                                             </nz-input-group>
                                             <ng-template #suffixIconSearch>
                                                 <i nz-icon nzType="search"></i>
                                             </ng-template>
                                         </div>
                                         <div class="col-sm-12 col-md-3 col-lg-3">
-                                            <button nz-button class="addSupplierBtn mt-3" (click)="showModal()"
+                                            <button nz-button class="addSupplierBtn mt-3" (click)="showModal(null)"
                                                 [nzType]="'primary'">
                                                 <fa-icon [icon]="plusIcon" class="me-2"></fa-icon> Add Supplier
                                             </button>
@@ -232,14 +234,14 @@
                                     nzTableLayout="fixed">
                                     <thead>
                                         <tr>
-                                            <th>Supplier Reference</th>
-                                            <th>Supplier Name</th>
+                                            <th [nzSortFn]="sortReferenceNoFn">Supplier Reference</th>
+                                            <th [nzSortFn]="sortNameFn">Supplier Name</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let data of sortTable.data" class="text-center">
+                                        <tr *ngFor="let data of sortTable.data">
                                             <td>{{data.SupplierReference}}</td>
                                             <td>{{data.SupplierName}}</td>
                                             <td>
@@ -247,11 +249,11 @@
                                                     (ngModelChange)="changeStatus(data)"></nz-switch>
                                             </td>
                                             <td>
-                                                <a (click)="deleteSupplier(data.SupplierId)">
+                                                <a (click)="showModal(data)">
                                                     <fa-icon [icon]="editIcon" class="text-dark"></fa-icon>
                                                 </a>
                                                 <nz-divider nzType="vertical"></nz-divider>
-                                                <a (click)="editSupplier(data.SupplierId)">
+                                                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="deleteSupplier(data.SupplierId)">
                                                     <fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon>
                                                 </a>
                                             </td>
