@@ -69,6 +69,7 @@
     <FunctionImportMapping FunctionImportName="GetAllInvoice" FunctionName="GiellyGreen_Team1Model.Store.GetAllInvoice">
       <ResultMapping>
         <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetAllInvoice_Result">
+          <ScalarProperty Name="sid" ColumnName="sid" />
           <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
           <ScalarProperty Name="MontlyInvoiceId" ColumnName="MontlyInvoiceId" />
           <ScalarProperty Name="HairService" ColumnName="HairService" />

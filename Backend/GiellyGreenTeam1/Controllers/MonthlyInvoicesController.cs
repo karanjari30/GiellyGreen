@@ -24,14 +24,10 @@ namespace GiellyGreenTeam1.Controllers
             var objResponse = new JsonResponse();
             try
             {
-                object objSuppilerlists;
-                if (month == 0 && year == 0) 
-                     objSuppilerlists = db.IsActive().ToList();
-                else
-                     objSuppilerlists = db.GetAllInvoice(month, year).ToList();
+                var objSuppilerlists = db.GetAllInvoice(month, year).ToList();
 
                 if (objSuppilerlists != null)
-                    objResponse = JsonResponseHelper.JsonMessage(1, "", objSuppilerlists);
+                    objResponse = JsonResponseHelper.JsonMessage(1, "Total " + objSuppilerlists.Count + " Record found", objSuppilerlists);
                 else
                     objResponse = JsonResponseHelper.JsonMessage(1, "Record Not Found.", null);
             }

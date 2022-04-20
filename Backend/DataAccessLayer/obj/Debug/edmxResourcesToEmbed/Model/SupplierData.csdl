@@ -155,34 +155,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <ComplexType Name="GetAllInvoice_Result">
-    <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
-    <Property Type="Int32" Name="MontlyInvoiceId" Nullable="true" />
-    <Property Type="Decimal" Name="HairService" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="BeautyService" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomHeader1" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomHeader2" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomHeader3" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomHeader4" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="CustomHeader5" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="NetAmount" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="VATAmount" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="GrossAmount" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="AdvancePay" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Decimal" Name="BalanceDue" Nullable="true" Precision="18" Scale="2" />
-    <Property Type="Boolean" Name="IsApprove" Nullable="true" />
-    <Property Type="Int32" Name="SupplierId" Nullable="true" />
-    <Property Type="Int32" Name="InvoiceId" Nullable="true" />
-    <Property Type="String" Name="Custom1" Nullable="true" MaxLength="80" />
-    <Property Type="String" Name="Custom2" Nullable="true" MaxLength="80" />
-    <Property Type="String" Name="Custom3" Nullable="true" MaxLength="80" />
-    <Property Type="String" Name="Custom4" Nullable="true" MaxLength="80" />
-    <Property Type="String" Name="Custom5" Nullable="true" MaxLength="80" />
-    <Property Type="String" Name="InvoiceReferenceId" Nullable="true" MaxLength="15" />
-    <Property Type="Int32" Name="InvoiceYear" Nullable="true" />
-    <Property Type="Int32" Name="InvoiceMonth" Nullable="true" />
-    <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
-  </ComplexType>
   <ComplexType Name="GetSupplierByInvoiceMonth_Result">
     <Property Type="Int32" Name="InvoiceId" Nullable="false" />
     <Property Type="String" Name="Custom1" Nullable="true" MaxLength="80" />
@@ -233,5 +205,34 @@
   </ComplexType>
   <ComplexType Name="InsertUpdateInvoice_Result">
     <Property Type="Int32" Name="Id" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetAllInvoice_Result">
+    <Property Type="Int32" Name="sid" Nullable="false" />
+    <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
+    <Property Type="Int32" Name="MontlyInvoiceId" Nullable="true" />
+    <Property Type="Decimal" Name="HairService" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="BeautyService" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomHeader1" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomHeader2" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomHeader3" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomHeader4" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="CustomHeader5" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="NetAmount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="VATAmount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="GrossAmount" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="AdvancePay" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="BalanceDue" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="Boolean" Name="IsApprove" Nullable="true" />
+    <Property Type="Int32" Name="SupplierId" Nullable="true" />
+    <Property Type="Int32" Name="InvoiceId" Nullable="true" />
+    <Property Type="String" Name="Custom1" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="Custom2" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="Custom3" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="Custom4" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="Custom5" Nullable="true" MaxLength="80" />
+    <Property Type="String" Name="InvoiceReferenceId" Nullable="true" MaxLength="15" />
+    <Property Type="Int32" Name="InvoiceYear" Nullable="true" />
+    <Property Type="Int32" Name="InvoiceMonth" Nullable="true" />
+    <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
   </ComplexType>
 </Schema>
