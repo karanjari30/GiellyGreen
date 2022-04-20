@@ -58,20 +58,7 @@ namespace GiellyGreenTeam1.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (!String.IsNullOrEmpty(model.logo))
-                    {
-                        String path = HttpContext.Current.Server.MapPath("~/ImageStorage"); //Path
-                                                                                            //Check if directory exist
-                        if (!System.IO.Directory.Exists(path))
-                            System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
-
-                        string imageName = model.SupplierName + ".jpg";
-                        //set the image path
-                        string imgPath = Path.Combine(path, imageName);
-                        byte[] imageBytes = Convert.FromBase64String(model.logo);
-                        System.IO.File.WriteAllBytes(imgPath, imageBytes);
-                        model.logo = imageName;
-                    }
+                    model.logo = LogoHelper.StoreLogoInFileSystem(model.logo,model.SupplierName);
 
                     var objectSupplier = objSuppiler.InsertUpdateSupplier(0, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, model.logo, model.Isactive);
                     if (objectSupplier != null)
@@ -97,20 +84,7 @@ namespace GiellyGreenTeam1.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (!String.IsNullOrEmpty(model.logo))
-                    {
-                        String path = HttpContext.Current.Server.MapPath("~/ImageStorage"); //Path
-                                                                                            //Check if directory exist
-                        if (!System.IO.Directory.Exists(path))
-                            System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
-
-                        string imageName = model.SupplierName + ".jpg";
-                        //set the image path
-                        string imgPath = Path.Combine(path, imageName);
-                        byte[] imageBytes = Convert.FromBase64String(model.logo);
-                        System.IO.File.WriteAllBytes(imgPath, imageBytes);
-                        model.logo = imageName;
-                    }
+                    model.logo = LogoHelper.StoreLogoInFileSystem(model.logo, model.SupplierName);
 
                     var objectSupplier = objSuppiler.Suppliers.Find(id);
                     if (objectSupplier != null)
@@ -174,12 +148,6 @@ namespace GiellyGreenTeam1.Controllers
                 objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
             }
             return objResponse;
-        }
-
-
-        private bool SupplierExists(int id)
-        {
-            return objSuppiler.Suppliers.Count(e => e.SupplierId == id) > 0;
         }
     }
 }
