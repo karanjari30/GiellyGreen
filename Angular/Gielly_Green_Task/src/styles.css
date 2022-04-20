@@ -1,4 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
-body{
-    font-family:"Dax-Regular" !important;
+body {
+  font-family: "Dax-Regular" !important;
+}
+
+.printTableDiv{
+    margin: 20px !important;
+}
+
+.tableToPrint {
+  width: 90% !important;
+}
+
+.tableToPrint th{
+    background: #2c2b29 !important;
+    color: white !important;
+}
+
+@page  
+{ 
+    size: auto;   /* auto is the initial value */ 
+
+    /* this affects the margin in the printer settings */ 
+    margin: 25mm 25mm 25mm 25mm;  
+} 
+@media print {
+    .tableToPrint th{
+        background-color: #2c2b29 !important;
+        -webkit-print-background-adjust: exact; 
+    }
 }
