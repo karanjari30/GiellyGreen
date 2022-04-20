@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
 })
 export class SupplierListComponent implements OnInit {
 
-  //Variables
-  fileName:any;
+  //Variables/Properties
+  fileName: any;
   searchSupplier = '';
   editIcon = faPen;
   tempData: any;
@@ -56,7 +56,7 @@ export class SupplierListComponent implements OnInit {
         isSupplierActive: this.tempData.Isactive,
         invoiceLogo: this.tempLogoData
       })
-     
+
     }
 
   }
@@ -167,7 +167,7 @@ export class SupplierListComponent implements OnInit {
   //This method is for searching a record in the table by using SupplierName
   searchBySupplierOrReference() {
     let searchBySupplier = this.supplierListData.filter(
-      (item: any) => item.SupplierName.indexOf(this.searchSupplier) !== -1
+      (item: any) => item.SupplierName.toLowerCase().indexOf(this.searchSupplier.toLowerCase()) !== -1
     );
 
     if (this.searchSupplier.length <= 0) {
@@ -183,20 +183,30 @@ export class SupplierListComponent implements OnInit {
 
   //This method will delete the supplier from database
   deleteSupplier(supplierId: number) {
-    this.supplierListData = this.supplierListData.filter((d: any) => d.SupplierId !== supplierId);
     this.apiService.deleteSupplier(supplierId, this.token).subscribe(
       (response: any) => {
+        console.log(response);
         if (response.ResponseStatus == 1) {
-          this.notification.create(
-            'success',
-            'Success',
-            'Record Deleted successfully!'
-          );
+          if (response.Result == 2) {
+            this.notification.create(
+              'error',
+              'Error',
+              'Invoice already exists for this supplier!'
+            );
+          } else {
+            this.supplierListData = this.supplierListData.filter((d: any) => d.SupplierId !== supplierId);
+            this.notification.create(
+              'success',
+              'Success',
+              'Record Deleted successfully!'
+            );
+          }
+
         } else {
           this.notification.create(
             'error',
             'Error',
-            'Failed to delete the recordz!'
+            'Failed to delete the record!'
           );
         }
       }
@@ -304,7 +314,7 @@ export class SupplierListComponent implements OnInit {
         this.tempLogoData = reader.result
         this.fileData = this.tempLogoData.split(',')[1];
       };
-      
+
     }
   }
 
@@ -330,7 +340,7 @@ export class SupplierListComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     this.getDataInTable();
-    
+
   }
 }
 

@@ -45,19 +45,34 @@ nz-content {
   border-radius: 5px;
 }
 
-th{
+th {
   background-color: #2c2b29 !important;
   color: white !important;
 }
 
-.customFooterButton{
-  border-color: #2C2B29;
+.customFooterButton {
+  border-color: #2c2b29;
   font-size: 13.5px;
   width: 100%;
 }
 
-.saveButton{
+.saveButton {
   background-color: #c99d4a;
   color: white;
   border-color: #c99d4a;
 }
+
+.approveImage {
+  height: 18px;
+  width: 18px;
+}
+
+.downloadButton {
+  font-size: 12px;
+}
+
+#printableDiv {
+  display: none;
+}
+
+
