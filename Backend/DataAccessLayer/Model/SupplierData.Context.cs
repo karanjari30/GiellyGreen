@@ -125,7 +125,7 @@ namespace DataAccessLayer.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertUpdateInvoice_Result>("InsertUpdateInvoice", invoiceIdParameter, custom1Parameter, custom2Parameter, custom3Parameter, custom4Parameter, custom5Parameter, invoiceReferenceIdParameter, invoiceYearParameter, invoiceMonthParameter, invoiceDateParameter);
         }
     
-        public virtual ObjectResult<InsertUpdateMonthlyInvoice_Result> InsertUpdateMonthlyInvoice(Nullable<int> montlyInvoiceId, Nullable<decimal> hairService, Nullable<decimal> beautyService, Nullable<decimal> customHeader1, Nullable<decimal> customHeader2, Nullable<decimal> customHeader3, Nullable<decimal> customHeader4, Nullable<decimal> customHeader5, Nullable<decimal> netAmount, Nullable<decimal> vATAmount, Nullable<decimal> grossAmount, Nullable<decimal> advancePay, Nullable<decimal> balanceDue, Nullable<bool> isApprove, Nullable<int> supplierId, Nullable<int> invoiceId)
+        public virtual int InsertUpdateMonthlyInvoice(Nullable<int> montlyInvoiceId, Nullable<decimal> hairService, Nullable<decimal> beautyService, Nullable<decimal> customHeader1, Nullable<decimal> customHeader2, Nullable<decimal> customHeader3, Nullable<decimal> customHeader4, Nullable<decimal> customHeader5, Nullable<decimal> netAmount, Nullable<decimal> vATAmount, Nullable<decimal> grossAmount, Nullable<decimal> advancePay, Nullable<decimal> balanceDue, Nullable<bool> isApprove, Nullable<int> supplierId, Nullable<int> invoiceId)
         {
             var montlyInvoiceIdParameter = montlyInvoiceId.HasValue ?
                 new ObjectParameter("MontlyInvoiceId", montlyInvoiceId) :
@@ -191,7 +191,7 @@ namespace DataAccessLayer.Model
                 new ObjectParameter("InvoiceId", invoiceId) :
                 new ObjectParameter("InvoiceId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InsertUpdateMonthlyInvoice_Result>("InsertUpdateMonthlyInvoice", montlyInvoiceIdParameter, hairServiceParameter, beautyServiceParameter, customHeader1Parameter, customHeader2Parameter, customHeader3Parameter, customHeader4Parameter, customHeader5Parameter, netAmountParameter, vATAmountParameter, grossAmountParameter, advancePayParameter, balanceDueParameter, isApproveParameter, supplierIdParameter, invoiceIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUpdateMonthlyInvoice", montlyInvoiceIdParameter, hairServiceParameter, beautyServiceParameter, customHeader1Parameter, customHeader2Parameter, customHeader3Parameter, customHeader4Parameter, customHeader5Parameter, netAmountParameter, vATAmountParameter, grossAmountParameter, advancePayParameter, balanceDueParameter, isApproveParameter, supplierIdParameter, invoiceIdParameter);
         }
     
         public virtual ObjectResult<InsertUpdateSupplier_Result> InsertUpdateSupplier(Nullable<int> id, string supplierName, string supplierReference, string businessAddress, string emailAddress, string phoneNumber, string companyRegisterNumber, string vATNumber, string taxReference, string companyRegisterAddress, string logo, Nullable<bool> isactive)

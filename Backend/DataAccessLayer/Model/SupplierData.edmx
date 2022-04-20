@@ -199,7 +199,7 @@
             <Parameter Name="InvoiceMonth" Mode="In" Type="Int32" />
             <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="InsertUpdateMonthlyInvoice" ReturnType="Collection(GiellyGreen_Team1Model.InsertUpdateMonthlyInvoice_Result)">
+          <FunctionImport Name="InsertUpdateMonthlyInvoice">
             <Parameter Name="MontlyInvoiceId" Mode="In" Type="Int32" />
             <Parameter Name="HairService" Mode="In" Type="Decimal" />
             <Parameter Name="BeautyService" Mode="In" Type="Decimal" />
@@ -391,9 +391,6 @@
         <ComplexType Name="InsertUpdateSupplier_Result">
           <Property Type="Int32" Name="SupplierId" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="InsertUpdateMonthlyInvoice_Result">
-          <Property Type="Int32" Name="MontlyInvoiceId" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="InsertUpdateInvoice_Result">
           <Property Type="Int32" Name="Id" Nullable="true" />
         </ComplexType>
@@ -543,11 +540,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertUpdateMonthlyInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateMonthlyInvoice" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateMonthlyInvoice_Result">
-                <ScalarProperty Name="MontlyInvoiceId" ColumnName="MontlyInvoiceId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateSupplier" >
             <ResultMapping>

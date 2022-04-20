@@ -65,9 +65,6 @@
     <Compile Include="Model\InsertUpdateInvoice_Result.cs">
       <DependentUpon>SupplierData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\InsertUpdateMonthlyInvoice_Result.cs">
-      <DependentUpon>SupplierData.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\InsertUpdateSupplier_Result.cs">
       <DependentUpon>SupplierData.tt</DependentUpon>
     </Compile>

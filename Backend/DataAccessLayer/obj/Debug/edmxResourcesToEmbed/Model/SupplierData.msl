@@ -140,13 +140,7 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="InsertUpdateMonthlyInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateMonthlyInvoice">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateMonthlyInvoice_Result">
-          <ScalarProperty Name="MontlyInvoiceId" ColumnName="MontlyInvoiceId" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertUpdateMonthlyInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateMonthlyInvoice" />
     <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateSupplier">
       <ResultMapping>
         <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateSupplier_Result">

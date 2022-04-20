@@ -49,11 +49,13 @@ namespace GiellyGreenTeam1.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var objInvoiceList = model.InvoiceViewList.ToList().FirstOrDefault();
+                    dynamic objectMonthlyInvoice = "";
                     var objectInvoice = db.InsertUpdateInvoice(0, model.Custom1, model.Custom2, model.Custom3, model.Custom4, model.Custom5, model.InvoiceReferenceId, model.InvoiceYear, model.InvoiceMonth, model.InvoiceDate).FirstOrDefault().Id;
-                    var objectMonthlyInvoice = db.InsertUpdateMonthlyInvoice(0, objInvoiceList.HairService , objInvoiceList.BeautyService, objInvoiceList.CustomHeader1, objInvoiceList.CustomHeader2, objInvoiceList.CustomHeader3, objInvoiceList.CustomHeader4, objInvoiceList.CustomHeader5, objInvoiceList.NetAmount, objInvoiceList.VATAmount, objInvoiceList.GrossAmount, objInvoiceList.AdvancePay, objInvoiceList.BalanceDue, objInvoiceList.IsApprove, objInvoiceList.SupplierId, objectInvoice);
-
-                    if (objectInvoice != null && objectMonthlyInvoice != null )
+                    foreach(var item in model.InvoiceViewList.ToList())
+                    {
+                            objectMonthlyInvoice = db.InsertUpdateMonthlyInvoice(0, item.HairService, item.BeautyService, item.CustomHeader1, item.CustomHeader2, item.CustomHeader3, item.CustomHeader4, item.CustomHeader5, item.NetAmount, item.VATAmount, item.GrossAmount, item.AdvancePay, item.BalanceDue, item.IsApprove, item.SupplierId, objectInvoice);
+                    }
+                    if (objectInvoice != null && objectMonthlyInvoice != null)
                         objResponse = JsonResponseHelper.JsonMessage(1, "Record Created Successfully", objectMonthlyInvoice);
                 }
                 else
