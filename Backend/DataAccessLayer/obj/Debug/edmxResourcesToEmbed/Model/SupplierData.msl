@@ -168,5 +168,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ApproveSupplier" FunctionName="GiellyGreen_Team1Model.Store.ApproveSupplier" />
   </EntityContainerMapping>
 </Mapping>

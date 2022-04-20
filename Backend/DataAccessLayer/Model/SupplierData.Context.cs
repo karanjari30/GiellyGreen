@@ -251,5 +251,22 @@ namespace DataAccessLayer.Model
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<IsActive_Result>("IsActive");
         }
+    
+        public virtual int ApproveSupplier(Nullable<int> id, Nullable<int> month, Nullable<int> year)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var monthParameter = month.HasValue ?
+                new ObjectParameter("month", month) :
+                new ObjectParameter("month", typeof(int));
+    
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("year", year) :
+                new ObjectParameter("year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ApproveSupplier", idParameter, monthParameter, yearParameter);
+        }
     }
 }

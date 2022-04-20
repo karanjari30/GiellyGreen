@@ -83,6 +83,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ApproveSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="month" Type="int" Mode="In" />
+          <Parameter Name="year" Type="int" Mode="In" />
+        </Function>
         <Function Name="ChangeIsActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="IsActive" Type="bit" Mode="In" />
@@ -232,6 +237,11 @@
             <Parameter Name="Isactive" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="IsActive" ReturnType="Collection(GiellyGreen_Team1Model.IsActive_Result)" />
+          <FunctionImport Name="ApproveSupplier">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="month" Mode="In" Type="Int32" />
+            <Parameter Name="year" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Invoice">
           <Key>
@@ -363,9 +373,6 @@
         <ComplexType Name="InsertUpdateSupplier_Result">
           <Property Type="Int32" Name="SupplierId" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="InsertUpdateInvoice_Result">
-          <Property Type="Int32" Name="Id" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="GetAllInvoice_Result">
           <Property Type="Int32" Name="sid" Nullable="false" />
           <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
@@ -394,6 +401,9 @@
           <Property Type="Int32" Name="InvoiceYear" Nullable="true" />
           <Property Type="Int32" Name="InvoiceMonth" Nullable="true" />
           <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="InsertUpdateInvoice_Result">
+          <Property Type="Int32" Name="Id" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -569,6 +579,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ApproveSupplier" FunctionName="GiellyGreen_Team1Model.Store.ApproveSupplier" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
