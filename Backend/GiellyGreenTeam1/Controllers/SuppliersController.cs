@@ -1,10 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.Description;
 using DataAccessLayer.Model;
 using GiellyGreenTeam1.Helper;
 using GiellyGreenTeam1.Models;
@@ -15,7 +13,6 @@ namespace GiellyGreenTeam1.Controllers
     {
         public GiellyGreen_Team1Entities objSuppiler = new GiellyGreen_Team1Entities();
 
-        // GET: api/Suppliers
         public JsonResponse GetSuppliers()
         {
             var objResponse = new JsonResponse();
@@ -23,17 +20,16 @@ namespace GiellyGreenTeam1.Controllers
             {
                 var objSuppilerlists = objSuppiler.GetSuppliers().ToList();
                 String path = HttpContext.Current.Server.MapPath("~/ImageStorage"); //Path Check if directory exist
-                if (!System.IO.Directory.Exists(path))
+                if (!Directory.Exists(path))
                 {
-                    System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
+                    Directory.CreateDirectory(path); //Create directory if it doesn't exist
                 }
 
                 objSuppilerlists.ForEach(supplier =>
                 {
                     if (!String.IsNullOrEmpty(supplier.logo) && supplier.logo != "null")
                     {
-                        string imgPath = Path.Combine(path, supplier.logo);
-                        byte[] imageByte = File.ReadAllBytes(imgPath);
+                        byte[] imageByte = File.ReadAllBytes(Path.Combine(path, supplier.logo));
                         supplier.logo = Convert.ToBase64String(imageByte);
                     }
                 });
@@ -49,7 +45,7 @@ namespace GiellyGreenTeam1.Controllers
             }
             return objResponse;
         }
-        // POST: api/Suppliers
+
         [HttpPost]
         public JsonResponse PostSupplier(SupplierViewModel model)
         {
@@ -58,22 +54,7 @@ namespace GiellyGreenTeam1.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (!String.IsNullOrEmpty(model.logo))
-                    {
-                        String path = HttpContext.Current.Server.MapPath("~/ImageStorage"); //Path
-                                                                                            //Check if directory exist
-                        if (!System.IO.Directory.Exists(path))
-                            System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
-
-                        string imageName = model.SupplierName + ".jpg";
-                        //set the image path
-                        string imgPath = Path.Combine(path, imageName);
-                        byte[] imageBytes = Convert.FromBase64String(model.logo);
-                        System.IO.File.WriteAllBytes(imgPath, imageBytes);
-                        model.logo = imageName;
-                    }
-
-                    var objectSupplier = objSuppiler.InsertUpdateSupplier(0, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, model.logo, model.Isactive);
+                    var objectSupplier = objSuppiler.InsertUpdateSupplier(0, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, LogoHelper.StoreLogoInFileSystem(model.logo, model.SupplierName), model.Isactive);
                     if (objectSupplier != null)
                         objResponse = JsonResponseHelper.JsonMessage(1, "Record Created Successfully", objectSupplier);
                 }
@@ -97,25 +78,9 @@ namespace GiellyGreenTeam1.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (!String.IsNullOrEmpty(model.logo))
+                    if (objSuppiler.Suppliers.Find(id) != null)
                     {
-                        String path = HttpContext.Current.Server.MapPath("~/ImageStorage"); //Path
-                                                                                            //Check if directory exist
-                        if (!System.IO.Directory.Exists(path))
-                            System.IO.Directory.CreateDirectory(path); //Create directory if it doesn't exist
-
-                        string imageName = model.SupplierName + ".jpg";
-                        //set the image path
-                        string imgPath = Path.Combine(path, imageName);
-                        byte[] imageBytes = Convert.FromBase64String(model.logo);
-                        System.IO.File.WriteAllBytes(imgPath, imageBytes);
-                        model.logo = imageName;
-                    }
-
-                    var objectSupplier = objSuppiler.Suppliers.Find(id);
-                    if (objectSupplier != null)
-                    {
-                        var supplierObject = objSuppiler.InsertUpdateSupplier(id, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, model.logo, model.Isactive).FirstOrDefault();
+                        var supplierObject = objSuppiler.InsertUpdateSupplier(id, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, LogoHelper.StoreLogoInFileSystem(model.logo, model.SupplierName), model.Isactive).FirstOrDefault();
                         objResponse = JsonResponseHelper.JsonMessage(1, "Record Updated Successfully", supplierObject);
                     }
                     else
@@ -134,7 +99,6 @@ namespace GiellyGreenTeam1.Controllers
             return objResponse;
         }
 
-        // DELETE: api/Suppliers/5
         public JsonResponse DeleteSupplier(int id)
         {
             var objResponse = new JsonResponse();
@@ -160,12 +124,8 @@ namespace GiellyGreenTeam1.Controllers
             var objResponse = new JsonResponse();
             try
             {
-                var objectSupplier = objSuppiler.Suppliers.Find(id);
-                if (objectSupplier != null)
-                {
-                    var supplierObject = objSuppiler.ChangeIsActive(id, isActive);
-                    objResponse = JsonResponseHelper.JsonMessage(1, "Status Updated Successfully", supplierObject);
-                }
+                if (objSuppiler.Suppliers.Find(id) != null)
+                    objResponse = JsonResponseHelper.JsonMessage(1, "Status Updated Successfully", objSuppiler.ChangeIsActive(id, isActive));
                 else
                     objResponse = JsonResponseHelper.JsonMessage(2, "No Record found", null);
             }
@@ -174,12 +134,6 @@ namespace GiellyGreenTeam1.Controllers
                 objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
             }
             return objResponse;
-        }
-
-
-        private bool SupplierExists(int id)
-        {
-            return objSuppiler.Suppliers.Count(e => e.SupplierId == id) > 0;
         }
     }
 }

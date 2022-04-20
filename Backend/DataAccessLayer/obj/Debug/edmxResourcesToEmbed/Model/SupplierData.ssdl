@@ -78,6 +78,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="ApproveSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="month" Type="int" Mode="In" />
+    <Parameter Name="year" Type="int" Mode="In" />
+  </Function>
   <Function Name="ChangeIsActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="id" Type="int" Mode="In" />
     <Parameter Name="IsActive" Type="bit" Mode="In" />
@@ -104,6 +109,24 @@
     <Parameter Name="InvoiceYear" Type="int" Mode="In" />
     <Parameter Name="InvoiceMonth" Type="int" Mode="In" />
     <Parameter Name="InvoiceDate" Type="date" Mode="In" />
+  </Function>
+  <Function Name="InsertUpdateMonthlyInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MontlyInvoiceId" Type="int" Mode="In" />
+    <Parameter Name="HairService" Type="decimal" Mode="In" />
+    <Parameter Name="BeautyService" Type="decimal" Mode="In" />
+    <Parameter Name="CustomHeader1" Type="decimal" Mode="In" />
+    <Parameter Name="CustomHeader2" Type="decimal" Mode="In" />
+    <Parameter Name="CustomHeader3" Type="decimal" Mode="In" />
+    <Parameter Name="CustomHeader4" Type="decimal" Mode="In" />
+    <Parameter Name="CustomHeader5" Type="decimal" Mode="In" />
+    <Parameter Name="NetAmount" Type="decimal" Mode="In" />
+    <Parameter Name="VATAmount" Type="decimal" Mode="In" />
+    <Parameter Name="GrossAmount" Type="decimal" Mode="In" />
+    <Parameter Name="AdvancePay" Type="decimal" Mode="In" />
+    <Parameter Name="BalanceDue" Type="decimal" Mode="In" />
+    <Parameter Name="IsApprove" Type="bit" Mode="In" />
+    <Parameter Name="SupplierId" Type="int" Mode="In" />
+    <Parameter Name="InvoiceId" Type="int" Mode="In" />
   </Function>
   <Function Name="InsertUpdateSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="id" Type="int" Mode="In" />
