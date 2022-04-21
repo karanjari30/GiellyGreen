@@ -373,8 +373,10 @@
         <ComplexType Name="InsertUpdateSupplier_Result">
           <Property Type="Int32" Name="SupplierId" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="InsertUpdateInvoice_Result">
+          <Property Type="Int32" Name="Id" Nullable="true" />
+        </ComplexType>
         <ComplexType Name="GetAllInvoice_Result">
-          <Property Type="Int32" Name="sid" Nullable="false" />
           <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
           <Property Type="Int32" Name="MontlyInvoiceId" Nullable="true" />
           <Property Type="Decimal" Name="HairService" Nullable="true" Precision="18" Scale="2" />
@@ -401,9 +403,6 @@
           <Property Type="Int32" Name="InvoiceYear" Nullable="true" />
           <Property Type="Int32" Name="InvoiceMonth" Nullable="true" />
           <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="InsertUpdateInvoice_Result">
-          <Property Type="Int32" Name="Id" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -479,7 +478,6 @@
           <FunctionImportMapping FunctionImportName="GetAllInvoice" FunctionName="GiellyGreen_Team1Model.Store.GetAllInvoice">
             <ResultMapping>
               <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetAllInvoice_Result">
-                <ScalarProperty Name="sid" ColumnName="sid" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
                 <ScalarProperty Name="MontlyInvoiceId" ColumnName="MontlyInvoiceId" />
                 <ScalarProperty Name="HairService" ColumnName="HairService" />

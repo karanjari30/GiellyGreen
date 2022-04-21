@@ -246,3 +246,5 @@ F:\GiellyGreen\Backend\GiellyGreenTeam1\obj\Debug\GiellyGreenTeam1.csproj.CoreCo
 F:\GiellyGreen\Backend\GiellyGreenTeam1\obj\Debug\GiellyGreenTeam1.csproj.CopyComplete
 F:\GiellyGreen\Backend\GiellyGreenTeam1\obj\Debug\GiellyGreenTeam1.dll
 F:\GiellyGreen\Backend\GiellyGreenTeam1\obj\Debug\GiellyGreenTeam1.pdb
+D:\Gielly Green\Backend\GiellyGreenTeam1\bin\AutoMapper.dll
+D:\Gielly Green\Backend\GiellyGreenTeam1\bin\AutoMapper.xml
