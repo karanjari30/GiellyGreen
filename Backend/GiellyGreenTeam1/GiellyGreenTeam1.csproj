@@ -255,7 +255,6 @@
     <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Models\LogIn.cs" />
     <Compile Include="Models\MontlyInvoiceView.cs" />
-    <Compile Include="Models\PdfViewModel.cs" />
     <Compile Include="Models\SupplierViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />

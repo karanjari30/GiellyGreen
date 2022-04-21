@@ -1,73 +1,130 @@
-﻿@model IEnumerable<DataAccessLayer.Model.Invoice>
+﻿@model DataAccessLayer.Model.GetSupplierInvoiceForPDF_Result
 
-@{
-    ViewBag.Title = "Pdf";
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Invoice</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                @if (@Model.logo != null)
+                {
+                    <img src="@Model.logo" width="200" height="200" />}
+            </div>
+            <div class="col-md-6">
+                <h3>Self Billed Invoice</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>@Model.SupplierName</h4>
+                <p>@Model.BusinessAddress</p>
+            </div>
+            <div class="col-md-6">
+                <h5> Invoice Date : @Model.InvoiceDate</h5>
+                <h5>Invoice Referance : @Model.InvoiceReferenceId</h5>
+                <br />
+                @if (Model.TaxReference != null)
+                {
+                    <h5> TAX Referance : @Model.TaxReference</h5>}
+                @if (Model.VATAmount != null)
+                {
+                    <h5> TAX VATNumber : @Model.VATAmount</h5>}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h5>To : ADK Consultancy</h5>
+                <h5>Dummy Address</h5>
+                <h5>Dummy Address</h5>
+                <h5>Dummy Address</h5>
+            </div>
+        </div>
+        <div class="row">
+            <table border>
+                <thead>
+                    <tr>
+                        <th colspan="4"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">Hair Services</td>
+                        <td></td>
+                        <td>@Model.HairService</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Beauty Services</td>
+                        <td></td>
+                        <td>@Model.BeautyService</td>
+                    </tr>
+                    @if (Model.Custom1 != null)
+                    {
+                        <tr>
+                            <td colspan="2">@Model.Custom1</td>
+                            <td></td>
+                            <td>@Model.CustomHeader1</td>
+                        </tr>
 }
-
-<h2>Pdf</h2>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Custom1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Custom2)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Custom3)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Custom4)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Custom5)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.InvoiceReferenceId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.InvoiceYear)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.InvoiceMonth)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.InvoiceDate)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Custom1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Custom2)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Custom3)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Custom4)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Custom5)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InvoiceReferenceId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InvoiceYear)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InvoiceMonth)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InvoiceDate)
-        </td>
-    </tr>
+                    @if (Model.Custom2 != null)
+                    {
+                        <tr>
+                            <td colspan="2">@Model.Custom2</td>
+                            <td></td>
+                            <td>@Model.CustomHeader2</td>
+                        </tr>
 }
-
-</table>
+                    @if (Model.Custom3 != null)
+                    {
+                        <tr>
+                            <td colspan="2">@Model.Custom3</td>
+                            <td></td>
+                            <td>@Model.CustomHeader3</td>
+                        </tr>
+}
+                    @if (Model.Custom4 != null)
+                    {
+                        <tr>
+                            <td colspan="2">@Model.Custom4</td>
+                            <td></td>
+                            <td>@Model.CustomHeader4</td>
+                        </tr>
+}
+                    @if (Model.Custom5 != null)
+                    {
+                        <tr>
+                            <td colspan="2">@Model.Custom5</td>
+                            <td></td>
+                            <td>@Model.CustomHeader5</td>
+                        </tr>
+}
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>Subtotal(Net)</td>
+                        <td>@Model.NetAmount</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>VAT</td>
+                        <td>@Model.VATAmount</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>Advance Paid</td>
+                        <td>@Model.AdvancePay</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td>Balance Due</td>
+                        <td>@Model.BalanceDue</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

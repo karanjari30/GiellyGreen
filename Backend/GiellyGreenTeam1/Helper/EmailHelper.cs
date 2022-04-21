@@ -23,11 +23,7 @@ namespace GiellyGreenTeam1.Models
             mailMessage.Attachments.Add(attPDF);
             mailMessage.IsBodyHtml = true;
 
-            string[] MultiEmailID = ToEmail.Split(',');
-            foreach (string EmailID in MultiEmailID)
-            {
-                mailMessage.To.Add(new MailAddress(EmailID));
-            }
+            mailMessage.To.Add(new MailAddress(ToEmail));
             SmtpClient smtp = new SmtpClient();
             smtp.Host = HostAdd;
 

@@ -415,7 +415,6 @@
           <Property Type="DateTime" Name="InvoiceDate" Nullable="true" />
         </ComplexType>
         <ComplexType Name="GetSupplierInvoiceForPDF_Result">
-          <Property Type="Int32" Name="SupplierId" Nullable="false" />
           <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
           <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="255" />
@@ -445,7 +444,7 @@
           <Property Type="Decimal" Name="AdvancePay" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="BalanceDue" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Boolean" Name="IsApprove" Nullable="true" />
-          <Property Type="Int32" Name="SupplierId1" Nullable="true" />
+          <Property Type="Int32" Name="SupplierId" Nullable="true" />
           <Property Type="Int32" Name="InvoiceId" Nullable="true" />
         </ComplexType>
       </Schema>
@@ -625,7 +624,6 @@
           <FunctionImportMapping FunctionImportName="GetSupplierInvoiceForPDF" FunctionName="GiellyGreen_Team1Model.Store.GetSupplierInvoiceForPDF">
             <ResultMapping>
               <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetSupplierInvoiceForPDF_Result">
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
                 <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
@@ -655,7 +653,7 @@
                 <ScalarProperty Name="AdvancePay" ColumnName="AdvancePay" />
                 <ScalarProperty Name="BalanceDue" ColumnName="BalanceDue" />
                 <ScalarProperty Name="IsApprove" ColumnName="IsApprove" />
-                <ScalarProperty Name="SupplierId1" ColumnName="SupplierId1" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
                 <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
               </ComplexTypeMapping>
             </ResultMapping>

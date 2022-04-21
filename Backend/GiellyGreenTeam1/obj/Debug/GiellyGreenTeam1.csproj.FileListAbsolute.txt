@@ -382,3 +382,9 @@ D:\Gielly Green\Backend\GiellyGreenTeam1\bin\BouncyCastle.Crypto.dll
 D:\Gielly Green\Backend\GiellyGreenTeam1\bin\itextsharp.dll
 D:\Gielly Green\Backend\GiellyGreenTeam1\bin\Rotativa.dll
 D:\Gielly Green\Backend\GiellyGreenTeam1\bin\itextsharp.xml
+F:\GiellyGreen\Backend\GiellyGreenTeam1\bin\AutoMapper.dll
+F:\GiellyGreen\Backend\GiellyGreenTeam1\bin\BouncyCastle.Crypto.dll
+F:\GiellyGreen\Backend\GiellyGreenTeam1\bin\itextsharp.dll
+F:\GiellyGreen\Backend\GiellyGreenTeam1\bin\Rotativa.dll
+F:\GiellyGreen\Backend\GiellyGreenTeam1\bin\AutoMapper.xml
+F:\GiellyGreen\Backend\GiellyGreenTeam1\bin\itextsharp.xml
