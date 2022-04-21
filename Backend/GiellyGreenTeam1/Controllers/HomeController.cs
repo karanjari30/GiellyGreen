@@ -25,7 +25,7 @@ namespace GiellyGreenTeam1.Controllers
 
         public Byte[] getPDF()
         {
-            var actionPDF = new Rotativa.ViewAsPdf("Pdf");
+            var actionPDF = new Rotativa.ViewAsPdf("Pdf", db.Invoices.ToList());
             byte[] applicationPDFData = actionPDF.BuildPdf(this.ControllerContext);
             return applicationPDFData;
         }

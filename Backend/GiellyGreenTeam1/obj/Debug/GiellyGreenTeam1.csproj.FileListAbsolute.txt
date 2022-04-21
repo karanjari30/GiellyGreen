@@ -378,3 +378,7 @@ D:\Self Invoice\Backend\GiellyGreenTeam1\obj\Debug\GiellyGreenTeam1.pdb
 D:\Self Invoice\Backend\GiellyGreenTeam1\bin\BouncyCastle.Crypto.dll
 D:\Self Invoice\Backend\GiellyGreenTeam1\bin\itextsharp.dll
 D:\Self Invoice\Backend\GiellyGreenTeam1\bin\itextsharp.xml
+D:\Gielly Green\Backend\GiellyGreenTeam1\bin\BouncyCastle.Crypto.dll
+D:\Gielly Green\Backend\GiellyGreenTeam1\bin\itextsharp.dll
+D:\Gielly Green\Backend\GiellyGreenTeam1\bin\Rotativa.dll
+D:\Gielly Green\Backend\GiellyGreenTeam1\bin\itextsharp.xml
