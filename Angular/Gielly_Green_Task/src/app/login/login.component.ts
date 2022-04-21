@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
       this.apiService.user.Password = this.validateForm.controls['password'].value;
       this.apiService.loginUser().subscribe(
         (response: any) => {
-          console.log(response)
           if(response.ResponseStatus == 0){
             Swal.fire({
               title: 'Error!',

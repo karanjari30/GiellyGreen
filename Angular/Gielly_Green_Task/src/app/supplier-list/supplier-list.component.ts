@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { faPen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faPlus, faTrash, faArrowUpFromBracket, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ApiDataService } from '../api-data.service';
 // import Swal from 'sweetalert2';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -16,13 +16,16 @@ export class SupplierListComponent implements OnInit {
   //Variables/Properties
   fileName: any;
   searchSupplier = '';
-  editIcon = faPen;
+
   tempData: any;
   isEmailDuplicate: boolean = false;
   token: any;
   tempLogoData: any;
+  editIcon = faPen;
+  uploadIcon = faArrowUpFromBracket;
   plusIcon = faPlus;
   deleteIcon = faTrash;
+  iconDelete = faXmark;
   supplierListData: any;
   sortNameFn = (a: ApiDataService["supplier"], b: ApiDataService["supplier"]) => a.SupplierName.localeCompare(b.SupplierName);
   sortReferenceNoFn = (a: ApiDataService["supplier"], b: ApiDataService["supplier"]) => a.SupplierReference.localeCompare(b.SupplierReference);
@@ -305,16 +308,18 @@ export class SupplierListComponent implements OnInit {
   //This method is used for converting the file into Base64 string
   onFileSelected(filedata: any) {
     const file: File = filedata.target.files[0];
-
     if (file) {
-      this.fileName = file.name;
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.tempLogoData = reader.result
-        this.fileData = this.tempLogoData.split(',')[1];
-      };
-
+      if ((file.type == 'image/png') || (file.type == 'image/jpeg')) {
+        this.fileName = file.name;
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          this.tempLogoData = reader.result
+          this.fileData = this.tempLogoData.split(',')[1];
+        };
+      } else {
+        alert('Only .jpeg or .png are allowed');
+      }
     }
   }
 
@@ -332,6 +337,12 @@ export class SupplierListComponent implements OnInit {
       isSupplierActive: [false],
       invoiceLogo: [null]
     })
+  }
+
+  removeImage(){
+    this.tempLogoData = null;
+    console.log(this.tempLogoData);
+    this.fileData = this.tempLogoData;
   }
 
   //Initialization Method

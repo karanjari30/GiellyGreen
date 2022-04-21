@@ -150,16 +150,17 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <nz-form-label [nzSpan]="12">Upload Invoice Logo</nz-form-label>
+                        <nz-form-label [nzSpan]="12">Upload Supplier Logo</nz-form-label>
                         <nz-form-item>
                             <nz-form-control [nzSpan]="24">
                                 <input nz-input formControlName="invoiceLogo" type="file" class="fileInput" accept=".png, .jpeg, .jpg" (change)="onFileSelected($event)" #fileUpload>
                                 <div>
-                                    <i nz-icon nzType="upload" class="uploadLogo me-1"></i>
                                     <button nz-button (click)="fileUpload.click()">
-                                        Upload here
+                                        <fa-icon [icon]="uploadIcon" class="text-dark me-1"></fa-icon> Upload here
                                     </button><br>
-                                    <img [src]="tempLogoData" class="mt-2" height="200" width="200">
+                                    <img [src]="tempLogoData" [ngClass]="tempLogoData == null ? 'hideImageBox':''" class="mt-2 me-2" height="200" width="200">
+                                    <br>
+                                    <button [ngClass]="tempLogoData == null ? 'hideImageBox':''" class="btn text-danger" (click)="removeImage()"><fa-icon [icon]="iconDelete"></fa-icon> Delete</button>
                                 </div>
                             </nz-form-control>
                         </nz-form-item>
@@ -245,8 +246,7 @@
                                             <td>{{data.SupplierReference}}</td>
                                             <td>{{data.SupplierName}}</td>
                                             <td>
-                                                <nz-switch [(ngModel)]='data.Isactive'
-                                                    (ngModelChange)="changeStatus(data)"></nz-switch>
+                                                <nz-switch [(ngModel)]='data.Isactive' class="customSwitch" (ngModelChange)="changeStatus(data)"></nz-switch>
                                             </td>
                                             <td>
                                                 <a (click)="showModal(data)">

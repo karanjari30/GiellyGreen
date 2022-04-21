@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import { ApiDataService } from '../api-data.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 interface ItemData {
   id: number;
   name: string;
@@ -18,12 +19,12 @@ interface ItemData {
 })
 export class MonthlyInvoiceComponent implements OnInit {
 
-
   isCollapsed = false;
   approveButtonIcon = faCheck;
   month = null;
   invoiceDate: any;
   monthlyInvoiceData: any;
+  tempMonthlyInvoiceData: any[] = [];
   monthForInvoice: any;
   monthToGetInvoice: any;
   yearToGetInvoice: any;
@@ -38,7 +39,6 @@ export class MonthlyInvoiceComponent implements OnInit {
   checked = false;
   indeterminate = false;
   listOfCurrentPageData: readonly ItemData[] = [];
-  listOfData: readonly ItemData[] = [];
   setOfCheckedId = new Set<number>();
   counter: number = 0;
   listOfSelection = [
@@ -49,7 +49,7 @@ export class MonthlyInvoiceComponent implements OnInit {
       }
     },
   ];
- 
+
   //This method will give month and year for the report printing and also will generate an invoice reference number
   onChange(date: any) {
     this.isVisible = true;
@@ -57,11 +57,10 @@ export class MonthlyInvoiceComponent implements OnInit {
     this.yearToGetInvoice = date.getFullYear();
     date = new Date();
     this.invoiceDate = this.datepipe.transform(date, 'yyyy-MM-dd');
-    this.invoiceReferenceNumber = String(date.getMonth() + 1) + String(date.getFullYear()) + String(this.counter);
     this.monthForInvoice = this.datepipe.transform(date, 'MM/yyyy');
     this.counter++;
     this.getInvoicesData(this.monthToGetInvoice, this.yearToGetInvoice)
-    
+
   }
 
   //this method is called whenever a row is selected
@@ -69,8 +68,11 @@ export class MonthlyInvoiceComponent implements OnInit {
     if (checked) {
       this.setOfCheckedId.add(id);
       console.log(this.setOfCheckedId);
+      this.arrayOfID = Array.from(this.setOfCheckedId);
+
     } else {
       this.setOfCheckedId.delete(id);
+      this.arrayOfID = Array.from(this.setOfCheckedId);
     }
   }
 
@@ -81,7 +83,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   }
 
   onAllChecked(value: boolean): void {
-    this.monthlyInvoiceData.forEach((item: any) => this.updateCheckedSet(item.sid, value));
+    this.monthlyInvoiceData.forEach((item: any) => this.updateCheckedSet(item.SupplierId, value));
     this.refreshCheckedStatus();
   }
 
@@ -112,7 +114,7 @@ export class MonthlyInvoiceComponent implements OnInit {
     let printContents: any = document.getElementById('printableDiv');
     let getTableToPrint = printContents.outerHTML;
     var a: any = window.open('', '', 'height=1000, width=1000');
-    setTimeout(function(){
+    setTimeout(function () {
       a.document.write('<html><head><link rel="stylesheet" type="text/css" href="styles.css" /></head>');
       a.document.write('<body>');
       a.document.write(getTableToPrint);
@@ -120,42 +122,84 @@ export class MonthlyInvoiceComponent implements OnInit {
       // a.close();
       window.print();
     }, 2000);
-    
+
   }
 
   //This method is for getting all the invoice data from API
-  getInvoicesData(month: number, year: number){
+  getInvoicesData(month: number, year: number) {
     this.apiService.getMonthlyInvoiceData(month, year).subscribe((response: any) => {
       console.log(response.Result);
       this.monthlyInvoiceData = response.Result;
-      this.customHeader1 = this.monthlyInvoiceData[1].Custom1;
-      this.customHeader2 = this.monthlyInvoiceData[1].Custom2;
-      this.customHeader3 = this.monthlyInvoiceData[1].Custom3;
-      this.customHeader4 = this.monthlyInvoiceData[1].Custom4;
-      this.customHeader5 = this.monthlyInvoiceData[1].Custom5;
+      this.customHeader1 = this.monthlyInvoiceData[0].Custom1;
+      this.customHeader2 = this.monthlyInvoiceData[0].Custom2;
+      this.customHeader3 = this.monthlyInvoiceData[0].Custom3;
+      this.customHeader4 = this.monthlyInvoiceData[0].Custom4;
+      this.customHeader5 = this.monthlyInvoiceData[0].Custom5;
       this.onCurrentPageDataChange(response.Result);
+      this.invoiceReferenceNumber = this.monthlyInvoiceData[0].InvoiceReferenceId;
     })
   }
 
-  saveData(){
-    console.log(this.monthlyInvoiceData);
+  //This method will save the table into database using API
+  saveData() {
+    var monthlyJSONObject: any = this.setMonthlyInvoiceObjectAPIData();
+    console.log("In Save data method: ", monthlyJSONObject);
+    this.apiService.addMonthlyInvoicesData(monthlyJSONObject).subscribe((response: any) => console.log(response));
   }
 
-  
+  setMonthlyInvoiceObjectAPIData() {
+    var body = {
+      Custom1: this.customHeader1,
+      Custom2: this.customHeader2,
+      Custom3: this.customHeader3,
+      Custom4: this.customHeader4,
+      Custom5: this.customHeader5,
+      InvoiceReferenceId: this.invoiceReferenceNumber,
+      InvoiceYear: this.yearToGetInvoice,
+      InvoiceMonth: this.monthToGetInvoice,
+      InvoiceDate: this.invoiceDate,
+      InvoiceViewList: this.monthlyInvoiceData
+    }
+    return body;
+  }
 
-  constructor(private apiService: ApiDataService, private router: Router, private fb: FormBuilder, public datepipe: DatePipe) { }
+  onAmountChange(data: any) {
+    if (this.tempMonthlyInvoiceData.length != 0) {
+      var isIdExist: any = this.tempMonthlyInvoiceData.filter((item: { SupplierId: any }) => item.SupplierId == data.SupplierId);
+      if (isIdExist.length != 0) {
+        this.tempMonthlyInvoiceData.splice(isIdExist, 1);
+      }
+    }
+    this.tempMonthlyInvoiceData.push(data);
+  }
+
+  //This method is for approving the suppliers usign SupplierId
+  approveSelectedSupplier() {
+    this.apiService.approveSupplier(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice).subscribe(
+      (response: any) => {
+        // console.log(response)
+        if(response.ResponseStatus == 1){
+          this.notification.create(
+            'success',
+            'Success',
+            'Supplier(s) successfully approved!'
+          );
+        } else{
+          this.notification.create(
+            'error',
+            'Error',
+            'Failed to approve supplier(s)'
+          );
+        }
+      }
+    )
+  }
+
+  constructor(private apiService: ApiDataService, private router: Router, private fb: FormBuilder, public datepipe: DatePipe, private notification: NzNotificationService) { }
 
   ngOnInit(): void {
-     if (!sessionStorage.getItem('userSessionToken')) {
-       this.router.navigate(['/login']);
-     }
-    this.listOfData = new Array(20).fill(0).map((_, index) => ({
-      id: index,
-      name: `Edward King ${index}`,
-      age: 32,
-      address: `London, Park Lane no. ${index}`
-    }));
-
-    
+    if (!sessionStorage.getItem('userSessionToken')) {
+      this.router.navigate(['/login']);
+    }
   }
 }

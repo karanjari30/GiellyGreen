@@ -91,42 +91,25 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let data of rowSelectionTable.data" id="data.sid">
-                                                    <td [nzChecked]="setOfCheckedId.has(data.sid)"
-                                                        (nzCheckedChange)="onItemChecked(data.sid, $event)" nzLeft></td>
+                                                <tr *ngFor="let data of rowSelectionTable.data" id="data.SupplierId">
+                                                    <td [nzChecked]="setOfCheckedId.has(data.SupplierId)"
+                                                        (nzCheckedChange)="onItemChecked(data.SupplierId, $event)" nzLeft></td>
                                                     <td>{{data.SupplierName}}</td>
-                                                    <td><input type="number" nz-input class="w-100"
-                                                            [(ngModel)]="data.HairService" [disabled]="data.IsApprove">
-                                                    </td>
-                                                    <td><input type="number" nz-input class="w-100"
-                                                            [(ngModel)]="data.BeautyService"
-                                                            [disabled]="data.IsApprove"></td>
-                                                    <td><input type="number" nz-input class="w-100"
-                                                            [(ngModel)]="data.CustomHeader1"
-                                                            [disabled]="data.IsApprove"></td>
-                                                    <td><input type="number" nz-input class="w-100"
-                                                            [(ngModel)]="data.CustomHeader2"
-                                                            [disabled]="data.IsApprove"></td>
-                                                    <td><input type="number" nz-input class="w-100"
-                                                            [(ngModel)]="data.CustomHeader3"
-                                                            [disabled]="data.IsApprove"></td>
-                                                    <td><input type="number" nz-input class="w-100"
-                                                            [(ngModel)]="data.CustomHeader4"
-                                                            [disabled]="data.IsApprove"></td>
-                                                    <td><input type="number" nz-input class="w-100"
-                                                            [(ngModel)]="data.CustomHeader5"
-                                                            [disabled]="data.IsApprove"></td>
-                                                    <td><input type="number" nz-input class="w-100"
-                                                            [(ngModel)]="data.NetAmount" [disabled]="data.IsApprove">
-                                                    </td>
+                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.HairService" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
+                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.BeautyService" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
+                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.CustomHeader1" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
+                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.CustomHeader2" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
+                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.CustomHeader3" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
+                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.CustomHeader4" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
+                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.CustomHeader5" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
+                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.NetAmount" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
                                                     <td>{{data.VATAmount}}</td>
                                                     <td>{{data.GrossAmount}}</td>
                                                     <td><input type="number" nz-input class="w-100"
-                                                            [(ngModel)]="data.AdvancePay" [disabled]="data.IsApprove">
+                                                            [(ngModel)]="data.AdvancePay" (change)="onAmountChange(data)" [disabled]="data.IsApprove">
                                                     </td>
                                                     <td>{{data.BalanceDue}}</td>
-                                                    <td nzRight><input disabled nz-input type="checkbox"
-                                                            id="{{data.sid}}"></td>
+                                                    <td nzRight><input disabled [checked]="data.IsApprove" class="check" nz-input type="checkbox" id="{{data.SupplierId}}"></td>
                                                 </tr>
                                                 <tr>
                                                     <td [colSpan]="9" class="fs-6"><b>Total</b></td>
@@ -143,8 +126,7 @@
                             </div>
                             <div class="row mt-3" *ngIf="isVisible">
                                 <div class="col-sm-12 col-md-3 col-lg-3">
-                                    <button nz-button class="btn customFooterButton"><img src="assets/Vectorapprove.png"
-                                            class="approveImage me-2">APPROVE SELECTED INVOICES</button>
+                                    <button nz-button class="btn customFooterButton" (click)="approveSelectedSupplier()"><img src="assets/Vectorapprove.png" class="approveImage me-2" >APPROVE SELECTED INVOICES</button>
                                 </div>
                                 <div class="col-sm-12 col-md-3 col-lg-3">
                                     <button nz-button class="btn customFooterButton downloadButton"><img
@@ -152,9 +134,7 @@
                                         DOWNLOAD SELECTED INVOICES</button>
                                 </div>
                                 <div class="col-sm-12 col-md-3 col-lg-3">
-                                    <button nz-button class="btn customFooterButton" (click)="sendEmail()"><img
-                                            src="assets/Vectoremail.png" class="approveImage me-2">EMAIL SELECTED
-                                        INVOICES</button>
+                                    <button nz-button class="btn customFooterButton" (click)="sendEmail()"><img src="assets/Vectoremail.png" class="approveImage me-2">EMAIL SELECTED INVOICES</button>
                                 </div>
                                 <div class="col-sm-12 col-md-3 col-lg-3 d-flex justify-content-end">
                                     <button nz-button class="btn saveButton" (click)="saveData()">SAVE</button>
