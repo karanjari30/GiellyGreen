@@ -1,48 +1,35 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using DataAccessLayer.Model;
+using GiellyGreenTeam1.Models;
+using Rotativa;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Net.Mail;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace GiellyGreenTeam1.Controllers
 {
     public class EmailController : ApiController
     {
-        public void SendEmail(String ToEmail,String Subject,String Message)
+        public GiellyGreen_Team1Entities db = new GiellyGreen_Team1Entities();
+        public void SendEmail(String ToEmail,int month, int year,String companyName)
         {
-            var HostAdd = ConfigurationManager.AppSettings["Host"].ToString();
-            var FromEmail = ConfigurationManager.AppSettings["FromMail"].ToString();
-            var Password = ConfigurationManager.AppSettings["MailPassword"].ToString();
-
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress(FromEmail);
-            mailMessage.Subject = Subject;
-            mailMessage.Body = Message;
-            mailMessage.IsBodyHtml = true;
-
-            string[] MultiEmailID = ToEmail.Split(',');
-            foreach (string EmailID in MultiEmailID)
-            {
-                mailMessage.To.Add(new MailAddress(EmailID));
-            }
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = HostAdd;
-
-            smtp.EnableSsl = true;
-            NetworkCredential networkCredential = new NetworkCredential();
-            networkCredential.UserName = mailMessage.From.Address;
-            networkCredential.Password = Password;
-            smtp.UseDefaultCredentials = true;
-            smtp.Credentials = networkCredential;
-            smtp.Port = 587;
-            smtp.Send(mailMessage);
+            var pdf = new ViewAsPdf("Pdf", db.Invoices.ToList());
+            HomeController controller = new HomeController();
+            RouteData route = new RouteData();
+            route.Values.Add("action", "getPDF"); // ActionName
+            route.Values.Add("controller", "Home"); // Controller Name
+            ControllerContext newContext = new
+            ControllerContext(new HttpContextWrapper(HttpContext.Current), route, controller);
+            controller.ControllerContext = newContext;
+            byte[] applicationPDFData = pdf.BuildPdf(newContext);
+            Attachment attPDF = new Attachment(new MemoryStream(applicationPDFData), "Invoice.pdf");
+            EmailHelper.SendEmailToSupplier(ToEmail, month, year, companyName, attPDF);
         }
     }
 }

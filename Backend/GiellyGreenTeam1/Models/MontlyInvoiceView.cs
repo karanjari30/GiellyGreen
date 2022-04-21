@@ -7,7 +7,7 @@ namespace GiellyGreenTeam1.Models
 {
     public class MontlyInvoiceView
     {
-        public int MontlyInvoiceId { get; set; }
+        public int? MontlyInvoiceId { get; set; }
         public Nullable<decimal> HairService { get; set; }
         public Nullable<decimal> BeautyService { get; set; }
         public Nullable<decimal> CustomHeader1 { get; set; }
