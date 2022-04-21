@@ -1,0 +1,73 @@
+﻿@model IEnumerable<DataAccessLayer.Model.Invoice>
+
+@{
+    ViewBag.Title = "Pdf";
+}
+
+<h2>Pdf</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Custom1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Custom2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Custom3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Custom4)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Custom5)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceReferenceId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceYear)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceMonth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InvoiceDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Custom1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Custom2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Custom3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Custom4)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Custom5)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceReferenceId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceMonth)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InvoiceDate)
+        </td>
+    </tr>
+}
+
+</table>

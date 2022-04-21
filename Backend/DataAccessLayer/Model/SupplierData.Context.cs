@@ -268,5 +268,22 @@ namespace DataAccessLayer.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ApproveSupplier", idParameter, monthParameter, yearParameter);
         }
+    
+        public virtual ObjectResult<GetSupplierInvoiceForPDF_Result> GetSupplierInvoiceForPDF(string supplierMontlyInvoiceId, Nullable<int> invoiceMonth, Nullable<int> invoiceYear)
+        {
+            var supplierMontlyInvoiceIdParameter = supplierMontlyInvoiceId != null ?
+                new ObjectParameter("SupplierMontlyInvoiceId", supplierMontlyInvoiceId) :
+                new ObjectParameter("SupplierMontlyInvoiceId", typeof(string));
+    
+            var invoiceMonthParameter = invoiceMonth.HasValue ?
+                new ObjectParameter("InvoiceMonth", invoiceMonth) :
+                new ObjectParameter("InvoiceMonth", typeof(int));
+    
+            var invoiceYearParameter = invoiceYear.HasValue ?
+                new ObjectParameter("InvoiceYear", invoiceYear) :
+                new ObjectParameter("InvoiceYear", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSupplierInvoiceForPDF_Result>("GetSupplierInvoiceForPDF", supplierMontlyInvoiceIdParameter, invoiceMonthParameter, invoiceYearParameter);
+        }
     }
 }

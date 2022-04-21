@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.Http;
+using AutoMapper;
 using DataAccessLayer.Model;
 using GiellyGreenTeam1.Helper;
 using GiellyGreenTeam1.Models;
@@ -18,10 +19,19 @@ namespace GiellyGreenTeam1.Controllers
             var objResponse = new JsonResponse();
             try
             {
-                var objSuppilerlists = db.GetAllInvoice(month, year).ToList();
+                MapperConfiguration configuration = new MapperConfiguration(x => x.CreateMap<IsActive_Result, GetAllInvoice_Result>());
+                Mapper mapper = new Mapper(configuration);
+                var objInvoicelists = db.GetAllInvoice(month, year).ToList();
+                var objActiveSupplier = db.IsActive().ToList();
 
-                if (objSuppilerlists != null)
-                    objResponse = JsonResponseHelper.JsonMessage(1, "Total " + objSuppilerlists.Count + " Record found", objSuppilerlists);
+                foreach(var objsupplier in objActiveSupplier)
+                {
+                    if (objInvoicelists.Where(x => x.SupplierId == objsupplier.SupplierId).FirstOrDefault() == null)
+                        objInvoicelists.Add(mapper.Map<GetAllInvoice_Result>(objsupplier));
+                }
+
+                if (objInvoicelists != null)
+                    objResponse = JsonResponseHelper.JsonMessage(1, "Total " + objInvoicelists.Count + " Record found", objInvoicelists);
                 else
                     objResponse = JsonResponseHelper.JsonMessage(1, "Record Not Found.", null);
             }
