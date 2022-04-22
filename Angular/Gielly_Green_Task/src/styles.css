@@ -3,29 +3,33 @@ body {
   font-family: "Dax-Regular" !important;
 }
 
-.printTableDiv{
-    margin: 20px !important;
+.printTableDiv {
+  margin: 20px !important;
 }
 
 .tableToPrint {
   width: 90% !important;
 }
 
-.tableToPrint th{
-    background: #2c2b29 !important;
-    color: white !important;
+.tableToPrint th {
+  background: #2c2b29 !important;
+  color: white !important;
 }
 
-@page  
-{ 
-    size: auto;   /* auto is the initial value */ 
+.ant-switch-checked {
+  background-color: #00C897 !important;
+}
 
-    /* this affects the margin in the printer settings */ 
-    margin: 25mm 25mm 25mm 25mm;  
-} 
-@media print {
-    .tableToPrint th{
-        background-color: #2c2b29 !important;
-        -webkit-print-background-adjust: exact; 
-    }
+.ant-checkbox-input {
+  -webkit-appearance: none !important; /*hides the default checkbox*/
+}
+
+.ant-checkbox-input:checked {
+  background-color: #00c897 !important;
+  border-color: #00c897 !important;
+}
+
+.ant-checkbox-input:checked:before {
+  content: "✔" !important;
+  color: white !important;
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import { ApiDataService } from '../api-data.service';
@@ -53,14 +53,19 @@ export class MonthlyInvoiceComponent implements OnInit {
   //This method will give month and year for the report printing and also will generate an invoice reference number
   onChange(date: any) {
     this.isVisible = true;
-    this.monthToGetInvoice = date.getMonth() + 1;
+    this.monthToGetInvoice = this.datepipe.transform(date, 'MM');
     this.yearToGetInvoice = date.getFullYear();
     date = new Date();
-    this.invoiceDate = this.datepipe.transform(date, 'yyyy-MM-dd');
-    this.monthForInvoice = this.datepipe.transform(date, 'MM/yyyy');
+    this.invoiceDate = this.datepipe.transform(date, 'yyyy/MM/dd');
+    // this.invoiceDate = this.datepipe.transform(date, 'yyyy/MM/dd');
+    this.monthForInvoice = String(this.monthToGetInvoice + "/" + this.yearToGetInvoice);
     this.counter++;
     this.getInvoicesData(this.monthToGetInvoice, this.yearToGetInvoice)
 
+  }
+
+  onDateChange(date: any) {
+    this.invoiceDate = this.datepipe.transform(date, 'yyyy/MM/dd');
   }
 
   //this method is called whenever a row is selected
@@ -101,28 +106,33 @@ export class MonthlyInvoiceComponent implements OnInit {
 
   //This method is for sending email
   sendEmail() {
-    Swal.fire({
-      title: 'Mailed Successfully!',
-      text: 'You just sent mail to suppliers',
-      icon: 'success',
-      confirmButtonText: 'Ok',
-    });
+    this.apiService.emailSelectedSuppliers(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice).subscribe(
+      (response: any) => {
+        if (response.ResponseStatus == 1) {
+          Swal.fire({
+            title: 'Mailed Successfully!',
+            text: 'You just sent mail to suppliers',
+            icon: 'success',
+            confirmButtonText: 'Ok',
+          });
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Error in sending mail!',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
+        }
+      }
+    )
+
   }
 
   //This method is for printing the monthly invoice table 
   printReport() {
-    let printContents: any = document.getElementById('printableDiv');
-    let getTableToPrint = printContents.outerHTML;
-    var a: any = window.open('', '', 'height=1000, width=1000');
     setTimeout(function () {
-      a.document.write('<html><head><link rel="stylesheet" type="text/css" href="styles.css" /></head>');
-      a.document.write('<body>');
-      a.document.write(getTableToPrint);
-      a.document.write('</body></html>');
-      // a.close();
       window.print();
     }, 2000);
-
   }
 
   //This method is for getting all the invoice data from API
@@ -178,19 +188,105 @@ export class MonthlyInvoiceComponent implements OnInit {
     this.apiService.approveSupplier(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice).subscribe(
       (response: any) => {
         // console.log(response)
-        if(response.ResponseStatus == 1){
+        if (response.ResponseStatus == 1) {
           this.notification.create(
             'success',
             'Success',
             'Supplier(s) successfully approved!'
           );
-        } else{
+        } else {
           this.notification.create(
             'error',
             'Error',
             'Failed to approve supplier(s)'
           );
         }
+      }
+    )
+  }
+
+  //This method will return net amount
+  getNetAmount(data: any) {
+    return data.NetAmount = data.HairService + data.BeautyService + data.CustomHeader1 + data.CustomHeader2 + data.CustomHeader3 + data.CustomHeader4 + data.CustomHeader5;
+  }
+
+   //This method will return VAT amount
+  getVATAmount(data: any) {
+    return data.VATAmount = data.NetAmount * 0.2;
+  }
+
+   //This method will return gross amount
+  getGrossAmount(data: any) {
+    return data.GrossAmount = data.NetAmount + data.VATAmount;
+  }
+
+  //This method will return balance due
+  getBalanceDue(data: any) {
+    return data.BalanceDue = data.GrossAmount - data.AdvancePay;
+  }
+
+  //This method will return total of net amount column
+  totalNetAmount(data: any) {
+    let total = 0;
+    data.forEach((item: { NetAmount: number }) => {
+      total += item.NetAmount;
+    })
+    return total;
+  }
+
+  //This method will return total of VAT amount column
+  totalVATAmount(data: any) {
+    let total = 0;
+    data.forEach((item: { VATAmount: number }) => {
+      total += item.VATAmount;
+    })
+    return total;
+  }
+
+  //This method will return total of gross amount column
+  totalGrossAmount(data: any) {
+    let total = 0;
+    data.forEach((item: { GrossAmount: number }) => {
+      total += item.GrossAmount;
+    })
+    return total;
+  }
+
+  //This method will return total of advance payment amount column
+  totalAdvancePayment(data: any) {
+    let total = 0;
+    data.forEach((item: { AdvancePay: number }) => {
+      total += item.AdvancePay;
+    })
+    return total;
+  }
+
+  //This method will return total of balance due column
+  totalBalanceDue(data: any) {
+    let total = 0;
+    data.forEach((item: { BalanceDue: number }) => {
+      total += item.BalanceDue;
+    })
+    return total;
+  }
+
+  //this method will create pdf and will download it
+  createPDF(string: string, fileName: string) {
+    const source = `data:application/pdf;base64,${string}`;
+    const link = document.createElement("a");
+    link.href = source;
+    link.download = `${fileName}.pdf`
+    link.click();
+  }
+
+  //This method will return a base64 string
+  downloadCombinePDF() {
+    this.apiService.downloadPDF(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice).subscribe(
+      (response: any) => {
+        console.log(response)
+         if (response.ResponseStatus == 1) {
+           this.createPDF(response.Result, response.Message);
+         }
       }
     )
   }

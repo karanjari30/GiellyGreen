@@ -75,7 +75,6 @@ th {
   display: none;
 }
 
-
 .check {
   -webkit-appearance: none; /*hides the default checkbox*/
   height: 20px;
@@ -83,9 +82,9 @@ th {
   position: relative;
   top: 10px;
   left: 10px;
-  bottom: 10px; 
-  transition: 0.10s;
-  background-color: #CFD3D866;
+  bottom: 10px;
+  transition: 0.1s;
+  background-color: #cfd3d866;
   text-align: center;
   font-weight: 200;
   color: white;
@@ -94,20 +93,46 @@ th {
 }
 
 .check:checked {
-  background-color: #E5FFDD;
-  border-color: #E5FFDD;
+  background-color: #e5ffdd;
+  border-color: #e5ffdd;
 }
 
 .check:before {
   content: "✖";
-  color: #CFD3D8;
+  color: #cfd3d8;
 }
+
 .check:checked:before {
   content: "✔";
-  color: #1FBA70
+  color: #1fba70;
 }
 
 .check:hover {
-  cursor: pointer; 
+  cursor: pointer;
   opacity: 0.5;
 }
+
+
+
+@page {
+  size: auto !important;
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+
+  #printableDiv{
+    display: block !important;
+  }
+
+  #printSection{
+    display: none !important;
+  }
+
+  nz-layout{
+    display: none !important;
+  }
+  
+} 

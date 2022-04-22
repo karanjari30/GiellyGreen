@@ -17,7 +17,7 @@
     <nz-layout>
         <nz-content>
             <div class="inner-content">
-                <div class="container">
+                <div class="container customContainer">
                     <div class="row">
                         <div class="col-sm-12 col-md-3 col-lg-3 mt-3">
                             <h3>Monthly Invoice</h3>
@@ -27,8 +27,7 @@
                                 <nz-form-label class="fs-5 fw-400">Choose Month</nz-form-label>
                                 <nz-form-control>
                                     <nz-date-picker nzMode="month" [(ngModel)]="month"
-                                        (ngModelChange)="onChange($event)">
-                                    </nz-date-picker>
+                                        (ngModelChange)="onChange($event)"></nz-date-picker>
                                 </nz-form-control>
                             </nz-form-item>
                         </div>
@@ -46,7 +45,10 @@
                                     <nz-form-item>
                                         <nz-form-label class="fs-5 fw-400">Date</nz-form-label>
                                         <nz-form-control>
-                                            <input type="date" nz-input [(ngModel)]="invoiceDate">
+                                            <nz-date-picker [(ngModel)]="invoiceDate"
+                                                (ngModelChange)="onDateChange($event)" [nzFormat]="'dd/MM/yyyy'">
+                                            </nz-date-picker>
+                                            <!-- <input type="date" nz-input [(ngModel)]="invoiceDate"> -->
                                         </nz-form-control>
                                     </nz-form-item>
                                 </div>
@@ -93,31 +95,62 @@
                                             <tbody>
                                                 <tr *ngFor="let data of rowSelectionTable.data" id="data.SupplierId">
                                                     <td [nzChecked]="setOfCheckedId.has(data.SupplierId)"
-                                                        (nzCheckedChange)="onItemChecked(data.SupplierId, $event)" nzLeft></td>
+                                                        (nzCheckedChange)="onItemChecked(data.SupplierId, $event)"
+                                                        nzLeft></td>
                                                     <td>{{data.SupplierName}}</td>
-                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.HairService" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
-                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.BeautyService" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
-                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.CustomHeader1" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
-                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.CustomHeader2" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
-                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.CustomHeader3" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
-                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.CustomHeader4" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
-                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.CustomHeader5" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
-                                                    <td><input type="number" nz-input class="w-100" [(ngModel)]="data.NetAmount" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td>
-                                                    <td>{{data.VATAmount}}</td>
-                                                    <td>{{data.GrossAmount}}</td>
                                                     <td><input type="number" nz-input class="w-100"
-                                                            [(ngModel)]="data.AdvancePay" (change)="onAmountChange(data)" [disabled]="data.IsApprove">
+                                                            [(ngModel)]="data.HairService"
+                                                            (change)="onAmountChange(data)" [disabled]="data.IsApprove">
                                                     </td>
-                                                    <td>{{data.BalanceDue}}</td>
-                                                    <td nzRight><input disabled [checked]="data.IsApprove" class="check" nz-input type="checkbox" id="{{data.SupplierId}}"></td>
+                                                    <td><input type="number" nz-input class="w-100"
+                                                            [(ngModel)]="data.BeautyService"
+                                                            (change)="onAmountChange(data)" [disabled]="data.IsApprove">
+                                                    </td>
+                                                    <td><input type="number" nz-input class="w-100"
+                                                            [(ngModel)]="data.CustomHeader1"
+                                                            (change)="onAmountChange(data)" [disabled]="data.IsApprove">
+                                                    </td>
+                                                    <td><input type="number" nz-input class="w-100"
+                                                            [(ngModel)]="data.CustomHeader2"
+                                                            (change)="onAmountChange(data)" [disabled]="data.IsApprove">
+                                                    </td>
+                                                    <td><input type="number" nz-input class="w-100"
+                                                            [(ngModel)]="data.CustomHeader3"
+                                                            (change)="onAmountChange(data)" [disabled]="data.IsApprove">
+                                                    </td>
+                                                    <td><input type="number" nz-input class="w-100"
+                                                            [(ngModel)]="data.CustomHeader4"
+                                                            (change)="onAmountChange(data)" [disabled]="data.IsApprove">
+                                                    </td>
+                                                    <td><input type="number" nz-input class="w-100"
+                                                            [(ngModel)]="data.CustomHeader5"
+                                                            (change)="onAmountChange(data)" [disabled]="data.IsApprove">
+                                                    </td>
+                                                    <!-- <td><input type="number" nz-input class="w-100" [(ngModel)]="data.NetAmount" (change)="onAmountChange(data)" [disabled]="data.IsApprove"></td> -->
+                                                    <td>{{getNetAmount(data) | number : '1.2-2'}}</td>
+                                                    <td>{{getVATAmount(data) | number : '1.2-2'}}</td>
+                                                    <td>{{getGrossAmount(data) | number : '1.2-2'}}</td>
+                                                    <td><input type="number" nz-input class="w-100"
+                                                            [(ngModel)]="data.AdvancePay"
+                                                            (change)="onAmountChange(data)" [disabled]="data.IsApprove">
+                                                    </td>
+                                                    <td>{{getBalanceDue(data) >= 0 ? (getBalanceDue(data) | number :
+                                                        '1.2-2') : '(' + getBalanceDue(data).toFixed(2) + ')'}}</td>
+                                                    <td nzRight><input disabled [checked]="data.IsApprove" class="check"
+                                                            nz-input type="checkbox" id="{{data.SupplierId}}"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td [colSpan]="9" class="fs-6"><b>Total</b></td>
-                                                    <td>Example</td>
-                                                    <td>Example</td>
-                                                    <td>Example</td>
-                                                    <td>Example</td>
-                                                    <td>Example</td>
+                                                    <td [colSpan]="9" class="fs-6 text-center"><b>Total</b></td>
+                                                    <td>{{totalNetAmount(rowSelectionTable.data) | number : '1.2-2'}}
+                                                    </td>
+                                                    <td>{{totalVATAmount(rowSelectionTable.data) | number : '1.2-2'}}
+                                                    </td>
+                                                    <td>{{totalGrossAmount(rowSelectionTable.data) | number : '1.2-2'}}
+                                                    </td>
+                                                    <td>{{totalAdvancePayment(rowSelectionTable.data) | number :
+                                                        '1.2-2'}}</td>
+                                                    <td>{{totalBalanceDue(rowSelectionTable.data) | number : '1.2-2'}}
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </nz-table>
@@ -126,80 +159,20 @@
                             </div>
                             <div class="row mt-3" *ngIf="isVisible">
                                 <div class="col-sm-12 col-md-3 col-lg-3">
-                                    <button nz-button class="btn customFooterButton" (click)="approveSelectedSupplier()"><img src="assets/Vectorapprove.png" class="approveImage me-2" >APPROVE SELECTED INVOICES</button>
+                                    <button nz-button class="btn customFooterButton"
+                                        (click)="approveSelectedSupplier()"><img src="assets/Vectorapprove.png"
+                                            class="approveImage me-2">APPROVE SELECTED INVOICES</button>
                                 </div>
                                 <div class="col-sm-12 col-md-3 col-lg-3">
-                                    <button nz-button class="btn customFooterButton downloadButton"><img
-                                            src="assets/VectorcombineDownload.png" class="approveImage me-2">COMBINE &
-                                        DOWNLOAD SELECTED INVOICES</button>
+                                    <button nz-button class="btn customFooterButton downloadButton" (click)="downloadCombinePDF()"> <img src="assets/VectorcombineDownload.png" class="approveImage me-2">COMBINE & DOWNLOAD SELECTED INVOICES</button>
                                 </div>
                                 <div class="col-sm-12 col-md-3 col-lg-3">
-                                    <button nz-button class="btn customFooterButton" (click)="sendEmail()"><img src="assets/Vectoremail.png" class="approveImage me-2">EMAIL SELECTED INVOICES</button>
+                                    <button nz-button class="btn customFooterButton" (click)="sendEmail()"><img
+                                            src="assets/Vectoremail.png" class="approveImage me-2">EMAIL SELECTED
+                                        INVOICES</button>
                                 </div>
                                 <div class="col-sm-12 col-md-3 col-lg-3 d-flex justify-content-end">
                                     <button nz-button class="btn saveButton" (click)="saveData()">SAVE</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="row " id="printableDiv">
-                        <div class="col-sm-12 col-md-12 col-lg-12 printTableDiv">
-                            <h3>Monthly Invoice</h3>
-                            <div class="row">
-                                <div class="col-3" style="display:flex">Date: {{invoiceDate}} </div>
-                                <div class="col-3" style="display:flex">Month: {{monthForInvoice}}</div>
-                                <div class="col-3" style="display:flex">Invoice Reference: {{monthForInvoice }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12 col-lg-12">
-                                    <nz-table [nzShowPagination]="false" [nzData]="monthlyInvoiceData"
-                                        class="tableToPrint">
-                                        <thead>
-                                            <tr>
-                                                <th>Supplier Name</th>
-                                                <th>Hair Services</th>
-                                                <th>Beauty Services</th>
-                                                <th>Spa Service</th>
-                                                <th>Custom Service-2</th>
-                                                <th>Custom Service-3</th>
-                                                <th>Custom Service-4</th>
-                                                <th>Custom Service-5</th>
-                                                <th>Net</th>
-                                                <th>Gross</th>
-                                                <th>VAT</th>
-                                                <th>Advance Paid</th>
-                                                <th>Balance Due</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let data of monthlyInvoiceData" id="{{data.sid}}">
-                                                <td>{{data.SupplierName}}</td>
-                                                <td>{{data.HairService}}</td>
-                                                <td>{{data.BeautyService}}</td>
-                                                <td>{{data.CustomHeader1}}</td>
-                                                <td>{{data.CustomHeader2}}</td>
-                                                <td>{{data.CustomHeader3}}</td>
-                                                <td>{{data.CustomHeader4}}</td>
-                                                <td>{{data.CustomHeader}}</td>
-                                                <td>{{data.NetAmount}}</td>
-                                                <td>{{data.GrossAmount}}</td>
-                                                <td>{{data.VATAmount}}</td>
-                                                <td>{{data.AdvancePay}}</td>
-                                                <td>{{data.BalanceDue}}</td>
-
-                                            </tr>
-                                            <tr>
-                                                <td [colSpan]="8" class="fs-6 fw-bold text-center">Total</td>
-                                                <td>950</td>
-                                                <td>450</td>
-                                                <td>200</td>
-                                                <td>200</td>
-                                                <td>1150</td>
-                                            </tr>
-                                        </tbody>
-                                    </nz-table>
                                 </div>
                             </div>
                         </div>
@@ -209,3 +182,64 @@
         </nz-content>
     </nz-layout>
 </nz-layout>
+
+<div class="container-fluid" id="printableDiv">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <h3>Monthly Invoice</h3>
+            <div class="row">
+                <div class="col-3" style="display:flex">Date: {{invoiceDate}} </div>
+                <div class="col-3" style="display:flex">Month: {{monthForInvoice}}</div>
+                <div class="col-3" style="display:flex">Invoice Reference: {{monthForInvoice }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <nz-table #printTable [nzShowPagination]="false" [nzData]="monthlyInvoiceData" class="tableToPrint">
+                <thead>
+                    <tr>
+                        <th>Supplier Name</th>
+                        <th>Hair Services</th>
+                        <th>Beauty Services</th>
+                        <th>{{customHeader1}}</th>
+                        <th>{{customHeader2}}</th>
+                        <th>{{customHeader3}}</th>
+                        <th>{{customHeader4}}</th>
+                        <th>{{customHeader5}}</th>
+                        <th>Net</th>
+                        <th>Gross</th>
+                        <th>VAT</th>
+                        <th>Advance Paid</th>
+                        <th>Balance Due</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of printTable.data" id="{{data.sid}}">
+                        <td>{{data.SupplierName}}</td>
+                        <td>{{data.HairService | number : '1.2-2'}}</td>
+                        <td>{{data.BeautyService | number : '1.2-2'}}</td>
+                        <td>{{data.CustomHeader1 | number : '1.2-2'}}</td>
+                        <td>{{data.CustomHeader2 | number : '1.2-2'}}</td>
+                        <td>{{data.CustomHeader3 | number : '1.2-2'}}</td>
+                        <td>{{data.CustomHeader4 | number : '1.2-2'}}</td>
+                        <td>{{data.CustomHeader | number : '1.2-2'}}</td>
+                        <td>{{data.NetAmount | number : '1.2-2'}}</td>
+                        <td>{{data.GrossAmount | number : '1.2-2'}}</td>
+                        <td>{{data.VATAmount | number : '1.2-2'}}</td>
+                        <td>{{data.AdvancePay | number : '1.2-2'}}</td>
+                        <td>{{data.BalanceDue | number : '1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td [colSpan]="8" class="fs-6 fw-bold text-center">Total</td>
+                        <td>{{totalNetAmount(printTable.data) | number : '1.2-2'}}</td>
+                        <td>{{totalVATAmount(printTable.data) | number : '1.2-2'}}</td>
+                        <td>{{totalGrossAmount(printTable.data) | number : '1.2-2'}}</td>
+                        <td>{{totalAdvancePayment(printTable.data) | number : '1.2-2'}}</td>
+                        <td>{{totalBalanceDue(printTable.data) | number : '1.2-2'}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </div>
+</div>

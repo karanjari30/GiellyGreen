@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { faPen, faPlus, faTrash, faArrowUpFromBracket, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { ApiDataService } from '../api-data.service';
@@ -16,7 +16,6 @@ export class SupplierListComponent implements OnInit {
   //Variables/Properties
   fileName: any;
   searchSupplier = '';
-
   tempData: any;
   isEmailDuplicate: boolean = false;
   token: any;
@@ -33,9 +32,9 @@ export class SupplierListComponent implements OnInit {
   isCollapsed = false;
   isVisible = false;
   validateForm!: FormGroup;
-  msg: any;
-  img = new Image();
   fileData: any;
+  @ViewChild('logoUpload') logoUpload:any;
+  
 
   //this method is for showing modal at the time adding/updating the data
   showModal($event: any): void {
@@ -85,67 +84,22 @@ export class SupplierListComponent implements OnInit {
 
   //This method will add suupplier to the database
   addSupplier() {
-    const formControl = this.validateForm.value;
-    this.apiService.supplier.SupplierReference = this.validateForm.value.supplierRefNo;
-    this.apiService.supplier.SupplierName = this.validateForm.value.supplierName;
-    this.apiService.supplier.BusinessAddress = this.validateForm.value.businessAddress;
-    this.apiService.supplier.EmailAddress = this.validateForm.value.emailAddress;
-    this.apiService.supplier.PhoneNumber = this.validateForm.value.phoneNumber;
-    this.apiService.supplier.CompanyRegisterNumber = this.validateForm.value.companyRegisteredNumber;
-    this.apiService.supplier.VATNumber = this.validateForm.value.vatNumber;
-    this.apiService.supplier.TaxReference = this.validateForm.value.taxReference;
-    this.apiService.supplier.CompanyRegisterAddress = this.validateForm.value.companyAddress;
-    this.apiService.supplier.Isactive = this.validateForm.value.isSupplierActive;
-    this.apiService.supplier.logo = this.fileData;
-
+    this.setDataOfAPIModel();
     this.apiService.addSupplier().subscribe(
       (response: any) => {
-        if (response.Result.includes('SP_EmailAddress')) {
+        if (response.ResponseStatus == 1) {
           this.notification.create(
-            'error',
-            'Error',
-            'Email already exists!'
+            'success',
+            'Success',
+            'Data added successfully!'
           );
-        }
-        else if (response.Result.includes('SP_SupplierReference')) {
-          this.notification.create(
-            'error',
-            'Error',
-            'Supplier Reference already exists!'
-          );
-        } else if (response.Result.includes('SP_TaxReferenceIndex')) {
-          this.notification.create(
-            'error',
-            'Error',
-            'Tax reference number already exists!'
-          );
-        }
-        else if (response.Result.includes('SP_VATNumberIndex')) {
-          this.notification.create(
-            'error',
-            'Error',
-            'VAT number already exists!'
-          );
+          this.validateForm.reset();
+          this.fileName = null;
+          this.tempLogoData = null;
+          this.isVisible = false;
         }
         else {
-          if (response.ResponseStatus == 1) {
-            this.notification.create(
-              'success',
-              'Success',
-              'Data added successfully!'
-            );
-            this.validateForm.reset();
-            this.fileName = null;
-            this.tempLogoData = null;
-            this.isVisible = false;
-          }
-          else {
-            this.notification.create(
-              'error',
-              'Error',
-              'Something went wrong. Please refresh the page'
-            );
-          }
+          this.showStatusNotification(response);
         }
       }
     );
@@ -165,6 +119,21 @@ export class SupplierListComponent implements OnInit {
     this.apiService.getDataSuppliers().subscribe((data: any) => {
       this.supplierListData = data.Result;
     })
+  }
+
+  //This is a common method for setting form values in the API model
+  setDataOfAPIModel(){
+    this.apiService.supplier.SupplierReference = this.validateForm.value.supplierRefNo;
+    this.apiService.supplier.SupplierName = this.validateForm.value.supplierName;
+    this.apiService.supplier.BusinessAddress = this.validateForm.value.businessAddress;
+    this.apiService.supplier.EmailAddress = this.validateForm.value.emailAddress;
+    this.apiService.supplier.PhoneNumber = this.validateForm.value.phoneNumber;
+    this.apiService.supplier.CompanyRegisterNumber = this.validateForm.value.companyRegisteredNumber;
+    this.apiService.supplier.VATNumber = this.validateForm.value.vatNumber;
+    this.apiService.supplier.TaxReference = this.validateForm.value.taxReference;
+    this.apiService.supplier.CompanyRegisterAddress = this.validateForm.value.companyAddress;
+    this.apiService.supplier.Isactive = this.validateForm.value.isSupplierActive;
+    this.apiService.supplier.logo = this.fileData;
   }
 
   //This method is for searching a record in the table by using SupplierName
@@ -218,21 +187,7 @@ export class SupplierListComponent implements OnInit {
 
   //This method is for editing the Supplier record
   editSupplier(supplierId: number) {
-    const supplierFormFields = this.validateForm.controls;
-    const supplierToEdit = this.apiService.supplier;
-
-    supplierToEdit.SupplierName = supplierFormFields["supplierName"].value;
-    supplierToEdit.SupplierReference = supplierFormFields["supplierRefNo"].value;
-    supplierToEdit.BusinessAddress = supplierFormFields["businessAddress"].value;
-    supplierToEdit.EmailAddress = supplierFormFields["emailAddress"].value;
-    supplierToEdit.PhoneNumber = supplierFormFields["phoneNumber"].value;
-    supplierToEdit.CompanyRegisterNumber = supplierFormFields["companyRegisteredNumber"].value;
-    supplierToEdit.VATNumber = supplierFormFields["vatNumber"].value;
-    supplierToEdit.TaxReference = supplierFormFields["taxReference"].value;
-    supplierToEdit.CompanyRegisterAddress = supplierFormFields["companyAddress"].value;
-    supplierToEdit.Isactive = supplierFormFields["isSupplierActive"].value;
-    supplierToEdit.logo = this.fileData;
-
+    this.setDataOfAPIModel();
     this.token = sessionStorage.getItem('userSessionToken');
     this.apiService.editSupplier(supplierId, this.token).subscribe(
       (response: any) => {
@@ -244,44 +199,48 @@ export class SupplierListComponent implements OnInit {
           );
           this.handleCancel();
         } else {
-          if (response.Result.includes('SP_EmailAddress')) {
-            this.notification.create(
-              'error',
-              'Error',
-              'Email already exists!'
-            );
-          }
-          else if (response.Result.includes('SP_SupplierReference')) {
-            this.notification.create(
-              'error',
-              'Error',
-              'Supplier Reference already exists!'
-            );
-          } else if (response.Result.includes('SP_TaxReferenceIndex')) {
-            this.notification.create(
-              'error',
-              'Error',
-              'Tax reference number already exists!'
-            );
-          }
-          else if (response.Result.includes('SP_VATNumberIndex')) {
-            this.notification.create(
-              'error',
-              'Error',
-              'VAT number already exists!'
-            );
-          } else {
-            this.notification.create(
-              'error',
-              'Error',
-              'Failed to update record!'
-            );
-          }
-          // this.handleCancel();
+          this.showStatusNotification(response);
         }
       }
     );
 
+  }
+
+  //This method will help to show notifications for Unique VATNumber, Supplier Reference, Tax Reference and Email
+  showStatusNotification(response: any) {
+    if (response.Result.includes('SP_EmailAddress')) {
+      this.notification.create(
+        'error',
+        'Error',
+        'Email already exists!'
+      );
+    }
+    else if (response.Result.includes('SP_SupplierReference')) {
+      this.notification.create(
+        'error',
+        'Error',
+        'Supplier Reference already exists!'
+      );
+    } else if (response.Result.includes('SP_TaxReferenceIndex')) {
+      this.notification.create(
+        'error',
+        'Error',
+        'Tax reference number already exists!'
+      );
+    }
+    else if (response.Result.includes('SP_VATNumberIndex')) {
+      this.notification.create(
+        'error',
+        'Error',
+        'VAT number already exists!'
+      );
+    } else {
+      this.notification.create(
+        'error',
+        'Error',
+        'Something went wrong. Please refresh the page'
+      );
+    }
   }
 
   //This method is for changing the Supplier Status from the table
@@ -310,7 +269,6 @@ export class SupplierListComponent implements OnInit {
     const file: File = filedata.target.files[0];
     if (file) {
       if ((file.type == 'image/png') || (file.type == 'image/jpeg')) {
-        this.fileName = file.name;
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
@@ -318,9 +276,23 @@ export class SupplierListComponent implements OnInit {
           this.fileData = this.tempLogoData.split(',')[1];
         };
       } else {
-        alert('Only .jpeg or .png are allowed');
+        this.notification.create(
+          'error',
+          'Error',
+          'Only .jpeg or .png are allowed!'
+        );
+        // alert('Only .jpeg or .png are allowed');
       }
     }
+  }
+
+  //This method will remove the uploaded image on button click when the user the is adding/editing the supplier
+  removeImage() {
+    this.tempLogoData = null;
+    this.fileData = null;
+    this.logoUpload.nativeElement.value = "";
+    // console.log(this .tempLogoData);
+    // this.fileData = this.tempLogoData;
   }
 
   constructor(private apiService: ApiDataService, private fb: FormBuilder, private notification: NzNotificationService, private router: Router) {
@@ -339,19 +311,12 @@ export class SupplierListComponent implements OnInit {
     })
   }
 
-  removeImage(){
-    this.tempLogoData = null;
-    console.log(this.tempLogoData);
-    this.fileData = this.tempLogoData;
-  }
-
   //Initialization Method
   ngOnInit(): void {
     if (!sessionStorage.getItem('userSessionToken')) {
       this.router.navigate(['/login']);
     }
+    this.tempLogoData = null;
     this.getDataInTable();
-
   }
 }
-
