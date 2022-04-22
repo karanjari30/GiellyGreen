@@ -30,14 +30,13 @@
             </div>
             <div class="split right">
                 <h4> Invoice Date : @Model.InvoiceDate.Value.ToShortDateString()</h4>
-                <h4>Invoice Referance : @Model.InvoiceReferenceId</h4>
-                <br />
+                <h4>Invoice Reference : @Model.SupplierReference@Model.InvoiceReferenceId</h4>
                 @if (Model.TaxReference != null)
                 {
-                    <h4> TAX Referance : @Model.TaxReference</h4>}
+                    <h4> TAX Reference : @Model.TaxReference</h4>}
                 @if (Model.VATAmount != null)
                 {
-                    <h4> TAX VATNumber : @Model.VATNumber</h4>}
+                    <h4> VAT Number : @Model.VATNumber</h4>}
             </div>
         </div>
         <div class="mypadding1">

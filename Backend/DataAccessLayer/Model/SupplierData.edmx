@@ -416,6 +416,7 @@
         </ComplexType>
         <ComplexType Name="GetSupplierInvoiceForPDF_Result">
           <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="SupplierReference" Nullable="false" MaxLength="15" />
           <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
           <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="255" />
           <Property Type="String" Name="logo" Nullable="true" />
@@ -625,6 +626,7 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetSupplierInvoiceForPDF_Result">
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
                 <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="logo" ColumnName="logo" />

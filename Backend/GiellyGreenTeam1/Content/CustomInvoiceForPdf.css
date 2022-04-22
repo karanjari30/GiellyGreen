@@ -20,6 +20,7 @@
     width: 50%;
     position: fixed;
     padding-top: 20px;
+    word-break: break-word;
 }
 
 .left {

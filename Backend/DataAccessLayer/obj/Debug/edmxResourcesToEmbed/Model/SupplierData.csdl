@@ -246,6 +246,7 @@
   </ComplexType>
   <ComplexType Name="GetSupplierInvoiceForPDF_Result">
     <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="SupplierReference" Nullable="false" MaxLength="15" />
     <Property Type="String" Name="BusinessAddress" Nullable="true" MaxLength="150" />
     <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="255" />
     <Property Type="String" Name="logo" Nullable="true" />

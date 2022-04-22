@@ -172,6 +172,7 @@
       <ResultMapping>
         <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetSupplierInvoiceForPDF_Result">
           <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+          <ScalarProperty Name="SupplierReference" ColumnName="SupplierReference" />
           <ScalarProperty Name="BusinessAddress" ColumnName="BusinessAddress" />
           <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
           <ScalarProperty Name="logo" ColumnName="logo" />
