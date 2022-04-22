@@ -22,12 +22,12 @@ namespace GiellyGreenTeam1.Models
             mailMessage.Body = "Please find attached a self-billed invoice to Gielly Green Limited, prepared on your behalf, as per the agreement. <br> Regard.<br> Gielly Green Limited";
             mailMessage.Attachments.Add(attPDF);
             mailMessage.IsBodyHtml = true;
-
             mailMessage.To.Add(new MailAddress(ToEmail));
+            
             SmtpClient smtp = new SmtpClient();
             smtp.Host = HostAdd;
-
             smtp.EnableSsl = true;
+
             NetworkCredential networkCredential = new NetworkCredential();
             networkCredential.UserName = mailMessage.From.Address;
             networkCredential.Password = Password;

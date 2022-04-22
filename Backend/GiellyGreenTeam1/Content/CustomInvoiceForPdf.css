@@ -1,0 +1,85 @@
+﻿body {
+    font-family: 'Mulish';
+    font-size: 22px;
+}
+
+.mypadding {
+    padding-top: 6rem;
+}
+
+.mypadding1 {
+    padding-top: 13rem;
+}
+
+.centered {
+    top: 50%;
+}
+
+.split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    padding-top: 20px;
+}
+
+.left {
+    left: 20px;
+}
+
+.right {
+    right: 0;
+    text-align: right;
+    padding-right: 20px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 150px;
+}
+
+.columnHeader {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 70px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+table {
+    border: none;
+    border-collapse: collapse;
+    font-size: 22px;
+}
+
+th, td {
+    padding: 8px;
+}
+
+.customdescription {
+    width: 60%;
+}
+
+.mytablecell {
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+
+.amountalignheader {
+    text-align: right;
+    font-weight: bold;
+}
+
+.amountalign {
+    text-align: right;
+}

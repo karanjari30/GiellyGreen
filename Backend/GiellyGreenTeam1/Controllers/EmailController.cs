@@ -28,11 +28,13 @@ namespace GiellyGreenTeam1.Controllers
                 RouteData route = new RouteData();
                 route.Values.Add("action", "getPDF"); // ActionName
                 route.Values.Add("controller", "Home"); // Controller Name
-                ControllerContext newContext = new
-                ControllerContext(new HttpContextWrapper(HttpContext.Current), route, controller);
+                ControllerContext newContext = new ControllerContext(new HttpContextWrapper(HttpContext.Current), route, controller);
                 controller.ControllerContext = newContext;
                 foreach (var invoice in supplierLIstForPdf)
                 {
+                    if(invoice.logo != null)
+                        invoice.logo = Path.Combine(HttpContext.Current.Server.MapPath("~/ImageStorage"), invoice.logo);
+
                     Attachment attPDF = new Attachment(new MemoryStream(controller.getPDF(invoice)), "Invoice.pdf");
                     EmailHelper.SendEmailToSupplier(invoice.EmailAddress, month, year, attPDF);
                 }

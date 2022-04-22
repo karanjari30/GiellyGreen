@@ -1,129 +1,130 @@
 ﻿@model DataAccessLayer.Model.GetSupplierInvoiceForPDF_Result
 
-@{ 
+@{
     Layout = "";
 }
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href='https://fonts.googleapis.com/css?family=Mulish' rel='stylesheet'>
     <title>Invoice</title>
+    <link href="~/Content/CustomInvoiceForPdf.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="split left">
                 @if (@Model.logo != null)
                 {
-                    <img src="@Model.logo" width="200" height="200" />}
+                    <img src="@Model.logo" width="200" height="100" />}
             </div>
-            <div class="col-md-6">
-                <h3>Self Billed Invoice</h3>
+            <div class="split right">
+                <h2>Self Billed Invoice</h2>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h4>@Model.SupplierName</h4>
-                <p>@Model.BusinessAddress</p>
+        <div class="mypadding">
+            <div class="split left">
+                <h3>@Model.SupplierName</h3>
+                <h4>@Model.BusinessAddress</h4>
             </div>
-            <div class="col-md-6">
-                <h5> Invoice Date : @Model.InvoiceDate</h5>
-                <h5>Invoice Referance : @Model.InvoiceReferenceId</h5>
+            <div class="split right">
+                <h4> Invoice Date : @Model.InvoiceDate.Value.ToShortDateString()</h4>
+                <h4>Invoice Referance : @Model.InvoiceReferenceId</h4>
                 <br />
                 @if (Model.TaxReference != null)
                 {
-                    <h5> TAX Referance : @Model.TaxReference</h5>}
+                    <h4> TAX Referance : @Model.TaxReference</h4>}
                 @if (Model.VATAmount != null)
                 {
-                    <h5> TAX VATNumber : @Model.VATNumber</h5>}
+                    <h4> TAX VATNumber : @Model.VATNumber</h4>}
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h5>To : ADK Consultancy</h5>
-                <h5>Dummy Address</h5>
-                <h5>Dummy Address</h5>
-                <h5>Dummy Address</h5>
+        <div class="mypadding1">
+            <div class="split left">
+                <h3>To : ADK Consultancy</h3>
+                <h4>Dummy Address</h4>
+                <h4>Dummy Address</h4>
             </div>
         </div>
-        <div class="row">
-            <table border>
+        <div class="mypadding1">
+            <table class="table-bord" style="width:100%">
                 <thead>
-                    <tr>
-                        <th colspan="4"></th>
+                    <tr style="padding:3px;" class="mytablecell">
+                        <th class="mytablecell" colspan="3" style="margin-left:10px;border-right:0px">Description</th>
+                        <th class="mytablecell" style="text-align:right;border-left:0px">Amount(GBP)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="2">Hair Services</td>
-                        <td></td>
-                        <td>@Model.HairService</td>
+                    <tr class="mytablecell">
+                        <td colspan="2" class="customdescription mytablecell">Hair Services</td>
+                        <td class="mytablecell"></td>
+                        <td class="mytablecell amountalign">@Model.HairService</td>
                     </tr>
-                    <tr>
-                        <td colspan="2">Beauty Services</td>
-                        <td></td>
-                        <td>@Model.BeautyService</td>
+                    <tr class="mytablecell">
+                        <td class="mytablecell" colspan="2">Beauty Services</td>
+                        <td class="mytablecell"></td>
+                        <td class="mytablecell amountalign">@Model.BeautyService</td>
                     </tr>
                     @if (Model.Custom1 != null)
                     {
-                        <tr>
-                            <td colspan="2">@Model.Custom1</td>
-                            <td></td>
-                            <td>@Model.CustomHeader1</td>
+                        <tr class="mytablecell">
+                            <td class="mytablecell" colspan="2">@Model.Custom1</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Model.CustomHeader1</td>
                         </tr>
-}
+                    }
                     @if (Model.Custom2 != null)
                     {
-                        <tr>
-                            <td colspan="2">@Model.Custom2</td>
-                            <td></td>
-                            <td>@Model.CustomHeader2</td>
+                        <tr class="mytablecell">
+                            <td class="mytablecell" colspan="2">@Model.Custom2</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Model.CustomHeader2</td>
                         </tr>
-}
+                    }
                     @if (Model.Custom3 != null)
                     {
-                        <tr>
-                            <td colspan="2">@Model.Custom3</td>
-                            <td></td>
-                            <td>@Model.CustomHeader3</td>
+                        <tr class="mytablecell">
+                            <td class="mytablecell" colspan="2">@Model.Custom3</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Model.CustomHeader3</td>
                         </tr>
-}
+                    }
                     @if (Model.Custom4 != null)
                     {
-                        <tr>
-                            <td colspan="2">@Model.Custom4</td>
-                            <td></td>
-                            <td>@Model.CustomHeader4</td>
+                        <tr class="mytablecell">
+                            <td class="mytablecell" colspan="2">@Model.Custom4</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Model.CustomHeader4</td>
                         </tr>
-}
+                    }
                     @if (Model.Custom5 != null)
                     {
-                        <tr>
-                            <td colspan="2">@Model.Custom5</td>
-                            <td></td>
-                            <td>@Model.CustomHeader5</td>
+                        <tr class="mytablecell">
+                            <td class="mytablecell" colspan="2">@Model.Custom5</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Model.CustomHeader5</td>
                         </tr>
-}
+                    }
                     <tr>
-                        <td colspan="2"></td>
-                        <td>Subtotal(Net)</td>
-                        <td>@Model.NetAmount</td>
+                        <td colspan="2" style="border:0px"></td>
+                        <td class="amountalignheader">Subtotal(Net)</td>
+                        <td class="mytablecell amountalign">@Model.NetAmount</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
-                        <td>VAT</td>
-                        <td>@Model.VATAmount</td>
+                        <td class="amountalignheader">VAT</td>
+                        <td class="mytablecell amountalign">@Model.VATAmount</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
-                        <td>Advance Paid</td>
-                        <td>@Model.AdvancePay</td>
+                        <td class="amountalignheader">Advance Paid</td>
+                        <td class="mytablecell amountalign">@Model.AdvancePay</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
-                        <td>Balance Due</td>
-                        <td>@Model.BalanceDue</td>
+                        <td class="amountalignheader">Balance Due</td>
+                        <td class="mytablecell amountalign">@Model.BalanceDue</td>
                     </tr>
                 </tbody>
             </table>
