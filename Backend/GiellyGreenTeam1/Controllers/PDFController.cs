@@ -29,7 +29,7 @@ namespace GiellyGreenTeam1.Controllers
                 ControllerContext(new HttpContextWrapper(HttpContext.Current), route, controller);
                 controller.ControllerContext = newContext;
                 string base64Pdf = Convert.ToBase64String(controller.getCombinePDF(supplierLIstForPdf));
-                objResponse = JsonResponseHelper.JsonMessage(1, "Successfully send mail", base64Pdf);
+                objResponse = JsonResponseHelper.JsonMessage(1, month+"_"+year+"_Invoices", base64Pdf);
             }
             catch(Exception ex)
             {
