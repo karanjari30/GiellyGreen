@@ -17,7 +17,7 @@ namespace GiellyGreenTeam1.Controllers
     public class EmailController : ApiController
     {
         public GiellyGreen_Team1Entities db = new GiellyGreen_Team1Entities();
-        public void SendEmail(int[] ids,int month, int year,String companyName)
+        public void SendEmail(int[] ids,int month, int year)
         {
             var supplierLIstForPdf = db.GetSupplierInvoiceForPDF(String.Join(",", ids), month, year);
             HomeController controller = new HomeController();
@@ -30,7 +30,7 @@ namespace GiellyGreenTeam1.Controllers
             foreach(var invoice in supplierLIstForPdf)
             {
                 Attachment attPDF = new Attachment(new MemoryStream(controller.getPDF(invoice)), "Invoice.pdf");
-                EmailHelper.SendEmailToSupplier(invoice.EmailAddress, month, year, companyName, attPDF);
+                EmailHelper.SendEmailToSupplier(invoice.EmailAddress, month, year, attPDF);
             }
         }
     }
