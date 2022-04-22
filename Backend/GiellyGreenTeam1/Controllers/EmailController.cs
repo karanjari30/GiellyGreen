@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Model;
+using GiellyGreenTeam1.Helper;
 using GiellyGreenTeam1.Models;
 using Rotativa;
 using System;
@@ -17,21 +18,31 @@ namespace GiellyGreenTeam1.Controllers
     public class EmailController : ApiController
     {
         public GiellyGreen_Team1Entities db = new GiellyGreen_Team1Entities();
-        public void SendEmail(int[] ids,int month, int year)
+        public JsonResponse SendEmail(int[] ids,int month, int year)
         {
-            var supplierLIstForPdf = db.GetSupplierInvoiceForPDF(String.Join(",", ids), month, year);
-            HomeController controller = new HomeController();
-            RouteData route = new RouteData();
-            route.Values.Add("action", "getPDF"); // ActionName
-            route.Values.Add("controller", "Home"); // Controller Name
-            ControllerContext newContext = new
-            ControllerContext(new HttpContextWrapper(HttpContext.Current), route, controller);
-            controller.ControllerContext = newContext;
-            foreach(var invoice in supplierLIstForPdf)
+            var objResponse = new JsonResponse();
+            try 
             {
-                Attachment attPDF = new Attachment(new MemoryStream(controller.getPDF(invoice)), "Invoice.pdf");
-                EmailHelper.SendEmailToSupplier(invoice.EmailAddress, month, year, attPDF);
+                var supplierLIstForPdf = db.GetSupplierInvoiceForPDF(String.Join(",", ids), month, year);
+                HomeController controller = new HomeController();
+                RouteData route = new RouteData();
+                route.Values.Add("action", "getPDF"); // ActionName
+                route.Values.Add("controller", "Home"); // Controller Name
+                ControllerContext newContext = new
+                ControllerContext(new HttpContextWrapper(HttpContext.Current), route, controller);
+                controller.ControllerContext = newContext;
+                foreach (var invoice in supplierLIstForPdf)
+                {
+                    Attachment attPDF = new Attachment(new MemoryStream(controller.getPDF(invoice)), "Invoice.pdf");
+                    EmailHelper.SendEmailToSupplier(invoice.EmailAddress, month, year, attPDF);
+                }
+                objResponse = JsonResponseHelper.JsonMessage(1, "Successfully send mail", 1);
             }
+            catch (Exception ex)
+            {
+                objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
+            }
+            return objResponse;
         }
     }
 }
