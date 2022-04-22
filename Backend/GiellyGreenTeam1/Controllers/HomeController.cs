@@ -22,5 +22,10 @@ namespace GiellyGreenTeam1.Controllers
         {
             return new Rotativa.ViewAsPdf("~/Views/Home/Pdf.cshtml", model).BuildFile(ControllerContext); ;
         }
+
+        public Byte[] getCombinePDF(List<GetSupplierInvoiceForPDF_Result> list)
+        {
+            return new Rotativa.ViewAsPdf("~/Views/Home/getCombinePDF.cshtml", list).BuildFile(ControllerContext); ;
+        }
     }
 }

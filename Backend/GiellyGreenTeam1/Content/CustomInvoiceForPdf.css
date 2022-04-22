@@ -10,7 +10,9 @@
 .mypadding1 {
     padding-top: 13rem;
 }
-
+.container {
+    page-break-after: always;
+}
 .centered {
     top: 50%;
 }

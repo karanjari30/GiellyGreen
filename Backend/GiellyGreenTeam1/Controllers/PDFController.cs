@@ -1,33 +1,42 @@
-﻿using System;
+﻿using DataAccessLayer.Model;
+using GiellyGreenTeam1.Helper;
+using GiellyGreenTeam1.Models;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace GiellyGreenTeam1.Controllers
 {
     public class PDFController : ApiController
     {
-        //public HttpResponseMessage Pdf()
-        //{
-        //    HomeController controller = new HomeController();
-        //    RouteData route = new RouteData();
-        //    route.Values.Add("action", "getPDF"); // ActionName
-        //    route.Values.Add("controller", "Home"); // Controller Name
-        //    System.Web.Mvc.ControllerContext newContext = new
-        //    System.Web.Mvc.ControllerContext(new HttpContextWrapper(System.Web.HttpContext.Current), route, controller);
-        //    controller.ControllerContext = newContext;
-        //    var actionPDF = controller.getPDF();
-        //    HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-        //    response.Content = new ByteArrayContent(actionPDF);// new StreamContent(new FileStream(localFilePath, FileMode.Open, FileAccess.Read));
-        //    response.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
-        //    response.Content.Headers.ContentDisposition.FileName = "SamplePDF.PDF";
-        //    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
-        //    return response;
-        //}
+        public GiellyGreen_Team1Entities db = new GiellyGreen_Team1Entities();
+        public JsonResponse Pdf(int[] ids, int month, int year)
+        {
+            var objResponse = new JsonResponse();
+            try
+            {
+                var supplierLIstForPdf = db.GetSupplierInvoiceForPDF(String.Join(",", ids), month, year).ToList();
+                HomeController controller = new HomeController();
+                RouteData route = new RouteData();
+                route.Values.Add("action", "getCombinePDF"); // ActionName
+                route.Values.Add("controller", "Home"); // Controller Name
+                ControllerContext newContext = new
+                ControllerContext(new HttpContextWrapper(HttpContext.Current), route, controller);
+                controller.ControllerContext = newContext;
+                string base64Pdf = Convert.ToBase64String(controller.getCombinePDF(supplierLIstForPdf));
+                objResponse = JsonResponseHelper.JsonMessage(1, "Successfully send mail", base64Pdf);
+            }
+            catch(Exception ex)
+            {
+                objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
+            }
+
+            return objResponse;
+        }
     }
 }
