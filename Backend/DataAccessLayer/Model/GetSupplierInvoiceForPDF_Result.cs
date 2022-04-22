@@ -13,8 +13,8 @@ namespace DataAccessLayer.Model
     
     public partial class GetSupplierInvoiceForPDF_Result
     {
-        public int SupplierId { get; set; }
         public string SupplierName { get; set; }
+        public string SupplierReference { get; set; }
         public string BusinessAddress { get; set; }
         public string EmailAddress { get; set; }
         public string logo { get; set; }
@@ -43,7 +43,7 @@ namespace DataAccessLayer.Model
         public Nullable<decimal> AdvancePay { get; set; }
         public Nullable<decimal> BalanceDue { get; set; }
         public Nullable<bool> IsApprove { get; set; }
-        public Nullable<int> SupplierId1 { get; set; }
+        public Nullable<int> SupplierId { get; set; }
         public Nullable<int> InvoiceId { get; set; }
     }
 }

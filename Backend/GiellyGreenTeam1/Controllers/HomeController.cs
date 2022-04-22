@@ -10,7 +10,7 @@ namespace GiellyGreenTeam1.Controllers
 {
     public class HomeController : Controller
     {
-        public GiellyGreen_Team1Entities db = new GiellyGreen_Team1Entities();
+  
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
@@ -18,16 +18,14 @@ namespace GiellyGreenTeam1.Controllers
             return View();
         }
 
-        public ActionResult Pdf()
+        public Byte[] getPDF(GetSupplierInvoiceForPDF_Result model)
         {
-            return new Rotativa.ViewAsPdf("Pdf", db.Invoices.ToList()) { FileName = "TestViewAsPdf.pdf" };
+            return new Rotativa.ViewAsPdf("~/Views/Home/Pdf.cshtml", model).BuildFile(ControllerContext); ;
         }
 
-        public Byte[] getPDF()
+        public Byte[] getCombinePDF(List<GetSupplierInvoiceForPDF_Result> list)
         {
-            var actionPDF = new Rotativa.ViewAsPdf("Pdf", db.Invoices.ToList());
-            byte[] applicationPDFData = actionPDF.BuildPdf(this.ControllerContext);
-            return applicationPDFData;
+            return new Rotativa.ViewAsPdf("~/Views/Home/getCombinePDF.cshtml", list).BuildFile(ControllerContext); ;
         }
     }
 }
