@@ -1,11 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Angular",
     "\\Backend",
     "\\Backend\\GiellyGreenTeam1",
+    "\\Backend\\GiellyGreenTeam1\\Content",
     "\\Backend\\GiellyGreenTeam1\\Controllers"
   ],
-  "SelectedNode": "\\Backend\\GiellyGreenTeam1\\Controllers\\LogInController.cs",
+  "SelectedNode": "\\Backend\\GiellyGreenTeam1\\Content\\CustomInvoiceForPdf.css",
   "PreviewInSolutionExplorer": false
 }
