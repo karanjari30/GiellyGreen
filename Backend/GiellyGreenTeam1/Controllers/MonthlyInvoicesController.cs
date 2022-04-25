@@ -10,6 +10,7 @@ using GiellyGreenTeam1.Models;
 
 namespace GiellyGreenTeam1.Controllers
 {
+    [Authorize]
     public class MonthlyInvoicesController : ApiController
     {
         public GiellyGreen_Team1Entities db = new GiellyGreen_Team1Entities();

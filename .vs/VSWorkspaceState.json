@@ -4,8 +4,10 @@
     "\\Backend",
     "\\Backend\\GiellyGreenTeam1",
     "\\Backend\\GiellyGreenTeam1\\Content",
-    "\\Backend\\GiellyGreenTeam1\\Controllers"
+    "\\Backend\\GiellyGreenTeam1\\Controllers",
+    "\\Backend\\GiellyGreenTeam1\\Views",
+    "\\Backend\\GiellyGreenTeam1\\Views\\Home"
   ],
-  "SelectedNode": "\\Backend\\GiellyGreenTeam1\\Content\\CustomInvoiceForPdf.css",
+  "SelectedNode": "\\Backend\\GiellyGreenTeam1\\Views\\Home\\Pdf.cshtml",
   "PreviewInSolutionExplorer": false
 }

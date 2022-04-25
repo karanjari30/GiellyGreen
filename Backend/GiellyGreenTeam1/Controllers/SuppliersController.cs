@@ -9,6 +9,7 @@ using GiellyGreenTeam1.Models;
 
 namespace GiellyGreenTeam1.Controllers
 {
+    [Authorize]
     public class SuppliersController : ApiController
     {
         public GiellyGreen_Team1Entities objSuppiler = new GiellyGreen_Team1Entities();

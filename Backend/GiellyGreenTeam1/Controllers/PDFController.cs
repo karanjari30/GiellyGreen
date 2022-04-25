@@ -10,6 +10,7 @@ using System.Web.Routing;
 
 namespace GiellyGreenTeam1.Controllers
 {
+    [System.Web.Http.Authorize]
     public class PDFController : ApiController
     {
         public GiellyGreen_Team1Entities db = new GiellyGreen_Team1Entities();

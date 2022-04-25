@@ -12,6 +12,7 @@ using System.Web.Routing;
 
 namespace GiellyGreenTeam1.Controllers
 {
+    [System.Web.Http.Authorize]
     public class EmailController : ApiController
     {
         public GiellyGreen_Team1Entities db = new GiellyGreen_Team1Entities();
@@ -32,9 +33,11 @@ namespace GiellyGreenTeam1.Controllers
                 {
                     foreach (var invoice in supplierLIstForPdf)
                     {
-                        if (invoice.NetAmount > 0 && invoice.logo != null && invoice.logo != "")
+                        if (invoice.NetAmount > 0)
                         {
-                            invoice.logo = Path.Combine(HttpContext.Current.Server.MapPath("~/ImageStorage"), invoice.logo);
+                            if(invoice.logo != null && invoice.logo != "")
+                                invoice.logo = Path.Combine(HttpContext.Current.Server.MapPath("~/ImageStorage"), invoice.logo);
+                            
                             Attachment attPDF = new Attachment(new MemoryStream(controller.getPDF(invoice)), "Invoice.pdf");
                             EmailHelper.SendEmailToSupplier(invoice.EmailAddress, month, year, attPDF);
                         }
