@@ -34,3 +34,15 @@ D:\Self Invoice\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCom
 D:\Self Invoice\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
 D:\Self Invoice\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 D:\Self Invoice\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Debug\DataAccessLayer.dll.config
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Debug\EntityFramework.dll
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Debug\EntityFramework.SqlServer.dll
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Debug\EntityFramework.xml
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Debug\EntityFramework.SqlServer.xml
+D:\Gieely_Green\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.AssemblyReference.cache
+D:\Gieely_Green\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\Gieely_Green\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.csproj.CopyComplete
+D:\Gieely_Green\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+D:\Gieely_Green\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
