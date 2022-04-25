@@ -2,8 +2,6 @@
 using GiellyGreenTeam1.Helper;
 using GiellyGreenTeam1.Models;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -12,6 +10,7 @@ using System.Web.Routing;
 
 namespace GiellyGreenTeam1.Controllers
 {
+    [System.Web.Http.Authorize]
     public class PDFController : ApiController
     {
         public GiellyGreen_Team1Entities db = new GiellyGreen_Team1Entities();
@@ -28,8 +27,14 @@ namespace GiellyGreenTeam1.Controllers
                 ControllerContext newContext = new
                 ControllerContext(new HttpContextWrapper(HttpContext.Current), route, controller);
                 controller.ControllerContext = newContext;
-                string base64Pdf = Convert.ToBase64String(controller.getCombinePDF(supplierLIstForPdf));
-                objResponse = JsonResponseHelper.JsonMessage(1, month+"_"+year+"_Invoices", base64Pdf);
+
+                if(supplierLIstForPdf.Count > 0)
+                {
+                    string base64Pdf = Convert.ToBase64String(controller.getCombinePDF(supplierLIstForPdf));
+                    objResponse = JsonResponseHelper.JsonMessage(1, month + "_" + year + "_Invoices", base64Pdf);
+                }
+                else
+                    objResponse = JsonResponseHelper.JsonMessage(0, "No Records Found", null);
             }
             catch(Exception ex)
             {

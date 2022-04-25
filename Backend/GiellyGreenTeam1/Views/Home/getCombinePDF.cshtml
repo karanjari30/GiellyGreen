@@ -5,139 +5,139 @@
 }
 @foreach (var supplier in Model)
 {
-    if (supplier.logo != null)
+    if (supplier.logo != null && supplier.logo != "")
     {
         supplier.logo = Path.Combine(HttpContext.Current.Server.MapPath("~/ImageStorage"), supplier.logo);
     }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <link href='https://fonts.googleapis.com/css?family=Mulish' rel='stylesheet'>
-    <title>Invoice</title>
-    <link href="~/Content/CustomInvoiceForPdf.css" rel="stylesheet" />
-</head>
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="split left">
-                @if (supplier.logo != null)
-                {
-                    <img src="@supplier.logo" width="200" height="100" />}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <link href='https://fonts.googleapis.com/css?family=Mulish' rel='stylesheet'>
+        <title>Invoice</title>
+        <link href="~/Content/CustomInvoiceForPdf.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="container custompagebreak">
+            <div class="row">
+                <div class="split left">
+                    @if (supplier.logo != null && supplier.logo != "")
+                    {
+                        <img src="@supplier.logo" width="200" height="100" />
+                    }
+                </div>
+                <div class="split right">
+                    <h2>Self Billed Invoice</h2>
+                </div>
             </div>
-            <div class="split right">
-                <h2>Self Billed Invoice</h2>
+            <div class="mypadding">
+                <div class="split left">
+                    <h3>@supplier.SupplierName</h3>
+                    <h4>@supplier.BusinessAddress</h4>
+                </div>
+                <div class="split right">
+                    <h4> Invoice Date : @supplier.InvoiceDate.Value.ToShortDateString()</h4>
+                    <h4>Invoice Reference : @supplier.SupplierReference@supplier.InvoiceReferenceId</h4>
+                    @if (supplier.TaxReference != null)
+                    {
+                        <h4> TAX Reference : @supplier.TaxReference</h4>}
+                    @if (supplier.VATNumber != null)
+                    {
+                        <h4> VAT Number : @supplier.VATNumber</h4>}
+                </div>
+            </div>
+            <div class="mypadding1">
+                <div class="split left">
+                    <h3>To</h3>
+                    <h3>ADK Consultancy</h3>
+                    <h4>Dummy Address</h4>
+                    <h4>Dummy Address</h4>
+                </div>
+            </div>
+            <div class="mypadding2">
+                <table class="table-bord" style="width:100%">
+                    <thead>
+                        <tr style="padding:3px;" class="mytablecell">
+                            <th class="mytablecell" colspan="3" style="margin-left:10px;border-right:0px">Description</th>
+                            <th class="mytablecell" style="text-align:right;border-left:0px">Amount(GBP)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="mytablecell">
+                            <td colspan="2" class="customdescription mytablecell">Hair Services</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.HairService).ToString("N2")</td>
+                        </tr>
+                        <tr class="mytablecell">
+                            <td class="mytablecell" colspan="2">Beauty Services</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.BeautyService).ToString("N2")</td>
+                        </tr>
+                        @if (supplier.Custom1 != null && supplier.CustomHeader1 != 0 && supplier.CustomHeader1 != null)
+                        {
+                            <tr class="mytablecell">
+                                <td class="mytablecell" colspan="2">@supplier.Custom1</td>
+                                <td class="mytablecell"></td>
+                                <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.CustomHeader1).ToString("N2")</td>
+                            </tr>
+                        }
+                        @if (supplier.Custom2 != null && supplier.CustomHeader2 != 0 && supplier.CustomHeader2 != null)
+                        {
+                            <tr class="mytablecell">
+                                <td class="mytablecell" colspan="2">@supplier.Custom2</td>
+                                <td class="mytablecell"></td>
+                                <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.CustomHeader2).ToString("N2")</td>
+                            </tr>
+                        }
+                        @if (supplier.Custom3 != null && supplier.CustomHeader3 != 0 && supplier.CustomHeader3 != null)
+                        {
+                            <tr class="mytablecell">
+                                <td class="mytablecell" colspan="2">@supplier.Custom3</td>
+                                <td class="mytablecell"></td>
+                                <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.CustomHeader3).ToString("N2")</td>
+                            </tr>
+                        }
+                        @if (supplier.Custom4 != null && supplier.CustomHeader4 != 0 && supplier.CustomHeader4 != null )
+                        {
+                            <tr class="mytablecell">
+                                <td class="mytablecell" colspan="2">@supplier.Custom4</td>
+                                <td class="mytablecell"></td>
+                                <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.CustomHeader4).ToString("N2")</td>
+                            </tr>
+                        }
+                        @if (supplier.Custom5 != null && supplier.CustomHeader5 != 0 && supplier.CustomHeader5 != null)
+                        {
+                            <tr class="mytablecell">
+                                <td class="mytablecell" colspan="2">@supplier.Custom5</td>
+                                <td class="mytablecell"></td>
+                                <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.CustomHeader5).ToString("N2")</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="2" style="border:0px"></td>
+                            <td class="amountalignheader">Subtotal(Net)</td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.NetAmount).ToString("N2")</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td class="amountalignheader">VAT</td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.VATAmount).ToString("N2")</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td class="amountalignheader">Advance Paid</td>
+                            <td class="mytablecell amountalign">(@Convert.ToDecimal(supplier.AdvancePay).ToString("N2"))</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td class="amountalignheader">Balance Due</td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.BalanceDue).ToString("N2")</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="mypadding">
-            <div class="split left">
-                <h3>@supplier.SupplierName</h3>
-                <h4>@supplier.BusinessAddress</h4>
-            </div>
-            <div class="split right">
-                <h4> Invoice Date : @supplier.InvoiceDate.Value.ToShortDateString()</h4>
-                <h4>Invoice Reference : @supplier.SupplierReference@supplier.InvoiceReferenceId</h4>
-                <br />
-                @if (supplier.TaxReference != null)
-                {
-                    <h4> TAX Referance : @supplier.TaxReference</h4>}
-                @if (supplier.VATAmount != null)
-                {
-                    <h4> VAT Number : @supplier.VATNumber</h4>}
-            </div>
-        </div>
-        <div class="mypadding1">
-            <div class="split left">
-                <h3>To : ADK Consultancy</h3>
-                <h4>Dummy Address</h4>
-                <h4>Dummy Address</h4>
-            </div>
-        </div>
-        <div class="mypadding1">
-            <table class="table-bord" style="width:100%">
-                <thead>
-                    <tr style="padding:3px;" class="mytablecell">
-                        <th class="mytablecell" colspan="3" style="margin-left:10px;border-right:0px">Description</th>
-                        <th class="mytablecell" style="text-align:right;border-left:0px">Amount(GBP)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="mytablecell">
-                        <td colspan="2" class="customdescription mytablecell">Hair Services</td>
-                        <td class="mytablecell"></td>
-                        <td class="mytablecell amountalign">@supplier.HairService</td>
-                    </tr>
-                    <tr class="mytablecell">
-                        <td class="mytablecell" colspan="2">Beauty Services</td>
-                        <td class="mytablecell"></td>
-                        <td class="mytablecell amountalign">@supplier.BeautyService</td>
-                    </tr>
-                    @if (supplier.Custom1 != null && supplier.CustomHeader1 != 0)
-                    {
-                        <tr class="mytablecell">
-                            <td class="mytablecell" colspan="2">@supplier.Custom1</td>
-                            <td class="mytablecell"></td>
-                            <td class="mytablecell amountalign">@supplier.CustomHeader1</td>
-                        </tr>
-                    }
-                    @if (supplier.Custom2 != null && supplier.CustomHeader2 != 0)
-                    {
-                        <tr class="mytablecell">
-                            <td class="mytablecell" colspan="2">@supplier.Custom2</td>
-                            <td class="mytablecell"></td>
-                            <td class="mytablecell amountalign">@supplier.CustomHeader2</td>
-                        </tr>
-                    }
-                    @if (supplier.Custom3 != null && supplier.CustomHeader3 != 0)
-                    {
-                        <tr class="mytablecell">
-                            <td class="mytablecell" colspan="2">@supplier.Custom3</td>
-                            <td class="mytablecell"></td>
-                            <td class="mytablecell amountalign">@supplier.CustomHeader3</td>
-                        </tr>
-                    }
-                    @if (supplier.Custom4 != null && supplier.CustomHeader4 != 0)
-                    {
-                        <tr class="mytablecell">
-                            <td class="mytablecell" colspan="2">@supplier.Custom4</td>
-                            <td class="mytablecell"></td>
-                            <td class="mytablecell amountalign">@supplier.CustomHeader4</td>
-                        </tr>
-                    }
-                    @if (supplier.Custom5 != null && supplier.CustomHeader5 != 0)
-                    {
-                        <tr class="mytablecell">
-                            <td class="mytablecell" colspan="2">@supplier.Custom5</td>
-                            <td class="mytablecell"></td>
-                            <td class="mytablecell amountalign">@supplier.CustomHeader5</td>
-                        </tr>
-                    }
-                    <tr>
-                        <td colspan="2" style="border:0px"></td>
-                        <td class="amountalignheader">Subtotal(Net)</td>
-                        <td class="mytablecell amountalign">@supplier.NetAmount</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"></td>
-                        <td class="amountalignheader">VAT</td>
-                        <td class="mytablecell amountalign">@supplier.VATAmount</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"></td>
-                        <td class="amountalignheader">Advance Paid</td>
-                        <td class="mytablecell amountalign">@supplier.AdvancePay</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"></td>
-                        <td class="amountalignheader">Balance Due</td>
-                        <td class="mytablecell amountalign">@supplier.BalanceDue</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</body>
+    </body>
 </html>
 }
-

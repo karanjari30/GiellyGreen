@@ -10,6 +10,7 @@ using GiellyGreenTeam1.Models;
 
 namespace GiellyGreenTeam1.Controllers
 {
+    [Authorize]
     public class MonthlyInvoicesController : ApiController
     {
         public GiellyGreen_Team1Entities db = new GiellyGreen_Team1Entities();
@@ -53,7 +54,8 @@ namespace GiellyGreenTeam1.Controllers
                     var objectInvoice = db.InsertUpdateInvoice(0, model.Custom1, model.Custom2, model.Custom3, model.Custom4, model.Custom5, model.InvoiceReferenceId, model.InvoiceYear, model.InvoiceMonth, model.InvoiceDate).FirstOrDefault().Id;
                     foreach (var item in model.InvoiceViewList.ToList())
                     {
-                        objectMonthlyInvoice = db.InsertUpdateMonthlyInvoice(0, item.HairService, item.BeautyService, item.CustomHeader1, item.CustomHeader2, item.CustomHeader3, item.CustomHeader4, item.CustomHeader5, item.NetAmount, item.VATAmount, item.GrossAmount, item.AdvancePay, item.BalanceDue, item.IsApprove, item.SupplierId, objectInvoice);
+                        if(item.NetAmount > 0)
+                            objectMonthlyInvoice = db.InsertUpdateMonthlyInvoice(0, item.HairService, item.BeautyService, item.CustomHeader1, item.CustomHeader2, item.CustomHeader3, item.CustomHeader4, item.CustomHeader5, item.NetAmount, item.VATAmount, item.GrossAmount, item.AdvancePay, item.BalanceDue, item.IsApprove, item.SupplierId, objectInvoice);
                     }
                     if (objectInvoice != null && objectMonthlyInvoice != null)
                         objResponse = JsonResponseHelper.JsonMessage(1, "Record Save Successfully", objectMonthlyInvoice);
