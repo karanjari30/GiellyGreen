@@ -32,21 +32,18 @@ namespace GiellyGreenTeam1.Controllers
                 {
                     foreach (var invoice in supplierLIstForPdf)
                     {
-                        if (invoice.NetAmount > 0)
+                        if (invoice.NetAmount > 0 && invoice.logo != null && invoice.logo != "")
                         {
-                            if (invoice.logo != null && invoice.logo != "")
-                                invoice.logo = Path.Combine(HttpContext.Current.Server.MapPath("~/ImageStorage"), invoice.logo);
-
+                            invoice.logo = Path.Combine(HttpContext.Current.Server.MapPath("~/ImageStorage"), invoice.logo);
                             Attachment attPDF = new Attachment(new MemoryStream(controller.getPDF(invoice)), "Invoice.pdf");
                             EmailHelper.SendEmailToSupplier(invoice.EmailAddress, month, year, attPDF);
-
                         }
                     }
                     objResponse = JsonResponseHelper.JsonMessage(1, "Successfully send mail", 1);
                 }
                 else
                 {
-                    objResponse = JsonResponseHelper.JsonMessage(0, "Error", null);
+                    objResponse = JsonResponseHelper.JsonMessage(0, "No Record Found", null);
                 }
             }
             catch (Exception ex)
