@@ -16,6 +16,7 @@ export class SupplierListComponent implements OnInit {
   //Variables/Properties
   fileName: any;
   searchSupplier = '';
+  modalTitle: any;
   tempData: any;
   isEmailDuplicate: boolean = false;
   token: any;
@@ -33,32 +34,26 @@ export class SupplierListComponent implements OnInit {
   isVisible = false;
   validateForm!: FormGroup;
   fileData: any;
-  @ViewChild('logoUpload') logoUpload:any;
-  
+  @ViewChild('logoUpload') logoUpload: any;
+
 
   //this method is for showing modal at the time adding/updating the data
   showModal($event: any): void {
     this.isVisible = true;
     if (!$event) {
+      this.modalTitle = "Add New Supplier";
       this.tempData = null;
       this.validateForm.reset();
     } else {
+      this.modalTitle = "Edit Supplier";
       this.tempData = $event;
-      this.tempLogoData = "data:image/jpeg;base64," + this.tempData.logo;
-      this.validateForm.patchValue({
-        supplierName: this.tempData.SupplierName,
-        supplierRefNo: this.tempData.SupplierReference,
-        businessAddress: this.tempData.BusinessAddress,
-        emailAddress: this.tempData.EmailAddress,
-        phoneNumber: this.tempData.PhoneNumber,
-        companyRegisteredNumber: this.tempData.CompanyRegisterNumber,
-        vatNumber: this.tempData.VATNumber,
-        taxReference: this.tempData.TaxReference,
-        companyAddress: this.tempData.CompanyRegisterAddress,
-        isSupplierActive: this.tempData.Isactive,
-        invoiceLogo: this.tempLogoData
-      })
-
+      if (this.tempData.logo == null || this.tempData.logo == '') {
+        this.tempLogoData = null;
+        this.getPatchValueForEdit();
+      } else {
+        this.tempLogoData = "data:image/jpeg;base64," + this.tempData.logo;
+        this.getPatchValueForEdit();
+      }
     }
 
   }
@@ -85,7 +80,8 @@ export class SupplierListComponent implements OnInit {
   //This method will add suupplier to the database
   addSupplier() {
     this.setDataOfAPIModel();
-    this.apiService.addSupplier().subscribe(
+    this.token = sessionStorage.getItem('userSessionToken');
+    this.apiService.addSupplier(this.token).subscribe(
       (response: any) => {
         if (response.ResponseStatus == 1) {
           this.notification.create(
@@ -97,6 +93,7 @@ export class SupplierListComponent implements OnInit {
           this.fileName = null;
           this.tempLogoData = null;
           this.isVisible = false;
+          this.getDataInTable();
         }
         else {
           this.showStatusNotification(response);
@@ -116,13 +113,14 @@ export class SupplierListComponent implements OnInit {
 
   //This method will fetch the data from the API into the table
   getDataInTable() {
-    this.apiService.getDataSuppliers().subscribe((data: any) => {
+    this.token= sessionStorage.getItem('userSessionToken');
+    this.apiService.getDataSuppliers(this.token).subscribe((data: any) => {
       this.supplierListData = data.Result;
     })
   }
 
   //This is a common method for setting form values in the API model
-  setDataOfAPIModel(){
+  setDataOfAPIModel() {
     this.apiService.supplier.SupplierReference = this.validateForm.value.supplierRefNo;
     this.apiService.supplier.SupplierName = this.validateForm.value.supplierName;
     this.apiService.supplier.BusinessAddress = this.validateForm.value.businessAddress;
@@ -185,6 +183,23 @@ export class SupplierListComponent implements OnInit {
     )
   }
 
+  //This method will fill up all the data in modal form whenever we click on edit button
+  getPatchValueForEdit(){
+    this.validateForm.patchValue({
+      supplierName: this.tempData.SupplierName,
+      supplierRefNo: this.tempData.SupplierReference,
+      businessAddress: this.tempData.BusinessAddress,
+      emailAddress: this.tempData.EmailAddress,
+      phoneNumber: this.tempData.PhoneNumber,
+      companyRegisteredNumber: this.tempData.CompanyRegisterNumber,
+      vatNumber: this.tempData.VATNumber,
+      taxReference: this.tempData.TaxReference,
+      companyAddress: this.tempData.CompanyRegisterAddress,
+      isSupplierActive: this.tempData.Isactive,
+      invoiceLogo: this.tempLogoData
+    })
+  }
+
   //This method is for editing the Supplier record
   editSupplier(supplierId: number) {
     this.setDataOfAPIModel();
@@ -245,7 +260,8 @@ export class SupplierListComponent implements OnInit {
 
   //This method is for changing the Supplier Status from the table
   changeStatus(supplierData: any) {
-    this.apiService.updateSupplierStatus(supplierData.SupplierId, supplierData.Isactive).subscribe(
+    this.token = sessionStorage.getItem('userSessionToken');
+    this.apiService.updateSupplierStatus(supplierData.SupplierId, supplierData.Isactive, this.token).subscribe(
       (response: any) => {
         if (response.ResponseStatus == 1) {
           this.notification.create(
@@ -273,6 +289,7 @@ export class SupplierListComponent implements OnInit {
         reader.readAsDataURL(file);
         reader.onload = () => {
           this.tempLogoData = reader.result
+          console.log(this.tempLogoData);
           this.fileData = this.tempLogoData.split(',')[1];
         };
       } else {
@@ -288,11 +305,19 @@ export class SupplierListComponent implements OnInit {
 
   //This method will remove the uploaded image on button click when the user the is adding/editing the supplier
   removeImage() {
-    this.tempLogoData = null;
+    this.tempLogoData = '';
     this.fileData = null;
     this.logoUpload.nativeElement.value = "";
     // console.log(this .tempLogoData);
     // this.fileData = this.tempLogoData;
+  }
+
+  isMenuCollapsed(){
+    if(this.isCollapsed){
+      this.isCollapsed = false;
+    } else {
+      this.isCollapsed = true;
+    }
   }
 
   constructor(private apiService: ApiDataService, private fb: FormBuilder, private notification: NzNotificationService, private router: Router) {
