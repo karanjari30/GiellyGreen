@@ -96,6 +96,7 @@
           <ScalarProperty Name="InvoiceYear" ColumnName="InvoiceYear" />
           <ScalarProperty Name="InvoiceMonth" ColumnName="InvoiceMonth" />
           <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="VAT" ColumnName="VAT" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

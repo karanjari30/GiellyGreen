@@ -17,12 +17,21 @@ namespace DataAccessLayer.Services
             MapperConfiguration configuration = new MapperConfiguration(x => x.CreateMap<IsActive_Result, GetAllInvoice_Result>());
             Mapper mapper = new Mapper(configuration);
             var objInvoicelists = db.GetAllInvoice(month, year).ToList();
+            decimal vatValue = 0;
+            if (objInvoicelists.Count > 0)
+                vatValue = Convert.ToDecimal(objInvoicelists[0].VAT);
+            else
+                vatValue = Convert.ToDecimal(db.GetCompanyProfile().FirstOrDefault().DefaultVat);
+
             var objActiveSupplier = db.IsActive().ToList();
 
             foreach (var objsupplier in objActiveSupplier)
             {
                 if (objInvoicelists.Where(x => x.SupplierId == objsupplier.SupplierId).FirstOrDefault() == null)
+                {
                     objInvoicelists.Add(mapper.Map<GetAllInvoice_Result>(objsupplier));
+                    objInvoicelists.Where(x => x.SupplierId == Convert.ToInt32(objsupplier.SupplierId)).FirstOrDefault().VAT = vatValue;
+                }
             }
             return objInvoicelists;
         }
