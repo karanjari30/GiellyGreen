@@ -1,4 +1,4 @@
-<nz-modal [nzMaskClosable]="false" nzCentered [(nzVisible)]="isVisible" nzWidth="750px" [nzFooter]="customModalFooter" nzTitle="Add New Supplier"
+<nz-modal [nzMaskClosable]="false" nzCentered [(nzVisible)]="isVisible" nzWidth="750px" [nzFooter]="customModalFooter" nzTitle={{modalTitle}}
     (nzOnCancel)="handleCancel()">
     <ng-container *nzModalContent>
         <form nz-form [formGroup]="validateForm">
@@ -184,12 +184,12 @@
 </nz-modal>
 
 <nz-layout>
-    <nz-sider class="sideMenu" nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <nz-sider class="sideMenu" [nzBreakpoint]="'lg'" nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
         <div>
-            <img src="assets/logo.png" class="logo" alt="logo" cla>
+            <img [src]="isCollapsed == true ? '':'assets/logo.png'"  class="logo" alt="logo" >
         </div>
         <ul nz-menu class="customMenu">
-            <li nz-menu-item class="text-center">
+            <li nz-menu-item class="text-center" nzIcon="user">
                 <a routerLink="/monthly-invoice" class="menuItemCustomColor"><span>MONTHLY INVOICE</span></a>
             </li>
             <li nz-menu-item class="text-center">
@@ -198,18 +198,26 @@
         </ul>
     </nz-sider>
     <nz-layout>
+        <nz-header>
+            <i
+              class="trigger"
+              nz-icon
+              [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+              (click)="isMenuCollapsed()"
+            ></i>
+          </nz-header>
         <nz-content>
             <div class="inner-content">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="row">
-                                <div class="col-sm-12 col-md-3 col-lg-3 mt-3">
+                                <div class="col-sm-3 col-md-3 col-lg-3 mt-3">
                                     <h3>Suppliers List</h3>
                                 </div>
                                 <div class="col-sm-12 col-md-9 col-lg-9">
                                     <div class="row">
-                                        <div class="col-sm-12 col-md-6 col-lg-6 mt-3">
+                                        <div class="col-sm-3 col-md-6 col-lg-6 mt-3">
                                             <nz-input-group [nzPrefix]="suffixIconSearch" class="customSearchInput">
                                                 <input type="text" [(ngModel)]="searchSupplier" (keyup)="searchBySupplierOrReference()" nz-input placeholder="Search here..." />
                                             </nz-input-group>
@@ -217,7 +225,7 @@
                                                 <i nz-icon nzType="search"></i>
                                             </ng-template>
                                         </div>
-                                        <div class="col-sm-12 col-md-3 col-lg-3">
+                                        <div class="col-sm-3 col-md-3 col-lg-3">
                                             <button nz-button class="addSupplierBtn mt-3" (click)="showModal(null)"
                                                 [nzType]="'primary'">
                                                 <fa-icon [icon]="plusIcon" class="me-2"></fa-icon> Add Supplier
@@ -232,7 +240,7 @@
                         <div class="col-sm-12 col-md-12 col-lg-12 mt-5">
                             <div class="table-responsive">
                                 <nz-table #sortTable [nzPageSize]="100" [nzData]="supplierListData"
-                                    nzTableLayout="fixed" [nzScroll]="{ y:'420px'}" class="customTable">
+                                    nzTableLayout="fixed" [nzScroll]="{ y:'420px'}" class="customTable" width="100%">
                                     <thead>
                                         <tr>
                                             <th [nzSortFn]="sortReferenceNoFn">Supplier Reference</th>

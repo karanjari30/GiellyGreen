@@ -20,16 +20,28 @@ body {
   background-color: #00C897 !important;
 }
 
-.ant-checkbox-input {
-  -webkit-appearance: none !important; /*hides the default checkbox*/
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
 }
 
-.ant-checkbox-input:checked {
-  background-color: #00c897 !important;
-  border-color: #00c897 !important;
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
 
-.ant-checkbox-input:checked:before {
-  content: "✔" !important;
-  color: white !important;
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.ant-layout-sider-trigger {
+  font-size: 18px !important;
+  background-color: #2c2b29 !important;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
 }

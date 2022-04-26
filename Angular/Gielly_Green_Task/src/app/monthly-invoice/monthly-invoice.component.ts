@@ -24,6 +24,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   month = null;
   invoiceDate: any;
   monthlyInvoiceData: any;
+  isDataSaved: boolean = false;
   tempMonthlyInvoiceData: any[] = [];
   monthForInvoice: any;
   monthToGetInvoice: any;
@@ -34,6 +35,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   customHeader4: any;
   customHeader5: any;
   arrayOfID: any;
+  token: any;
   invoiceReferenceNumber: any;
   isVisible = false;
   checked = false;
@@ -69,26 +71,24 @@ export class MonthlyInvoiceComponent implements OnInit {
   }
 
   //this method is called whenever a row is selected
-  updateCheckedSet(id: number, checked: boolean): void {
-    if (checked) {
-      this.setOfCheckedId.add(id);
-      console.log(this.setOfCheckedId);
-      this.arrayOfID = Array.from(this.setOfCheckedId);
-
-    } else {
+  updateCheckedSet(id: number): void {
+    if (this.setOfCheckedId.has(id)) {
       this.setOfCheckedId.delete(id);
+      this.arrayOfID = Array.from(this.setOfCheckedId);
+    } else {
+      this.setOfCheckedId.add(id);
       this.arrayOfID = Array.from(this.setOfCheckedId);
     }
   }
 
   //This method will 
-  onItemChecked(id: number, checked: boolean): void {
-    this.updateCheckedSet(id, checked);
+  onItemChecked(id: number): void {
+    this.updateCheckedSet(id);
     this.refreshCheckedStatus();
   }
 
   onAllChecked(value: boolean): void {
-    this.monthlyInvoiceData.forEach((item: any) => this.updateCheckedSet(item.SupplierId, value));
+    this.monthlyInvoiceData.forEach((item: any) => this.updateCheckedSet(item.SupplierId));
     this.refreshCheckedStatus();
   }
 
@@ -106,8 +106,10 @@ export class MonthlyInvoiceComponent implements OnInit {
 
   //This method is for sending email
   sendEmail() {
-    this.apiService.emailSelectedSuppliers(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice).subscribe(
+    this.token = sessionStorage.getItem('userSessionToken');
+    this.apiService.emailSelectedSuppliers(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice, this.token).subscribe(
       (response: any) => {
+        console.log(response)
         if (response.ResponseStatus == 1) {
           Swal.fire({
             title: 'Mailed Successfully!',
@@ -137,7 +139,8 @@ export class MonthlyInvoiceComponent implements OnInit {
 
   //This method is for getting all the invoice data from API
   getInvoicesData(month: number, year: number) {
-    this.apiService.getMonthlyInvoiceData(month, year).subscribe((response: any) => {
+    this.token = sessionStorage.getItem('userSessionToken');
+    this.apiService.getMonthlyInvoiceData(month, year, this.token).subscribe((response: any) => {
       console.log(response.Result);
       this.monthlyInvoiceData = response.Result;
       this.customHeader1 = this.monthlyInvoiceData[0].Custom1;
@@ -152,9 +155,25 @@ export class MonthlyInvoiceComponent implements OnInit {
 
   //This method will save the table into database using API
   saveData() {
+    this.token = sessionStorage.getItem('userSessionToken');
     var monthlyJSONObject: any = this.setMonthlyInvoiceObjectAPIData();
-    console.log("In Save data method: ", monthlyJSONObject);
-    this.apiService.addMonthlyInvoicesData(monthlyJSONObject).subscribe((response: any) => console.log(response));
+    this.apiService.addMonthlyInvoicesData(monthlyJSONObject, this.token).subscribe(
+      (response: any) => {
+        if (response.ResponseStatus == 1) {
+          this.notification.create(
+            'success',
+            'Success',
+            'Data saved successfully!'
+          );
+          this.isDataSaved = true;
+        } else {
+          this.notification.create(
+            'error',
+            'Error',
+            'Failed to save data. Please try again!'
+          );
+        }
+      });
   }
 
   setMonthlyInvoiceObjectAPIData() {
@@ -185,21 +204,25 @@ export class MonthlyInvoiceComponent implements OnInit {
 
   //This method is for approving the suppliers usign SupplierId
   approveSelectedSupplier() {
-    this.apiService.approveSupplier(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice).subscribe(
+    this.token = sessionStorage.getItem('userSessionToken');
+    this.apiService.approveSupplier(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice, this.token).subscribe(
       (response: any) => {
         // console.log(response)
         if (response.ResponseStatus == 1) {
-          this.notification.create(
-            'success',
-            'Success',
-            'Supplier(s) successfully approved!'
-          );
+          Swal.fire({
+            title: 'Approved!',
+            text: 'You just approved invoices.',
+            icon: 'success',
+            confirmButtonText: 'Ok',
+          });
+          this.getInvoicesData(this.monthToGetInvoice, this.yearToGetInvoice);
         } else {
-          this.notification.create(
-            'error',
-            'Error',
-            'Failed to approve supplier(s)'
-          );
+          Swal.fire({
+            title: 'Error',
+            text: 'Failed to approve invoices. Please try again later!',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
         }
       }
     )
@@ -210,12 +233,12 @@ export class MonthlyInvoiceComponent implements OnInit {
     return data.NetAmount = data.HairService + data.BeautyService + data.CustomHeader1 + data.CustomHeader2 + data.CustomHeader3 + data.CustomHeader4 + data.CustomHeader5;
   }
 
-   //This method will return VAT amount
+  //This method will return VAT amount
   getVATAmount(data: any) {
     return data.VATAmount = data.NetAmount * 0.2;
   }
 
-   //This method will return gross amount
+  //This method will return gross amount
   getGrossAmount(data: any) {
     return data.GrossAmount = data.NetAmount + data.VATAmount;
   }
@@ -281,14 +304,30 @@ export class MonthlyInvoiceComponent implements OnInit {
 
   //This method will return a base64 string
   downloadCombinePDF() {
-    this.apiService.downloadPDF(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice).subscribe(
+    this.token = sessionStorage.getItem('userSessionToken');
+    this.apiService.downloadPDF(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice, this.token).subscribe(
       (response: any) => {
         console.log(response)
-         if (response.ResponseStatus == 1) {
-           this.createPDF(response.Result, response.Message);
-         }
+        if (response.ResponseStatus == 1) {
+          this.createPDF(response.Result, response.Message);
+        } else {
+          this.notification.create(
+            'error',
+            'Error',
+            'You cannot download PDF as the data for supplier is not present.'
+          );
+        }
       }
     )
+  }
+
+
+  isMenuCollapsed(){
+    if(this.isCollapsed){
+      this.isCollapsed = false;
+    } else {
+      this.isCollapsed = true;
+    }
   }
 
   constructor(private apiService: ApiDataService, private router: Router, private fb: FormBuilder, public datepipe: DatePipe, private notification: NzNotificationService) { }
@@ -297,5 +336,6 @@ export class MonthlyInvoiceComponent implements OnInit {
     if (!sessionStorage.getItem('userSessionToken')) {
       this.router.navigate(['/login']);
     }
+    this.isDataSaved = false;
   }
 }

@@ -22,6 +22,18 @@
   top: 30px;
 }
 
+.trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
 nz-header {
   background: #fff;
   padding: 0;
@@ -112,14 +124,38 @@ th {
   opacity: 0.5;
 }
 
+.customCheckBox {
+  -webkit-appearance: none !important; /*hides the default checkbox*/
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 10px;
+  bottom: 10px;
+  transition: 0.1s;
+  background-color: #cfd3d866;
+  text-align: center;
+  font-weight: 200;
+  color: white;
+  border-radius: 3px;
+  outline: none;
+}
 
+.customCheckBox:checked {
+  background-color: #00c897 !important;
+  border-color: #00c897 !important;
+}
+
+.customCheckBox:checked:before {
+  content: "✔" !important;
+  color: white !important;
+}
 
 @page {
   size: auto !important;
 }
 
 @media print {
-  body {
+  table {
     -webkit-print-color-adjust: exact;
   }
 
@@ -133,6 +169,5 @@ th {
 
   nz-layout{
     display: none !important;
-  }
-  
+  }  
 } 
