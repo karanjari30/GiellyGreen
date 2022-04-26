@@ -19,6 +19,8 @@ namespace GiellyGreenTeam1.Models
         public Nullable<int> InvoiceMonth { get; set; }
         public Nullable<System.DateTime> InvoiceDate { get; set; }
 
+        public Nullable<decimal> VAT { get; set; }
+
         public List<MontlyInvoiceView> InvoiceViewList { get; set;}
     }
 }

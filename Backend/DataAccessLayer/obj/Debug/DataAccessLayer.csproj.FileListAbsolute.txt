@@ -48,3 +48,5 @@ D:\Gieely_Green\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.dll
 D:\Gieely_Green\Backend\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
 D:\Gieely_Green\Backend\DataAccessLayer\bin\Debug\AutoMapper.dll
 D:\Gieely_Green\Backend\DataAccessLayer\bin\Debug\AutoMapper.xml
+D:\Self Invoice\Backend\DataAccessLayer\bin\Debug\AutoMapper.dll
+D:\Self Invoice\Backend\DataAccessLayer\bin\Debug\AutoMapper.xml

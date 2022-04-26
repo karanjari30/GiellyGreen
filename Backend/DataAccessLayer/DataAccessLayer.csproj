@@ -56,10 +56,16 @@
   <ItemGroup>
     <Compile Include="Interface\IMonthlyInvoice.cs" />
     <Compile Include="Interface\ISupplierRepository.cs" />
+    <Compile Include="Model\CompanyProfile.cs">
+      <DependentUpon>SupplierData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DeleteSupplier_Result.cs">
       <DependentUpon>SupplierData.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GetAllInvoice_Result.cs">
+      <DependentUpon>SupplierData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetCompanyProfile_Result.cs">
       <DependentUpon>SupplierData.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GetSupplierByInvoiceMonth_Result.cs">

@@ -30,6 +30,7 @@ namespace DataAccessLayer.Model
         public Nullable<int> InvoiceYear { get; set; }
         public Nullable<int> InvoiceMonth { get; set; }
         public Nullable<System.DateTime> InvoiceDate { get; set; }
+        public Nullable<decimal> VAT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MonthlyInvoice> MonthlyInvoices { get; set; }
