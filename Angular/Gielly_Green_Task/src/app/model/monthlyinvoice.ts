@@ -9,6 +9,7 @@ export interface Monthlyinvoice {
     InvoiceYear: number;
     InvoiceMonth: number;
     InvoiceDate: string;
+    VAT: number,
     InvoiceViewList: 
     [
         {

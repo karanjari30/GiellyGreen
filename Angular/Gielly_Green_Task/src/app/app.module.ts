@@ -22,6 +22,7 @@ import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { MonthlyInvoiceComponent } from './monthly-invoice/monthly-invoice.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
@@ -33,6 +34,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { DatePipe, DecimalPipe } from '@angular/common'
 import { NgxPrintModule } from 'ngx-print';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { ProfileComponent } from './profile/profile.component';
 
 registerLocaleData(en);
 
@@ -42,6 +44,7 @@ registerLocaleData(en);
     LoginComponent,
     SupplierListComponent,
     MonthlyInvoiceComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +73,7 @@ registerLocaleData(en);
     NgxPrintModule,
     NzPopconfirmModule,
     NzDatePickerModule,
+    NzDropDownModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, DatePipe, DecimalPipe],
   bootstrap: [AppComponent]

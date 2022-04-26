@@ -9,7 +9,7 @@
   margin-top: 100px;
 }
 
-.customMenuIcons{
+.customMenuIcons {
   font-size: 18px;
   color: #c99d4a !important;
 }
@@ -19,15 +19,15 @@
   text-decoration: none;
 }
 
-.customMarginForMenu{
+.customMarginForMenu {
   margin-left: 90%;
 }
 
 .trigger {
   font-size: 18px;
   padding: 0 20px;
-  color: #c99d4a;
   cursor: pointer;
+  color: #c99d4a;
   transition: color 0.3s;
 }
 
@@ -57,46 +57,4 @@ nz-content {
   width: 100%;
   background: #fff;
   min-height: 100vh;
-}
-
-.customSearchInput {
-  margin-left: 50%;
-}
-
-.addSupplierBtn {
-  margin-left: 115%;
-  background-color: #c99d4a;
-  color: white;
-  border-color: #c99d4a;
-}
-
-th {
-  background-color: #2c2b29 !important;
-  color: #FFFFFF !important;
-}
-
-.customContainer{
-  max-height: 400px;
-  overflow-y: scroll;
-}
-
-.uploadLogo{
-  font-size: 15px;
-}
-
-.saveButton{
-  background: #2C2B29;
-  color:#FFFFFF;
-}
-
-.fileInput{
-  display:none !important;
-}
-
-.hideImageBox{
-  display: none;
-}
-
-.ant-switch-checked{
-  background-color: none !important;
 }
