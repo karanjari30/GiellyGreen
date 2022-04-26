@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTruck, faFileInvoiceDollar, faEllipsisVertical, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import { ApiDataService } from '../api-data.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -21,8 +21,14 @@ export class MonthlyInvoiceComponent implements OnInit {
 
   isCollapsed = false;
   approveButtonIcon = faCheck;
+  supplierIcon = faTruck;
+  invoiceIcon = faFileInvoiceDollar;
+  menuIcon = faEllipsisVertical;
   month = null;
+  globalVAT:number = 0;
   invoiceDate: any;
+  profileIcon = faUser;
+  logoutIcon = faRightFromBracket;
   monthlyInvoiceData: any;
   isDataSaved: boolean = false;
   tempMonthlyInvoiceData: any[] = [];
@@ -57,13 +63,14 @@ export class MonthlyInvoiceComponent implements OnInit {
     this.isVisible = true;
     this.monthToGetInvoice = this.datepipe.transform(date, 'MM');
     this.yearToGetInvoice = date.getFullYear();
+    this.invoiceReferenceNumber = this.datepipe.transform(date, "MMM") + date.getFullYear();
+    // this.invoiceReferenceNumber = this.datepipe.transform(date, 'MMM/yyyy')?.split('/');
     date = new Date();
     this.invoiceDate = this.datepipe.transform(date, 'yyyy/MM/dd');
     // this.invoiceDate = this.datepipe.transform(date, 'yyyy/MM/dd');
     this.monthForInvoice = String(this.monthToGetInvoice + "/" + this.yearToGetInvoice);
     this.counter++;
     this.getInvoicesData(this.monthToGetInvoice, this.yearToGetInvoice)
-
   }
 
   onDateChange(date: any) {
@@ -148,8 +155,9 @@ export class MonthlyInvoiceComponent implements OnInit {
       this.customHeader3 = this.monthlyInvoiceData[0].Custom3;
       this.customHeader4 = this.monthlyInvoiceData[0].Custom4;
       this.customHeader5 = this.monthlyInvoiceData[0].Custom5;
+      this.globalVAT = this.monthlyInvoiceData[0].VAT;
       this.onCurrentPageDataChange(response.Result);
-      this.invoiceReferenceNumber = this.monthlyInvoiceData[0].InvoiceReferenceId;
+      // this.invoiceReferenceNumber = this.monthlyInvoiceData[0].InvoiceReferenceId;
     })
   }
 
@@ -187,6 +195,7 @@ export class MonthlyInvoiceComponent implements OnInit {
       InvoiceYear: this.yearToGetInvoice,
       InvoiceMonth: this.monthToGetInvoice,
       InvoiceDate: this.invoiceDate,
+      VAT:this.globalVAT,
       InvoiceViewList: this.monthlyInvoiceData
     }
     return body;
@@ -235,7 +244,7 @@ export class MonthlyInvoiceComponent implements OnInit {
 
   //This method will return VAT amount
   getVATAmount(data: any) {
-    return data.VATAmount = data.NetAmount * 0.2;
+    return data.VATAmount = data.NetAmount * (this.globalVAT / 100);
   }
 
   //This method will return gross amount
@@ -321,7 +330,6 @@ export class MonthlyInvoiceComponent implements OnInit {
     )
   }
 
-
   isMenuCollapsed(){
     if(this.isCollapsed){
       this.isCollapsed = false;
@@ -329,7 +337,12 @@ export class MonthlyInvoiceComponent implements OnInit {
       this.isCollapsed = true;
     }
   }
-
+  
+  logout(){
+    sessionStorage.removeItem('userSessionToken');
+    this.router.navigate(['/login']);
+  }
+  
   constructor(private apiService: ApiDataService, private router: Router, private fb: FormBuilder, public datepipe: DatePipe, private notification: NzNotificationService) { }
 
   ngOnInit(): void {
@@ -337,5 +350,6 @@ export class MonthlyInvoiceComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     this.isDataSaved = false;
+    this.isCollapsed = false;
   }
 }

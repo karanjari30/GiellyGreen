@@ -1,0 +1,116 @@
+<nz-layout>
+    <nz-sider class="sideMenu" [nzBreakpoint]="'lg'" nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+        <div>
+            <img [src]="isCollapsed == true ? '':'assets/logo.png'" class="logo" alt="logo">
+        </div>
+        <ul nz-menu class="customMenu" nzMode="inline">
+            <li nz-menu-item class="text-center">
+                <a routerLink="/monthly-invoice" routerLinkActive="active" class="menuItemCustomColor">
+                    <span *ngIf="isCollapsed">
+                        <fa-icon [icon]="invoiceIcon" class="customMenuIcons"></fa-icon>
+                    </span>
+                    <span *ngIf="isCollapsed == false">MONTHLY INVOICE</span>
+                </a>
+            </li>
+            <li nz-menu-item class="text-center">
+                <a routerLink="/suppliers-list" routerLinkActive="active" class="menuItemCustomColor">
+                    <span *ngIf="isCollapsed">
+                        <fa-icon [icon]="supplierIcon" class="customMenuIcons"></fa-icon>
+                    </span>
+                    <span *ngIf="isCollapsed == false">SUPPLIERS LIST</span>
+                </a>
+            </li>
+        </ul>
+    </nz-sider>
+    <nz-layout>
+        <nz-header>
+            <div class="row">
+                <div class="col-11">
+                    <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+                        (click)="isMenuCollapsed()"></i>
+                </div>
+                <div class="col-1">
+                    <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+                        <fa-icon [icon]="menuIcon" class="customMenuIcons"></fa-icon>
+                    </a>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu>
+                            <li nz-menu-item>
+                                <a routerLink="/profile" class="text-dark text-decoration-none"> <span class="me-2">
+                                        <fa-icon [icon]="profileIcon" class="customMenuIcons"></fa-icon>
+                                    </span> Profile</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="logout()"><span class="me-2">
+                                        <fa-icon [icon]="logoutIcon" class="customMenuIcons"></fa-icon>
+                                    </span> Logout</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </div>
+            </div>
+        </nz-header>
+        <nz-content>
+            <div class="inner-content">
+                <div class="container-fluid">
+                    <div class="row p-3 d-flex justify-content-center">
+                        <h4>Profile</h4>
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <form nz-form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+                                <div class="col-12">
+                                    <nz-form-label [nzSpan]="20">Company Name</nz-form-label>
+                                    <nz-form-item>
+                                        <nz-form-control [nzSpan]="15">
+                                            <input class="form-control" nz-input formControlName="companyName" name="companyName" />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div class="col-12 ">
+                                    <nz-form-label [nzSpan]="7">Address Line</nz-form-label>
+                                    <nz-form-item>
+                                        <nz-form-control [nzSpan]="15">
+                                            <textarea class="form-control" formControlName="addressLine" name="addressLine" nz-input rows="2"></textarea>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div class="col-12">
+                                    <nz-form-label [nzSpan]="20">City</nz-form-label>
+                                    <nz-form-item>
+                                        <nz-form-control [nzSpan]="15">
+                                            <input class="form-control" nz-input formControlName="city" name="city" />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div class="col-12">
+                                    <nz-form-label [nzSpan]="20">Zip Code</nz-form-label>
+                                    <nz-form-item>
+                                        <nz-form-control [nzSpan]="15">
+                                            <input class="form-control" nz-input formControlName="zipCode" name="zipCode" />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div class="col-12">
+                                    <nz-form-label [nzSpan]="20">Country</nz-form-label>
+                                    <nz-form-item>
+                                        <nz-form-control [nzSpan]="15">
+                                            <input class="form-control" nz-input formControlName="country" name="country" />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <div class="col-12">
+                                    <nz-form-label [nzSpan]="20">Default Vat</nz-form-label>
+                                    <nz-form-item>
+                                        <nz-form-control [nzSpan]="15">
+                                            <input type="number" class="form-control" nz-input formControlName="defaultVat" name="defaultVat" />
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                                <button nz-button class="btn btn-success">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nz-content>
+    </nz-layout>
+</nz-layout>

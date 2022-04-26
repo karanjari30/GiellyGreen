@@ -1,5 +1,5 @@
-<nz-modal [nzMaskClosable]="false" nzCentered [(nzVisible)]="isVisible" nzWidth="750px" [nzFooter]="customModalFooter" nzTitle={{modalTitle}}
-    (nzOnCancel)="handleCancel()">
+<nz-modal [nzMaskClosable]="false" nzCentered [(nzVisible)]="isVisible" nzWidth="750px" [nzFooter]="customModalFooter"
+    nzTitle={{modalTitle}} (nzOnCancel)="handleCancel()">
     <ng-container *nzModalContent>
         <form nz-form [formGroup]="validateForm">
             <div class="container-fluid customContainer">
@@ -9,8 +9,8 @@
                         <nz-form-item>
                             <nz-form-control [nzSpan]="24" nzValidatingTip="Validating..."
                                 [nzErrorTip]="supplierRefNoError">
-                                <input #supplierReferenceNo class="form-control" nz-input formControlName="supplierRefNo"
-                                    name="supplierRefNo"/>
+                                <input #supplierReferenceNo class="form-control" nz-input
+                                    formControlName="supplierRefNo" name="supplierRefNo" />
                                 <ng-template #supplierRefNoError let-control>
                                     <ng-container *ngIf="control.hasError('required')">Please enter supplier reference
                                         number</ng-container>
@@ -58,9 +58,9 @@
                         <nz-form-item>
                             <nz-form-control [nzSpan]="24" [nzErrorTip]="emailErr">
                                 <input nz-input class="form-control" formControlName="emailAddress" id="emailAddress"
-                                    email="true"/>
+                                    email="true" />
                             </nz-form-control>
-                            
+
                             <ng-template #emailErr let-control>
                                 <ng-container *ngIf="control.hasError('required')">
                                     Please enter email
@@ -153,14 +153,20 @@
                         <nz-form-label [nzSpan]="12">Upload Supplier Logo</nz-form-label>
                         <nz-form-item>
                             <nz-form-control [nzSpan]="24">
-                                <input nz-input formControlName="invoiceLogo" type="file" class="fileInput" accept=".png, .jpeg, .jpg" #logoUpload (change)="onFileSelected($event)" #fileUpload>
+                                <input nz-input formControlName="invoiceLogo" type="file" class="fileInput"
+                                    accept=".png, .jpeg, .jpg" #logoUpload (change)="onFileSelected($event)"
+                                    #fileUpload>
                                 <div>
                                     <button nz-button (click)="fileUpload.click()">
                                         <fa-icon [icon]="uploadIcon" class="text-dark me-1"></fa-icon> Upload here
                                     </button><br>
-                                    <img [src]="tempLogoData" [ngClass]="tempLogoData == null ? 'hideImageBox':''" class="mt-2 me-2" height="200" width="200">
+                                    <img [src]="tempLogoData" [ngClass]="tempLogoData == null ? 'hideImageBox':''"
+                                        class="mt-2 me-2" height="200" width="200">
                                     <br>
-                                    <button [ngClass]="tempLogoData == null ? 'hideImageBox':''" class="btn text-danger" (click)="removeImage()"><fa-icon [icon]="iconDelete"></fa-icon> Delete</button>
+                                    <button [ngClass]="tempLogoData == null ? 'hideImageBox':''" class="btn text-danger"
+                                        (click)="removeImage()">
+                                        <fa-icon [icon]="iconDelete"></fa-icon> Delete
+                                    </button>
                                 </div>
                             </nz-form-control>
                         </nz-form-item>
@@ -186,26 +192,51 @@
 <nz-layout>
     <nz-sider class="sideMenu" [nzBreakpoint]="'lg'" nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
         <div>
-            <img [src]="isCollapsed == true ? '':'assets/logo.png'"  class="logo" alt="logo" >
+            <img [src]="isCollapsed == true ? '':'assets/logo.png'" class="logo" alt="logo">
         </div>
-        <ul nz-menu class="customMenu">
-            <li nz-menu-item class="text-center" nzIcon="user">
-                <a routerLink="/monthly-invoice" class="menuItemCustomColor"><span>MONTHLY INVOICE</span></a>
+        <ul nz-menu class="customMenu" nzMode="inline">
+            <li nz-menu-item class="text-center">
+                <a routerLink="/monthly-invoice" routerLinkActive="active" class="menuItemCustomColor">
+                    <span *ngIf="isCollapsed">
+                        <fa-icon [icon]="invoiceIcon" class="customMenuIcons"></fa-icon>
+                    </span>
+                    <span *ngIf="isCollapsed == false">MONTHLY INVOICE</span>
+                </a>
             </li>
             <li nz-menu-item class="text-center">
-                <a routerLink="/suppliers-list" class="menuItemCustomColor"><span>SUPPLIERS LIST</span></a>
+                <a routerLink="/suppliers-list" routerLinkActive="active" class="menuItemCustomColor">
+                    <span *ngIf="isCollapsed">
+                        <fa-icon [icon]="supplierIcon" class="customMenuIcons"></fa-icon>
+                    </span>
+                    <span *ngIf="isCollapsed == false">SUPPLIERS LIST</span>
+                </a>
             </li>
         </ul>
     </nz-sider>
     <nz-layout>
         <nz-header>
-            <i
-              class="trigger"
-              nz-icon
-              [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-              (click)="isMenuCollapsed()"
-            ></i>
-          </nz-header>
+            <div class="row">
+                <div class="col-11">
+                    <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+                        (click)="isMenuCollapsed()"></i>
+                </div>
+                <div class="col-1">
+                    <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+                        <fa-icon [icon]="menuIcon" class="customMenuIcons"></fa-icon>
+                    </a>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu>
+                            <li nz-menu-item>
+                                <a routerLink="/profile" class="text-dark text-decoration-none"> <span class="me-2"><fa-icon [icon]="profileIcon" class="customMenuIcons"></fa-icon></span> Profile</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="logout()"><span class="me-2" ><fa-icon [icon]="logoutIcon" class="customMenuIcons"></fa-icon></span> Logout</a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </div>
+            </div>
+        </nz-header>
         <nz-content>
             <div class="inner-content">
                 <div class="container">
@@ -219,7 +250,9 @@
                                     <div class="row">
                                         <div class="col-sm-3 col-md-6 col-lg-6 mt-3">
                                             <nz-input-group [nzPrefix]="suffixIconSearch" class="customSearchInput">
-                                                <input type="text" [(ngModel)]="searchSupplier" (keyup)="searchBySupplierOrReference()" nz-input placeholder="Search here..." />
+                                                <input type="text" [(ngModel)]="searchSupplier"
+                                                    (keyup)="searchBySupplierOrReference()" nz-input
+                                                    placeholder="Search here..." />
                                             </nz-input-group>
                                             <ng-template #suffixIconSearch>
                                                 <i nz-icon nzType="search"></i>
@@ -254,14 +287,16 @@
                                             <td>{{data.SupplierReference}}</td>
                                             <td>{{data.SupplierName}}</td>
                                             <td>
-                                                <nz-switch [(ngModel)]='data.Isactive' class="customSwitch" (ngModelChange)="changeStatus(data)"></nz-switch>
+                                                <nz-switch [(ngModel)]='data.Isactive' class="customSwitch"
+                                                    (ngModelChange)="changeStatus(data)"></nz-switch>
                                             </td>
                                             <td>
                                                 <a (click)="showModal(data)">
                                                     <fa-icon [icon]="editIcon" class="text-dark"></fa-icon>
                                                 </a>
                                                 <nz-divider nzType="vertical"></nz-divider>
-                                                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="deleteSupplier(data.SupplierId)">
+                                                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?"
+                                                    (nzOnConfirm)="deleteSupplier(data.SupplierId)">
                                                     <fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon>
                                                 </a>
                                             </td>

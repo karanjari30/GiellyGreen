@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { faPen, faPlus, faTrash, faArrowUpFromBracket, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faPlus, faTrash, faArrowUpFromBracket, faXmark, faTruck, faFileInvoiceDollar, faEllipsisVertical, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { ApiDataService } from '../api-data.service';
-// import Swal from 'sweetalert2';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { Router } from '@angular/router';
 
@@ -26,6 +25,11 @@ export class SupplierListComponent implements OnInit {
   plusIcon = faPlus;
   deleteIcon = faTrash;
   iconDelete = faXmark;
+  profileIcon = faUser;
+  menuIcon = faEllipsisVertical;
+  logoutIcon = faRightFromBracket;
+  supplierIcon = faTruck;
+  invoiceIcon = faFileInvoiceDollar;
   supplierListData: any;
   sortNameFn = (a: ApiDataService["supplier"], b: ApiDataService["supplier"]) => a.SupplierName.localeCompare(b.SupplierName);
   sortReferenceNoFn = (a: ApiDataService["supplier"], b: ApiDataService["supplier"]) => a.SupplierReference.localeCompare(b.SupplierReference);
@@ -289,7 +293,6 @@ export class SupplierListComponent implements OnInit {
         reader.readAsDataURL(file);
         reader.onload = () => {
           this.tempLogoData = reader.result
-          console.log(this.tempLogoData);
           this.fileData = this.tempLogoData.split(',')[1];
         };
       } else {
@@ -320,10 +323,15 @@ export class SupplierListComponent implements OnInit {
     }
   }
 
+  logout(){
+    sessionStorage.removeItem('userSessionToken');
+    this.router.navigate(['/login']);
+  }
+
   constructor(private apiService: ApiDataService, private fb: FormBuilder, private notification: NzNotificationService, private router: Router) {
     this.validateForm = this.fb.group({
       supplierRefNo: [null, [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$'), Validators.maxLength(15)]],
-      supplierName: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      supplierName: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$'), Validators.maxLength(30)]],
       businessAddress: [null, Validators.maxLength(150)],
       emailAddress: [null, [Validators.required, Validators.email]],
       phoneNumber: [null, [Validators.pattern('^[0-9]*$'), Validators.maxLength(15)]],
@@ -342,6 +350,7 @@ export class SupplierListComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     this.tempLogoData = null;
+    this.isCollapsed = false;
     this.getDataInTable();
   }
 }

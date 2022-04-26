@@ -3,25 +3,44 @@
         <div>
             <img [src]="isCollapsed == true ? '':'assets/logo.png'" class="logo" alt="logo">
         </div>
-        <ul nz-menu class="customMenu">
+        <ul nz-menu class="customMenu" nzMode="inline">
             <li nz-menu-item class="text-center">
-                <a routerLink="/monthly-invoice" routerLinkActive="active" class="menuItemCustomColor"><span>MONTHLY
-                        INVOICE</span></a>
+                <a routerLink="/monthly-invoice" routerLinkActive="active" class="menuItemCustomColor">
+                    <span *ngIf="isCollapsed"><fa-icon [icon]="invoiceIcon" class="customMenuIcons" ></fa-icon></span>
+                    <span *ngIf="isCollapsed == false">MONTHLY INVOICE</span>
+                </a>
             </li>
             <li nz-menu-item class="text-center">
-                <a routerLink="/suppliers-list" routerLinkActive="active" class="menuItemCustomColor"><span>SUPPLIERS
-                        LIST</span></a>
+                <a routerLink="/suppliers-list" routerLinkActive="active" class="menuItemCustomColor">
+                    <span *ngIf="isCollapsed"><fa-icon [icon]="supplierIcon" class="customMenuIcons"></fa-icon></span>
+                    <span *ngIf="isCollapsed == false">SUPPLIERS LIST</span>
+                </a>
             </li>
         </ul>
     </nz-sider>
     <nz-layout>
         <nz-header>
-            <i
-              class="trigger"
-              nz-icon
-              [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-              (click)="isMenuCollapsed()"
-            ></i>
+            <div class="row">
+                <div class="col-11">
+                    <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+                        (click)="isMenuCollapsed()"></i>
+                </div>
+                <div class="col-1">
+                    <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+                        <fa-icon [icon]="menuIcon" class="customMenuIcons"></fa-icon>
+                    </a>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu>
+                            <li nz-menu-item>
+                                <a routerLink="/profile" class="text-dark text-decoration-none"><span class="me-2"><fa-icon [icon]="profileIcon" class="customMenuIcons"></fa-icon></span> Profile</a>
+                            </li>
+                            <li nz-menu-item>
+                                <a (click)="logout()"><span class="me-2"><fa-icon [icon]="logoutIcon" class="customMenuIcons"></fa-icon></span> Logout </a>
+                            </li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </div>
+            </div>
           </nz-header>
         <nz-content>
             <div class="inner-content">
