@@ -240,6 +240,7 @@
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\MonthlyInvoicesController.cs" />
     <Compile Include="Controllers\PDFController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -250,6 +251,7 @@
     <Compile Include="Helper\LogoHelper.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CompanyProfileViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\JsonResponse.cs" />

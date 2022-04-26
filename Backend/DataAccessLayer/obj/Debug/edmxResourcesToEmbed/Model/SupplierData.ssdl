@@ -1,5 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="GiellyGreen_Team1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CompanyProfile">
+    <Key>
+      <PropertyRef Name="CId" />
+    </Key>
+    <Property Name="CId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyName" Type="nvarchar" MaxLength="100" />
+    <Property Name="AddressLine" Type="nvarchar" MaxLength="150" />
+    <Property Name="City" Type="nvarchar" MaxLength="150" />
+    <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="Country" Type="nvarchar" MaxLength="100" />
+    <Property Name="DefaultVat" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
   <EntityType Name="Invoice">
     <Key>
       <PropertyRef Name="InvoiceId" />
@@ -14,6 +26,7 @@
     <Property Name="InvoiceYear" Type="int" />
     <Property Name="InvoiceMonth" Type="int" />
     <Property Name="InvoiceDate" Type="date" />
+    <Property Name="VAT" Type="decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="MonthlyInvoice">
     <Key>
@@ -94,6 +107,7 @@
     <Parameter Name="InvoiceMonth" Type="int" Mode="In" />
     <Parameter Name="InvoiceYear" Type="int" Mode="In" />
   </Function>
+  <Function Name="GetCompanyProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="GetSupplierByInvoiceMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="InvoiceMonth" Type="datetime" Mode="In" />
   </Function>
@@ -103,6 +117,15 @@
     <Parameter Name="InvoiceYear" Type="int" Mode="In" />
   </Function>
   <Function Name="GetSuppliers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="InsertUpdateCompanyProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CId" Type="int" Mode="In" />
+    <Parameter Name="CompanyName" Type="nvarchar" Mode="In" />
+    <Parameter Name="AddressLine" Type="nvarchar" Mode="In" />
+    <Parameter Name="City" Type="nvarchar" Mode="In" />
+    <Parameter Name="ZipCode" Type="nvarchar" Mode="In" />
+    <Parameter Name="Country" Type="nvarchar" Mode="In" />
+    <Parameter Name="DefaultVat" Type="decimal" Mode="In" />
+  </Function>
   <Function Name="InsertUpdateInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="InvoiceId" Type="int" Mode="In" />
     <Parameter Name="Custom1" Type="nvarchar" Mode="In" />
@@ -149,6 +172,7 @@
   </Function>
   <Function Name="IsActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="GiellyGreen_Team1ModelStoreContainer">
+    <EntitySet Name="CompanyProfile" EntityType="Self.CompanyProfile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MonthlyInvoice" EntityType="Self.MonthlyInvoice" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />

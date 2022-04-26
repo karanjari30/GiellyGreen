@@ -5,9 +5,10 @@
     "\\Backend\\GiellyGreenTeam1",
     "\\Backend\\GiellyGreenTeam1\\Content",
     "\\Backend\\GiellyGreenTeam1\\Controllers",
+    "\\Backend\\GiellyGreenTeam1\\CustomSwagger",
     "\\Backend\\GiellyGreenTeam1\\Views",
     "\\Backend\\GiellyGreenTeam1\\Views\\Home"
   ],
-  "SelectedNode": "\\Backend\\GiellyGreenTeam1\\Views\\Home\\Pdf.cshtml",
+  "SelectedNode": "\\Backend\\GiellyGreenTeam1\\CustomSwagger\\SwaggerUiCustomization.js",
   "PreviewInSolutionExplorer": false
 }

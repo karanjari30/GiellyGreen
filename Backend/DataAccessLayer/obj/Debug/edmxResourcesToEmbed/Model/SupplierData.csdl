@@ -27,18 +27,6 @@
       <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
     </FunctionImport>
     <FunctionImport Name="GetSuppliers" ReturnType="Collection(GiellyGreen_Team1Model.GetSuppliers_Result)" />
-    <FunctionImport Name="InsertUpdateInvoice" ReturnType="Collection(GiellyGreen_Team1Model.InsertUpdateInvoice_Result)">
-      <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
-      <Parameter Name="Custom1" Mode="In" Type="String" />
-      <Parameter Name="Custom2" Mode="In" Type="String" />
-      <Parameter Name="Custom3" Mode="In" Type="String" />
-      <Parameter Name="Custom4" Mode="In" Type="String" />
-      <Parameter Name="Custom5" Mode="In" Type="String" />
-      <Parameter Name="InvoiceReferenceId" Mode="In" Type="String" />
-      <Parameter Name="InvoiceYear" Mode="In" Type="Int32" />
-      <Parameter Name="InvoiceMonth" Mode="In" Type="Int32" />
-      <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
-    </FunctionImport>
     <FunctionImport Name="InsertUpdateMonthlyInvoice">
       <Parameter Name="MontlyInvoiceId" Mode="In" Type="Int32" />
       <Parameter Name="HairService" Mode="In" Type="Decimal" />
@@ -82,6 +70,29 @@
       <Parameter Name="InvoiceMonth" Mode="In" Type="Int32" />
       <Parameter Name="InvoiceYear" Mode="In" Type="Int32" />
     </FunctionImport>
+    <EntitySet Name="CompanyProfiles" EntityType="GiellyGreen_Team1Model.CompanyProfile" />
+    <FunctionImport Name="GetCompanyProfile" ReturnType="Collection(GiellyGreen_Team1Model.GetCompanyProfile_Result)" />
+    <FunctionImport Name="InsertUpdateCompanyProfile">
+      <Parameter Name="CId" Mode="In" Type="Int32" />
+      <Parameter Name="CompanyName" Mode="In" Type="String" />
+      <Parameter Name="AddressLine" Mode="In" Type="String" />
+      <Parameter Name="City" Mode="In" Type="String" />
+      <Parameter Name="ZipCode" Mode="In" Type="String" />
+      <Parameter Name="Country" Mode="In" Type="String" />
+      <Parameter Name="DefaultVat" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="InsertUpdateInvoice" ReturnType="Collection(GiellyGreen_Team1Model.InsertUpdateInvoice_Result)">
+      <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
+      <Parameter Name="Custom1" Mode="In" Type="String" />
+      <Parameter Name="Custom2" Mode="In" Type="String" />
+      <Parameter Name="Custom3" Mode="In" Type="String" />
+      <Parameter Name="Custom4" Mode="In" Type="String" />
+      <Parameter Name="Custom5" Mode="In" Type="String" />
+      <Parameter Name="InvoiceReferenceId" Mode="In" Type="String" />
+      <Parameter Name="InvoiceYear" Mode="In" Type="Int32" />
+      <Parameter Name="InvoiceMonth" Mode="In" Type="Int32" />
+      <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="Invoice">
     <Key>
@@ -98,6 +109,7 @@
     <Property Name="InvoiceMonth" Type="Int32" />
     <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
     <NavigationProperty Name="MonthlyInvoices" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Invoi__5AEE82B9" FromRole="Invoice" ToRole="MonthlyInvoice" />
+    <Property Name="VAT" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="MonthlyInvoice">
     <Key>
@@ -213,9 +225,6 @@
   <ComplexType Name="InsertUpdateSupplier_Result">
     <Property Type="Int32" Name="SupplierId" Nullable="true" />
   </ComplexType>
-  <ComplexType Name="InsertUpdateInvoice_Result">
-    <Property Type="Int32" Name="Id" Nullable="true" />
-  </ComplexType>
   <ComplexType Name="GetAllInvoice_Result">
     <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
     <Property Type="Int32" Name="MontlyInvoiceId" Nullable="true" />
@@ -277,5 +286,29 @@
     <Property Type="Boolean" Name="IsApprove" Nullable="true" />
     <Property Type="Int32" Name="SupplierId" Nullable="true" />
     <Property Type="Int32" Name="InvoiceId" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="CompanyProfile">
+    <Key>
+      <PropertyRef Name="CId" />
+    </Key>
+    <Property Name="CId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DefaultVat" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <ComplexType Name="GetCompanyProfile_Result">
+    <Property Type="Int32" Name="CId" Nullable="false" />
+    <Property Type="String" Name="CompanyName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="AddressLine" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="City" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="ZipCode" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Country" Nullable="true" MaxLength="100" />
+    <Property Type="Decimal" Name="DefaultVat" Nullable="true" Precision="18" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="InsertUpdateInvoice_Result">
+    <Property Type="Int32" Name="Id" Nullable="true" />
   </ComplexType>
 </Schema>

@@ -3,7 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using AutoMapper;
+using DataAccessLayer.Interface;
 using DataAccessLayer.Model;
+using DataAccessLayer.Services;
 using GiellyGreenTeam1.Helper;
 using GiellyGreenTeam1.Models;
 
@@ -13,28 +16,14 @@ namespace GiellyGreenTeam1.Controllers
     public class SuppliersController : ApiController
     {
         public GiellyGreen_Team1Entities objSuppiler = new GiellyGreen_Team1Entities();
-
+        static readonly ISupplierRepository supplierRepository = new SupplierRepository();
+        public dynamic config = new MapperConfiguration(cfg => cfg.CreateMap<SupplierViewModel, Supplier>());
         public JsonResponse GetSuppliers()
         {
             var objResponse = new JsonResponse();
             try
             {
-                var objSuppilerlists = objSuppiler.GetSuppliers().ToList();
-                String path = HttpContext.Current.Server.MapPath("~/ImageStorage"); //Path Check if directory exist
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path); //Create directory if it doesn't exist
-                }
-
-                objSuppilerlists.ForEach(supplier =>
-                {
-                    if (!String.IsNullOrEmpty(supplier.logo) && supplier.logo != "null")
-                    {
-                        byte[] imageByte = File.ReadAllBytes(Path.Combine(path, supplier.logo));
-                        supplier.logo = Convert.ToBase64String(imageByte);
-                    }
-                });
-
+                var objSuppilerlists = supplierRepository.GetSuppliers();
                 if (objSuppilerlists != null)
                     objResponse = JsonResponseHelper.JsonMessage(1, "Total " + objSuppilerlists.Count + " Record Found.", objSuppilerlists);
                 else
@@ -55,16 +44,17 @@ namespace GiellyGreenTeam1.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var objectSupplier = objSuppiler.InsertUpdateSupplier(0, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, LogoHelper.StoreLogoInFileSystem(model.logo, model.SupplierName), model.Isactive);
-                    if (objectSupplier != null)
-                        objResponse = JsonResponseHelper.JsonMessage(1, "Record Created Successfully", objectSupplier);
+                    model.logo = LogoHelper.StoreLogoInFileSystem(model.logo, model.SupplierName);
+                    var Productmapper = config.CreateMapper().Map<Supplier>(model);
+                    supplierRepository.PostSupplier(Productmapper);
+                    objResponse = JsonResponseHelper.JsonMessage(1, "Record Created Successfully", Productmapper);
                 }
                 else
                     objResponse = JsonResponseHelper.JsonMessage(0, "Error", ModelState.Values.SelectMany(E => E.Errors).Select(E => E.ErrorMessage).ToList());
             }
             catch (Exception ex)
             {
-                if(ex.InnerException.Message != null)
+                if (ex.InnerException.Message != null)
                     objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.InnerException.Message);
                 else
                     objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
@@ -81,8 +71,11 @@ namespace GiellyGreenTeam1.Controllers
                 {
                     if (objSuppiler.Suppliers.Find(id) != null)
                     {
-                        var supplierObject = objSuppiler.InsertUpdateSupplier(id, model.SupplierName, model.SupplierReference, model.BusinessAddress, model.EmailAddress, model.PhoneNumber, model.CompanyRegisterNumber, model.VATNumber, model.TaxReference, model.CompanyRegisterAddress, LogoHelper.StoreLogoInFileSystem(model.logo, model.SupplierName), model.Isactive).FirstOrDefault();
-                        objResponse = JsonResponseHelper.JsonMessage(1, "Record Updated Successfully", supplierObject);
+                        model.SupplierId = id;
+                        model.logo = LogoHelper.StoreLogoInFileSystem(model.logo, model.SupplierName);
+                        var Productmapper = config.CreateMapper().Map<Supplier>(model);
+                        supplierRepository.PutSupplier(Productmapper, id);
+                        objResponse = JsonResponseHelper.JsonMessage(1, "Record Updated Successfully", Productmapper);
                     }
                     else
                         objResponse = JsonResponseHelper.JsonMessage(2, "No Record found", null);
@@ -105,7 +98,7 @@ namespace GiellyGreenTeam1.Controllers
             var objResponse = new JsonResponse();
             try
             {
-                var objSuppilerData = objSuppiler.DeleteSupplier(id).FirstOrDefault().result;
+                var objSuppilerData = supplierRepository.DeleteSupplier(id);
                 if (objSuppilerData == 1)
                     objResponse = JsonResponseHelper.JsonMessage(1, "Record deleted successfully.", objSuppilerData);
                 else if (objSuppilerData == 2)

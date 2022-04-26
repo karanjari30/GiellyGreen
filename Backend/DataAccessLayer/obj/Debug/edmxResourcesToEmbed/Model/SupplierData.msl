@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Invoices">
       <EntityTypeMapping TypeName="GiellyGreen_Team1Model.Invoice">
         <MappingFragment StoreEntitySet="Invoice">
+          <ScalarProperty Name="VAT" ColumnName="VAT" />
           <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
           <ScalarProperty Name="InvoiceMonth" ColumnName="InvoiceMonth" />
           <ScalarProperty Name="InvoiceYear" ColumnName="InvoiceYear" />
@@ -133,13 +134,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="InsertUpdateInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateInvoice">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateInvoice_Result">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="InsertUpdateMonthlyInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateMonthlyInvoice" />
     <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateSupplier">
       <ResultMapping>
@@ -203,6 +197,40 @@
           <ScalarProperty Name="IsApprove" ColumnName="IsApprove" />
           <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
           <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="CompanyProfiles">
+      <EntityTypeMapping TypeName="GiellyGreen_Team1Model.CompanyProfile">
+        <MappingFragment StoreEntitySet="CompanyProfile">
+          <ScalarProperty Name="DefaultVat" ColumnName="DefaultVat" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="AddressLine" ColumnName="AddressLine" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="CId" ColumnName="CId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetCompanyProfile" FunctionName="GiellyGreen_Team1Model.Store.GetCompanyProfile">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetCompanyProfile_Result">
+          <ScalarProperty Name="CId" ColumnName="CId" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="AddressLine" ColumnName="AddressLine" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="DefaultVat" ColumnName="DefaultVat" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="InsertUpdateCompanyProfile" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateCompanyProfile" />
+    <FunctionImportMapping FunctionImportName="InsertUpdateInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateInvoice">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateInvoice_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

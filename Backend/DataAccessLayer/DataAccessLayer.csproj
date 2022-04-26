@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\GiellyGreenTeam1\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\GiellyGreenTeam1\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -42,6 +45,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,10 +54,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interface\IMonthlyInvoice.cs" />
+    <Compile Include="Interface\ISupplierRepository.cs" />
+    <Compile Include="Model\CompanyProfile.cs">
+      <DependentUpon>SupplierData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\DeleteSupplier_Result.cs">
       <DependentUpon>SupplierData.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GetAllInvoice_Result.cs">
+      <DependentUpon>SupplierData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetCompanyProfile_Result.cs">
       <DependentUpon>SupplierData.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GetSupplierByInvoiceMonth_Result.cs">
@@ -99,6 +111,8 @@
       <DependentUpon>SupplierData.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\MonthlyInvoiceRepository.cs" />
+    <Compile Include="Services\SupplierRepository.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

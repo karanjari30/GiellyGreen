@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GiellyGreen_Team1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CompanyProfile">
+          <Key>
+            <PropertyRef Name="CId" />
+          </Key>
+          <Property Name="CId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="100" />
+          <Property Name="AddressLine" Type="nvarchar" MaxLength="150" />
+          <Property Name="City" Type="nvarchar" MaxLength="150" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="Country" Type="nvarchar" MaxLength="100" />
+          <Property Name="DefaultVat" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
         <EntityType Name="Invoice">
           <Key>
             <PropertyRef Name="InvoiceId" />
@@ -19,6 +31,7 @@
           <Property Name="InvoiceYear" Type="int" />
           <Property Name="InvoiceMonth" Type="int" />
           <Property Name="InvoiceDate" Type="date" />
+          <Property Name="VAT" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="MonthlyInvoice">
           <Key>
@@ -99,6 +112,7 @@
           <Parameter Name="InvoiceMonth" Type="int" Mode="In" />
           <Parameter Name="InvoiceYear" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetCompanyProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetSupplierByInvoiceMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="InvoiceMonth" Type="datetime" Mode="In" />
         </Function>
@@ -108,6 +122,15 @@
           <Parameter Name="InvoiceYear" Type="int" Mode="In" />
         </Function>
         <Function Name="GetSuppliers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="InsertUpdateCompanyProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CId" Type="int" Mode="In" />
+          <Parameter Name="CompanyName" Type="nvarchar" Mode="In" />
+          <Parameter Name="AddressLine" Type="nvarchar" Mode="In" />
+          <Parameter Name="City" Type="nvarchar" Mode="In" />
+          <Parameter Name="ZipCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="Country" Type="nvarchar" Mode="In" />
+          <Parameter Name="DefaultVat" Type="decimal" Mode="In" />
+        </Function>
         <Function Name="InsertUpdateInvoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="InvoiceId" Type="int" Mode="In" />
           <Parameter Name="Custom1" Type="nvarchar" Mode="In" />
@@ -154,6 +177,7 @@
         </Function>
         <Function Name="IsActive" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="GiellyGreen_Team1ModelStoreContainer">
+          <EntitySet Name="CompanyProfile" EntityType="Self.CompanyProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MonthlyInvoice" EntityType="Self.MonthlyInvoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
@@ -197,18 +221,6 @@
           <Parameter Name="InvoiceMonth" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="GetSuppliers" ReturnType="Collection(GiellyGreen_Team1Model.GetSuppliers_Result)" />
-          <FunctionImport Name="InsertUpdateInvoice" ReturnType="Collection(GiellyGreen_Team1Model.InsertUpdateInvoice_Result)">
-            <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
-            <Parameter Name="Custom1" Mode="In" Type="String" />
-            <Parameter Name="Custom2" Mode="In" Type="String" />
-            <Parameter Name="Custom3" Mode="In" Type="String" />
-            <Parameter Name="Custom4" Mode="In" Type="String" />
-            <Parameter Name="Custom5" Mode="In" Type="String" />
-            <Parameter Name="InvoiceReferenceId" Mode="In" Type="String" />
-            <Parameter Name="InvoiceYear" Mode="In" Type="Int32" />
-            <Parameter Name="InvoiceMonth" Mode="In" Type="Int32" />
-            <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
-          </FunctionImport>
           <FunctionImport Name="InsertUpdateMonthlyInvoice">
             <Parameter Name="MontlyInvoiceId" Mode="In" Type="Int32" />
             <Parameter Name="HairService" Mode="In" Type="Decimal" />
@@ -252,6 +264,29 @@
             <Parameter Name="InvoiceMonth" Mode="In" Type="Int32" />
             <Parameter Name="InvoiceYear" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="CompanyProfiles" EntityType="GiellyGreen_Team1Model.CompanyProfile" />
+          <FunctionImport Name="GetCompanyProfile" ReturnType="Collection(GiellyGreen_Team1Model.GetCompanyProfile_Result)" />
+          <FunctionImport Name="InsertUpdateCompanyProfile">
+            <Parameter Name="CId" Mode="In" Type="Int32" />
+            <Parameter Name="CompanyName" Mode="In" Type="String" />
+            <Parameter Name="AddressLine" Mode="In" Type="String" />
+            <Parameter Name="City" Mode="In" Type="String" />
+            <Parameter Name="ZipCode" Mode="In" Type="String" />
+            <Parameter Name="Country" Mode="In" Type="String" />
+            <Parameter Name="DefaultVat" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="InsertUpdateInvoice" ReturnType="Collection(GiellyGreen_Team1Model.InsertUpdateInvoice_Result)">
+            <Parameter Name="InvoiceId" Mode="In" Type="Int32" />
+            <Parameter Name="Custom1" Mode="In" Type="String" />
+            <Parameter Name="Custom2" Mode="In" Type="String" />
+            <Parameter Name="Custom3" Mode="In" Type="String" />
+            <Parameter Name="Custom4" Mode="In" Type="String" />
+            <Parameter Name="Custom5" Mode="In" Type="String" />
+            <Parameter Name="InvoiceReferenceId" Mode="In" Type="String" />
+            <Parameter Name="InvoiceYear" Mode="In" Type="Int32" />
+            <Parameter Name="InvoiceMonth" Mode="In" Type="Int32" />
+            <Parameter Name="InvoiceDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Invoice">
           <Key>
@@ -268,6 +303,7 @@
           <Property Name="InvoiceMonth" Type="Int32" />
           <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="MonthlyInvoices" Relationship="GiellyGreen_Team1Model.FK__MonthlyIn__Invoi__5AEE82B9" FromRole="Invoice" ToRole="MonthlyInvoice" />
+          <Property Name="VAT" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="MonthlyInvoice">
           <Key>
@@ -383,9 +419,6 @@
         <ComplexType Name="InsertUpdateSupplier_Result">
           <Property Type="Int32" Name="SupplierId" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="InsertUpdateInvoice_Result">
-          <Property Type="Int32" Name="Id" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="GetAllInvoice_Result">
           <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
           <Property Type="Int32" Name="MontlyInvoiceId" Nullable="true" />
@@ -448,6 +481,30 @@
           <Property Type="Int32" Name="SupplierId" Nullable="true" />
           <Property Type="Int32" Name="InvoiceId" Nullable="true" />
         </ComplexType>
+        <EntityType Name="CompanyProfile">
+          <Key>
+            <PropertyRef Name="CId" />
+          </Key>
+          <Property Name="CId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultVat" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <ComplexType Name="GetCompanyProfile_Result">
+          <Property Type="Int32" Name="CId" Nullable="false" />
+          <Property Type="String" Name="CompanyName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="AddressLine" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="ZipCode" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Country" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="DefaultVat" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="InsertUpdateInvoice_Result">
+          <Property Type="Int32" Name="Id" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -457,6 +514,7 @@
           <EntitySetMapping Name="Invoices">
             <EntityTypeMapping TypeName="GiellyGreen_Team1Model.Invoice">
               <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="VAT" ColumnName="VAT" />
                 <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
                 <ScalarProperty Name="InvoiceMonth" ColumnName="InvoiceMonth" />
                 <ScalarProperty Name="InvoiceYear" ColumnName="InvoiceYear" />
@@ -586,13 +644,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="InsertUpdateInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateInvoice" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateInvoice_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertUpdateMonthlyInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateMonthlyInvoice" >
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertUpdateSupplier" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateSupplier" >
@@ -657,6 +708,40 @@
                 <ScalarProperty Name="IsApprove" ColumnName="IsApprove" />
                 <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
                 <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="CompanyProfiles">
+            <EntityTypeMapping TypeName="GiellyGreen_Team1Model.CompanyProfile">
+              <MappingFragment StoreEntitySet="CompanyProfile">
+                <ScalarProperty Name="DefaultVat" ColumnName="DefaultVat" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="AddressLine" ColumnName="AddressLine" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CId" ColumnName="CId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetCompanyProfile" FunctionName="GiellyGreen_Team1Model.Store.GetCompanyProfile">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetCompanyProfile_Result">
+                <ScalarProperty Name="CId" ColumnName="CId" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="AddressLine" ColumnName="AddressLine" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="DefaultVat" ColumnName="DefaultVat" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertUpdateCompanyProfile" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateCompanyProfile" />
+          <FunctionImportMapping FunctionImportName="InsertUpdateInvoice" FunctionName="GiellyGreen_Team1Model.Store.InsertUpdateInvoice" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.InsertUpdateInvoice_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
