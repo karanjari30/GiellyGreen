@@ -47,7 +47,7 @@
                     {
                         <h4> VAT Number : @supplier.VATNumber</h4>}
                 </div>
-            </div>
+            </div><br />
             <div class="mypadding1">
                 <div class="split left">
                     <div><b>To</b></div>
@@ -100,7 +100,7 @@
                                 <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.CustomHeader3).ToString("N2")</td>
                             </tr>
                         }
-                        @if (supplier.CustomHeader4 != 0 && supplier.CustomHeader4 != null )
+                        @if (supplier.CustomHeader4 != 0 && supplier.CustomHeader4 != null)
                         {
                             <tr class="mytablecell">
                                 <td class="mytablecell" colspan="2">@supplier.Custom4</td>
@@ -138,6 +138,12 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="customfooter">
+                @if (supplier.CompanyRegisterNumber != null)
+                {   <div><b> Company Reg No : </b>@supplier.CompanyRegisterNumber</div>}
+                @if (supplier.CompanyRegisterAddress != null)
+                {   <div><b> Registered address : </b>@supplier.CompanyRegisterAddress</div>}
             </div>
         </div>
     </body>

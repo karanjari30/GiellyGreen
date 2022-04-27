@@ -1,5 +1,4 @@
-﻿@*@model DataAccessLayer.Model.GetSupplierInvoiceForPDF_Result*@
-@model GiellyGreenTeam1.Models.PdfProfile
+﻿@model GiellyGreenTeam1.Models.PdfProfile
 
 @{
     Layout = "";
@@ -40,7 +39,7 @@
                 {
                     <h4> VAT Number : @Model.getSupplierInvoiceForPDF_Result.VATNumber</h4>}
             </div>
-        </div>
+        </div><br />
         <div class="mypadding1">
             <div class="split left">
                 <div><b>To</b></div>
@@ -131,6 +130,12 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="customfooter">
+            @if (Model.getSupplierInvoiceForPDF_Result.CompanyRegisterNumber != null)
+            {  <div><b> Company Reg No : </b>@Model.getSupplierInvoiceForPDF_Result.CompanyRegisterNumber</div>   }
+            @if (Model.getSupplierInvoiceForPDF_Result.CompanyRegisterAddress != null)
+            {  <div><b> Registered address : </b>@Model.getSupplierInvoiceForPDF_Result.CompanyRegisterAddress</div>  }
         </div>
     </div>
 </body>

@@ -42,7 +42,7 @@ namespace GiellyGreenTeam1.Controllers
                             }
                             profile.getSupplierInvoiceForPDF_Result = invoice;
                             profile.companyProfile = db.GetCompanyProfile().FirstOrDefault();
-                            Attachment attPDF = new Attachment(new MemoryStream(controller.getPDF(profile)), "Invoice.pdf");
+                            Attachment attPDF = new Attachment(new MemoryStream(controller.getPDF(profile)), invoice.SupplierName + "_Invoice.pdf");
                             EmailHelper.SendEmailToSupplier(invoice.EmailAddress, month, year, attPDF);
                         }
                     }

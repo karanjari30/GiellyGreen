@@ -1,6 +1,7 @@
-﻿body {
-    font-family: 'Mulish';
-    font-size: 22px;
+﻿@import url('http://fonts.cdnfonts.com/css/dax');
+
+body {
+    font-size: 24px;
 }
 
 .mypadding {
@@ -8,11 +9,12 @@
 }
 
 .mypadding1 {
-    padding-top: 12rem;
+    padding-top: 13rem;
 }
 
 .mypadding2 {
-    padding-top: 15rem;
+    padding-top: 13rem;
+    height:52rem;
 }
 
 .custompagebreak {
@@ -95,4 +97,8 @@ th, td {
 
 .amountalign {
     text-align: right;
+}
+
+.customfooter{
+    text-align:left;
 }
