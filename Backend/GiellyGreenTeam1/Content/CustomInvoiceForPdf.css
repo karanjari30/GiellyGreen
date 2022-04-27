@@ -8,11 +8,11 @@
 }
 
 .mypadding1 {
-    padding-top: 13rem;
+    padding-top: 12rem;
 }
 
 .mypadding2 {
-    padding-top: 18rem;
+    padding-top: 15rem;
 }
 
 .custompagebreak {
@@ -72,11 +72,11 @@
 table {
     border: none;
     border-collapse: collapse;
-    font-size: 22px;
+    font-size: 20px;
 }
 
 th, td {
-    padding: 8px;
+    padding: 6px;
 }
 
 .customdescription {

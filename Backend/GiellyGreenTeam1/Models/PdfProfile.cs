@@ -5,6 +5,6 @@ namespace GiellyGreenTeam1.Models
     public class PdfProfile
     {
         public GetSupplierInvoiceForPDF_Result getSupplierInvoiceForPDF_Result { get; set; }
-        public CompanyProfile companyProfile { get; set; }
+        public GetCompanyProfile_Result companyProfile { get; set; }
     }
 }

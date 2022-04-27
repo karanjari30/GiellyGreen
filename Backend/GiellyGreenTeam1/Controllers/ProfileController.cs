@@ -1,11 +1,10 @@
-﻿using DataAccessLayer.Model;
+﻿using DataAccessLayer.Interface;
+using DataAccessLayer.Model;
+using DataAccessLayer.Services;
 using GiellyGreenTeam1.Helper;
 using GiellyGreenTeam1.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace GiellyGreenTeam1.Controllers
@@ -13,12 +12,13 @@ namespace GiellyGreenTeam1.Controllers
     public class ProfileController : ApiController
     {
         public GiellyGreen_Team1Entities db = new GiellyGreen_Team1Entities();
+        static readonly ICompanyProfile companyProfile = new CompanyProfileRepository();
         public JsonResponse GetProfile()
         {
             var objectResponse = new JsonResponse();
             try
             {
-                var companyProfileList = db.GetCompanyProfile().ToList();
+                var companyProfileList = companyProfile.GetProfile();
                 if (companyProfileList != null && companyProfileList.Count > 0)
                     objectResponse = JsonResponseHelper.JsonMessage(1, "No. of Records " + companyProfileList.Count, companyProfileList);
                 else
@@ -39,7 +39,7 @@ namespace GiellyGreenTeam1.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var objProfile = db.InsertUpdateCompanyProfile(id, model.CompanyName, model.AddressLine, model.City, model.ZipCode, model.Country, model.DefaultVat);
+                    var objProfile = companyProfile.PostProfile(model, id);
                     objResponse = JsonResponseHelper.JsonMessage(1, "Record save Successfully", objProfile);
                 }
                 else

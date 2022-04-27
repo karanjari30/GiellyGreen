@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interface\ICompanyProfile.cs" />
     <Compile Include="Interface\IMonthlyInvoice.cs" />
     <Compile Include="Interface\ISupplierRepository.cs" />
     <Compile Include="Model\CompanyProfile.cs">
@@ -111,6 +112,7 @@
       <DependentUpon>SupplierData.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CompanyProfileRepository.cs" />
     <Compile Include="Services\MonthlyInvoiceRepository.cs" />
     <Compile Include="Services\SupplierRepository.cs" />
   </ItemGroup>

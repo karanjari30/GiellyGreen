@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Model;
+using GiellyGreenTeam1.Models;
 using iTextSharp.text;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,12 @@ namespace GiellyGreenTeam1.Controllers
             return View();
         }
 
-        public Byte[] getPDF(GetSupplierInvoiceForPDF_Result model)
+        public Byte[] getPDF(PdfProfile model)
         {
             return new Rotativa.ViewAsPdf("~/Views/Home/Pdf.cshtml", model).BuildFile(ControllerContext); ;
         }
 
-        public Byte[] getCombinePDF(List<GetSupplierInvoiceForPDF_Result> list)
+        public Byte[] getCombinePDF(CombinePdfProfile list)
         {
             return new Rotativa.ViewAsPdf("~/Views/Home/getCombinePDF.cshtml", list).BuildFile(ControllerContext); ;
         }
