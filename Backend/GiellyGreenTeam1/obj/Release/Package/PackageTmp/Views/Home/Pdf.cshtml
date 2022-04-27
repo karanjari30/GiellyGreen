@@ -1,0 +1,142 @@
+﻿@model GiellyGreenTeam1.Models.PdfProfile
+
+@{
+    Layout = "";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href='https://fonts.googleapis.com/css?family=Mulish' rel='stylesheet'>
+    <title>Invoice</title>
+    <link href="~/Content/CustomInvoiceForPdf.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="split left">
+                @if (Model.getSupplierInvoiceForPDF_Result.logo != null && Model.getSupplierInvoiceForPDF_Result.logo != "")
+                {
+                    <img src="@Model.getSupplierInvoiceForPDF_Result.logo" width="200" height="100" />
+                }
+            </div>
+            <div class="split right">
+                <h2>Self Billed Invoice</h2>
+            </div>
+        </div>
+        <div class="mypadding">
+            <div class="split left">
+                <h3>@Model.getSupplierInvoiceForPDF_Result.SupplierName</h3>
+                <div>@Model.getSupplierInvoiceForPDF_Result.BusinessAddress</div>
+            </div>
+            <div class="split right">
+                <h4> Invoice Date : @Model.getSupplierInvoiceForPDF_Result.InvoiceDate.Value.ToShortDateString()</h4>
+                <h4 style=" word-break: break-word;">Invoice Reference : @Model.getSupplierInvoiceForPDF_Result.SupplierReference@Model.getSupplierInvoiceForPDF_Result.InvoiceReferenceId</h4>
+                @if (Model.getSupplierInvoiceForPDF_Result.TaxReference != null)
+                {
+                    <h4> TAX Reference : @Model.getSupplierInvoiceForPDF_Result.TaxReference</h4>}
+                @if (Model.getSupplierInvoiceForPDF_Result.VATNumber != null)
+                {
+                    <h4> VAT Number : @Model.getSupplierInvoiceForPDF_Result.VATNumber</h4>}
+            </div>
+        </div><br />
+        <div class="mypadding1">
+            <div class="split left">
+                <div><b>To</b></div>
+                <div><b>@Model.companyProfile.CompanyName</b></div>
+                <div>@Model.companyProfile.AddressLine</div>
+                <div>@Model.companyProfile.City - @Model.companyProfile.ZipCode</div>
+                <div>@Model.companyProfile.Country</div>
+            </div>
+        </div>
+        <div class="mypadding2">
+            <table class="table-bord" style="width:100%">
+                <thead>
+                    <tr style="padding:3px;" class="mytablecell">
+                        <th class="mytablecell" colspan="3" style="margin-left:10px;border-right:0px">Description</th>
+                        <th class="mytablecell" style="text-align:right;border-left:0px">Amount(GBP)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="mytablecell">
+                        <td colspan="2" class="customdescription mytablecell">Hair Services</td>
+                        <td class="mytablecell"></td>
+                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.HairService).ToString("N2")</td>
+                    </tr>
+                    <tr class="mytablecell">
+                        <td class="mytablecell" colspan="2">Beauty Services</td>
+                        <td class="mytablecell"></td>
+                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.BeautyService).ToString("N2")</td>
+                    </tr>
+                    @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader1 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader1 != null)
+                    {
+                        <tr class="mytablecell">
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom1</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader1).ToString("N2")1</td>
+                        </tr>
+                    }
+                    @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader2 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader2 != null)
+                    {
+                        <tr class="mytablecell">
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom2</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader2).ToString("N2")</td>
+                        </tr>
+                    }
+                    @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader3 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader3 != null)
+                    {
+                        <tr class="mytablecell">
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom3</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader3).ToString("N2")</td>
+                        </tr>
+                    }
+                    @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader4 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader4 != null)
+                    {
+                        <tr class="mytablecell">
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom4</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader4).ToString("N2")</td>
+                        </tr>
+                    }
+                    @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader5 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader5 != null)
+                    {
+                        <tr class="mytablecell">
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom5</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader5).ToString("N2")</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="2" style="border:0px"></td>
+                        <td class="amountalignheader">Subtotal(Net)</td>
+                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.NetAmount).ToString("N2")</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td class="amountalignheader">VAT</td>
+                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.VATAmount).ToString("N2")</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td class="amountalignheader">Advance Paid</td>
+                        <td class="mytablecell amountalign">(@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.AdvancePay).ToString("N2"))</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td class="amountalignheader">Balance Due</td>
+                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.BalanceDue).ToString("N2")</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="customfooter">
+            @if (Model.getSupplierInvoiceForPDF_Result.CompanyRegisterNumber != null)
+            {  <div><b> Company Reg No : </b>@Model.getSupplierInvoiceForPDF_Result.CompanyRegisterNumber</div>   }
+            @if (Model.getSupplierInvoiceForPDF_Result.CompanyRegisterAddress != null)
+            {  <div><b> Registered address : </b>@Model.getSupplierInvoiceForPDF_Result.CompanyRegisterAddress</div>  }
+        </div>
+    </div>
+</body>
+</html>

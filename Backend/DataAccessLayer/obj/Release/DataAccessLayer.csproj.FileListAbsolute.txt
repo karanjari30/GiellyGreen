@@ -1,0 +1,14 @@
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Release\DataAccessLayer.dll.config
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Release\DataAccessLayer.dll
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Release\DataAccessLayer.pdb
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Release\AutoMapper.dll
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Release\EntityFramework.dll
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Release\EntityFramework.SqlServer.dll
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Release\AutoMapper.xml
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Release\EntityFramework.xml
+D:\Gieely_Green\Backend\DataAccessLayer\bin\Release\EntityFramework.SqlServer.xml
+D:\Gieely_Green\Backend\DataAccessLayer\obj\Release\DataAccessLayer.csproj.AssemblyReference.cache
+D:\Gieely_Green\Backend\DataAccessLayer\obj\Release\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\Gieely_Green\Backend\DataAccessLayer\obj\Release\DataAccessLayer.csproj.CopyComplete
+D:\Gieely_Green\Backend\DataAccessLayer\obj\Release\DataAccessLayer.dll
+D:\Gieely_Green\Backend\DataAccessLayer\obj\Release\DataAccessLayer.pdb

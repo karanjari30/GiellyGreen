@@ -2,6 +2,8 @@
 using GiellyGreenTeam1.Helper;
 using GiellyGreenTeam1.Models;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -17,6 +19,7 @@ namespace GiellyGreenTeam1.Controllers
         public JsonResponse Pdf(int[] ids, int month, int year)
         {
             var objResponse = new JsonResponse();
+            CombinePdfProfile combinePdfProfile = new CombinePdfProfile();
             try
             {
                 var supplierLIstForPdf = db.GetSupplierInvoiceForPDF(String.Join(",", ids), month, year).ToList();
@@ -30,8 +33,10 @@ namespace GiellyGreenTeam1.Controllers
 
                 if(supplierLIstForPdf.Count > 0)
                 {
-                    string base64Pdf = Convert.ToBase64String(controller.getCombinePDF(supplierLIstForPdf));
-                    objResponse = JsonResponseHelper.JsonMessage(1, month + "_" + year + "_Invoices", base64Pdf);
+                    combinePdfProfile.getSupplierInvoiceForPDF_Result = supplierLIstForPdf;
+                    combinePdfProfile.companyProfile = db.GetCompanyProfile().FirstOrDefault();
+                    string base64Pdf = Convert.ToBase64String(controller.getCombinePDF(combinePdfProfile));
+                    objResponse = JsonResponseHelper.JsonMessage(1, CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "_" + year + "_Invoices", base64Pdf);
                 }
                 else
                     objResponse = JsonResponseHelper.JsonMessage(0, "No Records Found", null);

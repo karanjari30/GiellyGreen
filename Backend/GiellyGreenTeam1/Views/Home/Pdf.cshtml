@@ -1,4 +1,4 @@
-﻿@model DataAccessLayer.Model.GetSupplierInvoiceForPDF_Result
+﻿@model GiellyGreenTeam1.Models.PdfProfile
 
 @{
     Layout = "";
@@ -15,9 +15,9 @@
     <div class="container">
         <div class="row">
             <div class="split left">
-                @if (Model.logo != null && Model.logo != "")
+                @if (Model.getSupplierInvoiceForPDF_Result.logo != null && Model.getSupplierInvoiceForPDF_Result.logo != "")
                 {
-                    <img src="@Model.logo" width="200" height="100" />
+                    <img src="@Model.getSupplierInvoiceForPDF_Result.logo" width="200" height="100" />
                 }
             </div>
             <div class="split right">
@@ -26,26 +26,27 @@
         </div>
         <div class="mypadding">
             <div class="split left">
-                <h3>@Model.SupplierName</h3>
-                <h4>@Model.BusinessAddress</h4>
+                <h3>@Model.getSupplierInvoiceForPDF_Result.SupplierName</h3>
+                <div>@Model.getSupplierInvoiceForPDF_Result.BusinessAddress</div>
             </div>
             <div class="split right">
-                <h4> Invoice Date : @Model.InvoiceDate.Value.ToShortDateString()</h4>
-                <h4 style=" word-break: break-word;">Invoice Reference : @Model.SupplierReference@Model.InvoiceReferenceId</h4>
-                @if (Model.TaxReference != null)
+                <h4> Invoice Date : @Model.getSupplierInvoiceForPDF_Result.InvoiceDate.Value.ToShortDateString()</h4>
+                <h4 style=" word-break: break-word;">Invoice Reference : @Model.getSupplierInvoiceForPDF_Result.SupplierReference@Model.getSupplierInvoiceForPDF_Result.InvoiceReferenceId</h4>
+                @if (Model.getSupplierInvoiceForPDF_Result.TaxReference != null)
                 {
-                    <h4> TAX Reference : @Model.TaxReference</h4>}
-                @if (Model.VATNumber != null)
+                    <h4> TAX Reference : @Model.getSupplierInvoiceForPDF_Result.TaxReference</h4>}
+                @if (Model.getSupplierInvoiceForPDF_Result.VATNumber != null)
                 {
-                    <h4> VAT Number : @Model.VATNumber</h4>}
+                    <h4> VAT Number : @Model.getSupplierInvoiceForPDF_Result.VATNumber</h4>}
             </div>
-        </div>
+        </div><br />
         <div class="mypadding1">
             <div class="split left">
-                <h3>To</h3>
-                <h3>ADK Consultancy</h3>
-                <h4>Dummy Address</h4>
-                <h4>Dummy Address</h4>
+                <div><b>To</b></div>
+                <div><b>@Model.companyProfile.CompanyName</b></div>
+                <div>@Model.companyProfile.AddressLine</div>
+                <div>@Model.companyProfile.City - @Model.companyProfile.ZipCode</div>
+                <div>@Model.companyProfile.Country</div>
             </div>
         </div>
         <div class="mypadding2">
@@ -60,75 +61,81 @@
                     <tr class="mytablecell">
                         <td colspan="2" class="customdescription mytablecell">Hair Services</td>
                         <td class="mytablecell"></td>
-                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.HairService).ToString("N2")</td>
+                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.HairService).ToString("N2")</td>
                     </tr>
                     <tr class="mytablecell">
                         <td class="mytablecell" colspan="2">Beauty Services</td>
                         <td class="mytablecell"></td>
-                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.BeautyService).ToString("N2")</td>
+                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.BeautyService).ToString("N2")</td>
                     </tr>
-                    @if (Model.Custom1 != null && Model.CustomHeader1 != 0 && Model.CustomHeader1 != null)
+                    @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader1 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader1 != null)
                     {
                         <tr class="mytablecell">
-                            <td class="mytablecell" colspan="2">@Model.Custom1</td>
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom1</td>
                             <td class="mytablecell"></td>
-                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.CustomHeader1).ToString("N2")1</td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader1).ToString("N2")1</td>
                         </tr>
                     }
-                    @if (Model.Custom2 != null && Model.CustomHeader2 != 0 && Model.CustomHeader2 != null)
+                    @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader2 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader2 != null)
                     {
                         <tr class="mytablecell">
-                            <td class="mytablecell" colspan="2">@Model.Custom2</td>
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom2</td>
                             <td class="mytablecell"></td>
-                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.CustomHeader2).ToString("N2")</td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader2).ToString("N2")</td>
                         </tr>
                     }
-                    @if (Model.Custom3 != null && Model.CustomHeader3 != 0 && Model.CustomHeader3 != null)
+                    @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader3 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader3 != null)
                     {
                         <tr class="mytablecell">
-                            <td class="mytablecell" colspan="2">@Model.Custom3</td>
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom3</td>
                             <td class="mytablecell"></td>
-                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.CustomHeader3).ToString("N2")</td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader3).ToString("N2")</td>
                         </tr>
                     }
-                    @if (Model.Custom4 != null && Model.CustomHeader4 != 0 && Model.CustomHeader4 != null)
+                    @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader4 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader4 != null)
                     {
                         <tr class="mytablecell">
-                            <td class="mytablecell" colspan="2">@Model.Custom4</td>
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom4</td>
                             <td class="mytablecell"></td>
-                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.CustomHeader4).ToString("N2")</td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader4).ToString("N2")</td>
                         </tr>
                     }
-                    @if (Model.Custom5 != null && Model.CustomHeader5 != 0 && Model.CustomHeader5 != null)
+                    @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader5 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader5 != null)
                     {
                         <tr class="mytablecell">
-                            <td class="mytablecell" colspan="2">@Model.Custom5</td>
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom5</td>
                             <td class="mytablecell"></td>
-                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.CustomHeader5).ToString("N2")</td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader5).ToString("N2")</td>
                         </tr>
                     }
                     <tr>
                         <td colspan="2" style="border:0px"></td>
                         <td class="amountalignheader">Subtotal(Net)</td>
-                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.NetAmount).ToString("N2")</td>
+                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.NetAmount).ToString("N2")</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
                         <td class="amountalignheader">VAT</td>
-                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.VATAmount).ToString("N2")</td>
+                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.VATAmount).ToString("N2")</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
                         <td class="amountalignheader">Advance Paid</td>
-                        <td class="mytablecell amountalign">(@Convert.ToDecimal(Model.AdvancePay).ToString("N2"))</td>
+                        <td class="mytablecell amountalign">(@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.AdvancePay).ToString("N2"))</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>
                         <td class="amountalignheader">Balance Due</td>
-                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.BalanceDue).ToString("N2")</td>
+                        <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.BalanceDue).ToString("N2")</td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="customfooter">
+            @if (Model.getSupplierInvoiceForPDF_Result.CompanyRegisterNumber != null)
+            {  <div><b> Company Reg No : </b>@Model.getSupplierInvoiceForPDF_Result.CompanyRegisterNumber</div>   }
+            @if (Model.getSupplierInvoiceForPDF_Result.CompanyRegisterAddress != null)
+            {  <div><b> Registered address : </b>@Model.getSupplierInvoiceForPDF_Result.CompanyRegisterAddress</div>  }
         </div>
     </div>
 </body>

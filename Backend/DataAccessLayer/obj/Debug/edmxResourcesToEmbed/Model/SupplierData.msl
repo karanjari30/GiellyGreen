@@ -96,6 +96,7 @@
           <ScalarProperty Name="InvoiceYear" ColumnName="InvoiceYear" />
           <ScalarProperty Name="InvoiceMonth" ColumnName="InvoiceMonth" />
           <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="VAT" ColumnName="VAT" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
@@ -172,6 +173,8 @@
           <ScalarProperty Name="logo" ColumnName="logo" />
           <ScalarProperty Name="TaxReference" ColumnName="TaxReference" />
           <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
+          <ScalarProperty Name="CompanyRegisterNumber" ColumnName="CompanyRegisterNumber" />
+          <ScalarProperty Name="CompanyRegisterAddress" ColumnName="CompanyRegisterAddress" />
           <ScalarProperty Name="Custom1" ColumnName="Custom1" />
           <ScalarProperty Name="Custom2" ColumnName="Custom2" />
           <ScalarProperty Name="Custom3" ColumnName="Custom3" />

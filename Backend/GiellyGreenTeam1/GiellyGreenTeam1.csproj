@@ -251,12 +251,14 @@
     <Compile Include="Helper\LogoHelper.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CombinePdfProfile.cs" />
     <Compile Include="Models\CompanyProfileViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Models\LogIn.cs" />
     <Compile Include="Models\MontlyInvoiceView.cs" />
+    <Compile Include="Models\PdfProfile.cs" />
     <Compile Include="Models\SupplierViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -303,6 +305,8 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="App_Browsers\qt.browser" />
+    <None Include="Properties\PublishProfiles\apiteam1 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\apiteam1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
