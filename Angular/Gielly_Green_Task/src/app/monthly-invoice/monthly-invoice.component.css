@@ -14,6 +14,9 @@
   text-decoration: none;
 }
 
+.active{
+  border-bottom: 1px solid rgb(201, 157, 74) !important;
+}
 .customMenuIcons{
   font-size: 18px;
   color: #c99d4a !important;

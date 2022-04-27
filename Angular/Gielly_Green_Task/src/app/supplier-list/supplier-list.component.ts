@@ -216,6 +216,7 @@ export class SupplierListComponent implements OnInit {
             'Success',
             'Record updated successfully!'
           );
+          this.getDataInTable();
           this.handleCancel();
         } else {
           this.showStatusNotification(response);
@@ -314,7 +315,8 @@ export class SupplierListComponent implements OnInit {
     // console.log(this .tempLogoData);
     // this.fileData = this.tempLogoData;
   }
-
+  
+  //This method is for collapsing the menu
   isMenuCollapsed(){
     if(this.isCollapsed){
       this.isCollapsed = false;
@@ -323,6 +325,7 @@ export class SupplierListComponent implements OnInit {
     }
   }
 
+  
   logout(){
     sessionStorage.removeItem('userSessionToken');
     this.router.navigate(['/login']);
@@ -337,7 +340,7 @@ export class SupplierListComponent implements OnInit {
       phoneNumber: [null, [Validators.pattern('^[0-9]*$'), Validators.maxLength(15)]],
       companyRegisteredNumber: [null, [Validators.pattern('^[0-9]*$'), Validators.maxLength(15)]],
       vatNumber: [null, [Validators.pattern('^[a-zA-Z0-9][A-Za-z0-9]*$'), Validators.maxLength(15)]],
-      taxReference: [null, Validators.pattern('^[A-Za-z0-9]*$')],
+      taxReference: [null, [Validators.pattern('^[A-Za-z0-9]*$'), Validators.maxLength(15)]],
       companyAddress: [null, Validators.maxLength(150)],
       isSupplierActive: [false],
       invoiceLogo: [null]

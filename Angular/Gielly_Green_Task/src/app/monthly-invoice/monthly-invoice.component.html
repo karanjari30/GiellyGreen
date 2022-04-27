@@ -6,8 +6,8 @@
         <ul nz-menu class="customMenu" nzMode="inline">
             <li nz-menu-item class="text-center">
                 <a routerLink="/monthly-invoice" routerLinkActive="active" class="menuItemCustomColor">
-                    <span *ngIf="isCollapsed"><fa-icon [icon]="invoiceIcon" class="customMenuIcons" ></fa-icon></span>
-                    <span *ngIf="isCollapsed == false">MONTHLY INVOICE</span>
+                    <span *ngIf="isCollapsed" class="active"><fa-icon [icon]="invoiceIcon" class="customMenuIcons"></fa-icon></span>
+                    <span *ngIf="isCollapsed == false" class="active">MONTHLY INVOICE</span>
                 </a>
             </li>
             <li nz-menu-item class="text-center">

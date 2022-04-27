@@ -19,6 +19,10 @@
   text-decoration: none;
 }
 
+.active{
+  border-bottom: 1px solid rgb(201, 157, 74) !important;
+}
+
 .customMarginForMenu{
   margin-left: 90%;
 }
