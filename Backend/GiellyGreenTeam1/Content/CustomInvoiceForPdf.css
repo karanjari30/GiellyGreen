@@ -14,7 +14,7 @@ body {
 
 .mypadding2 {
     padding-top: 13rem;
-    height:52rem;
+    height:49rem;
 }
 
 .custompagebreak {
@@ -45,10 +45,6 @@ body {
     text-align: right;
     padding-right: 20px;
     word-break: break-word;
-}
-
-* {
-    box-sizing: border-box;
 }
 
 .column {
