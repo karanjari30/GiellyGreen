@@ -518,3 +518,23 @@ D:\Gieely_Green\Backend\GiellyGreenTeam1\obj\Debug\GiellyGreenTeam1.csproj.CoreC
 D:\Gieely_Green\Backend\GiellyGreenTeam1\obj\Debug\GiellyGreenTeam1.csproj.CopyComplete
 D:\Gieely_Green\Backend\GiellyGreenTeam1\obj\Debug\GiellyGreenTeam1.dll
 D:\Gieely_Green\Backend\GiellyGreenTeam1\obj\Debug\GiellyGreenTeam1.pdb
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\RestSharp.dll
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Buffers.dll
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Memory.dll
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Numerics.Vectors.dll
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Text.Encodings.Web.dll
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Text.Json.dll
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Threading.Tasks.Extensions.dll
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.ValueTuple.dll
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\Microsoft.Bcl.AsyncInterfaces.xml
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\RestSharp.xml
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Buffers.xml
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Memory.xml
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Numerics.Vectors.xml
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Runtime.CompilerServices.Unsafe.xml
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Text.Encodings.Web.xml
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Text.Json.xml
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Threading.Tasks.Extensions.xml
+D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.ValueTuple.xml

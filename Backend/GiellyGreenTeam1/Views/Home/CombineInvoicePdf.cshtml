@@ -16,7 +16,126 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="~/Content/CustomInvoiceForPdf.css" rel="stylesheet" />
+        <style>
+            body {
+                font-size: 24px;
+            }
+
+            .custompagebreak {
+                page-break-after: always;
+            }
+
+                .custompagebreak:last-child {
+                    page-break-after: auto;
+                }
+
+            .column {
+                float: left;
+                width: 50%;
+                padding: 10px;
+                height: 150px;
+            }
+
+            .columnHeader {
+                float: left;
+                width: 50%;
+                padding: 10px;
+                height: 70px;
+            }
+
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+            table {
+                border: none;
+                border-collapse: collapse;
+                font-size: 20px;
+            }
+
+            th, td {
+                padding: 6px;
+            }
+
+            .customdescription {
+                width: 60%;
+            }
+
+            .mytablecell {
+                border: 1px solid gray;
+                border-collapse: collapse;
+            }
+
+            .amountalignheader {
+                text-align: right;
+                font-weight: bold;
+            }
+
+            .amountalign {
+                text-align: right;
+            }
+
+            .customfooter {
+                text-align: left;
+            }
+
+            .address2Div {
+                width: 30%;
+                padding-top: 8px;
+            }
+
+            .pt-5 {
+                padding-top: 5px;
+            }
+
+            .pb-5 {
+                padding-bottom: 5px;
+            }
+
+            .Customheader {
+                width: 100%;
+            }
+
+            .mypadding2 {
+                padding-top: 1rem;
+                height: 45rem;
+            }
+
+            .f-25 {
+                font-size: 25px;
+                font-weight: bold;
+            }
+
+            .f-20 {
+                font-size: 20px;
+            }
+
+            .pd-5 {
+                padding: 5px;
+            }
+
+            .verti-bottom {
+                vertical-align: bottom;
+            }
+
+            .verti-top {
+                vertical-align: top;
+            }
+
+            .textRight {
+                text-align: right;
+            }
+
+            .font-bold {
+                font-weight: bold;
+            }
+
+            .customwordbreak {
+                word-break: break-word;
+            }
+        </style>
     </head>
     <body>
         <div class="custompagebreak">

@@ -25,7 +25,7 @@ namespace GiellyGreenTeam1.Controllers
                 var supplierLIstForPdf = db.GetSupplierInvoiceForPDF(String.Join(",", ids), month, year).ToList();
                 HomeController controller = new HomeController();
                 RouteData route = new RouteData();
-                route.Values.Add("action", "getCombinePDF"); // ActionName
+                route.Values.Add("action", "RenderRazorViewToString"); // ActionName
                 route.Values.Add("controller", "Home"); // Controller Name
                 ControllerContext newContext = new
                 ControllerContext(new HttpContextWrapper(HttpContext.Current), route, controller);
@@ -35,7 +35,9 @@ namespace GiellyGreenTeam1.Controllers
                 {
                     combinePdfProfile.getSupplierInvoiceForPDF_Result = supplierLIstForPdf;
                     combinePdfProfile.companyProfile = db.GetCompanyProfile().FirstOrDefault();
-                    string base64Pdf = Convert.ToBase64String(controller.getCombinePDF(combinePdfProfile));
+                    string viewstring = controller.RenderRazorViewToString("~/Views/Home/CombineInvoicePdf.cshtml", combinePdfProfile);
+                    var base64String = HtmlToPdfHelper.Base64Encode(viewstring);
+                    var base64Pdf = HtmlToPdfHelper.GetByteData(new HtmlToPdf() { FileName = "demo.pdf", HtmlData = new List<string>() { base64String } }).Replace('"', ' ').Trim();
                     objResponse = JsonResponseHelper.JsonMessage(1, CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "_" + year + "_Invoices", base64Pdf);
                 }
             }
