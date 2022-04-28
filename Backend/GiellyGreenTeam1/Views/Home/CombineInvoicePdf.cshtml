@@ -11,51 +11,83 @@
     }
 
     <!DOCTYPE html>
-    <html>
+    <html lang="en">
     <head>
-        <meta name="viewport" content="width=device-width" />
-        <link href='https://fonts.googleapis.com/css?family=Mulish' rel='stylesheet'>
-        <title>Invoice</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="~/Content/CustomInvoiceForPdf.css" rel="stylesheet" />
     </head>
     <body>
-        <div class="container custompagebreak">
-            <div class="row">
-                <div class="split left">
-                    @if (supplier.logo != null && supplier.logo != "")
-                    {
-                        <img src="@supplier.logo" width="200" height="100" />
-                    }
-                </div>
-                <div class="split right">
-                    <h2>Self Billed Invoice</h2>
-                </div>
-            </div>
-            <div class="mypadding">
-                <div class="split left">
-                    <h3>@supplier.SupplierName</h3>
-                    <h4>@supplier.BusinessAddress</h4>
-                </div>
-                <div class="split right">
-                    <h4> Invoice Date : @supplier.InvoiceDate.Value.ToShortDateString()</h4>
-                    <h4>Invoice Reference : @supplier.SupplierReference@supplier.InvoiceReferenceId</h4>
-                    @if (supplier.TaxReference != null)
-                    {
-                        <h4> TAX Reference : @supplier.TaxReference</h4>}
-                    @if (supplier.VATNumber != null)
-                    {
-                        <h4> VAT Number : @supplier.VATNumber</h4>}
-                </div>
-            </div><br />
-            <div class="mypadding1">
-                <div class="split left">
-                    <div><b>To</b></div>
-                    <div><b>@Model.companyProfile.CompanyName</b></div>
-                    <div>@Model.companyProfile.AddressLine</div>
-                    <div>@Model.companyProfile.City - @Model.companyProfile.ZipCode</div>
-                    <div>@Model.companyProfile.Country</div>
-                </div>
-            </div>
+        <div class="custompagebreak">
+            <table class="Customheader">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th width="70%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @if (supplier.logo != null && supplier.logo != "")
+                            {
+                                <img src="@supplier.logo" width="200" height="100" />
+                            }
+                            else
+                            {
+                                <h3>@supplier.SupplierName</h3>
+                                <div class="customwordbreak">@supplier.BusinessAddress</div>
+                            }
+                        </td>
+                        <td class="f-25 textRight">Self-Billed Invoice</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="5" class="f-20 pd-5 verti-top">
+                            @if (supplier.logo != null && supplier.logo != "")
+                            {
+                                <h3>@supplier.SupplierName</h3>
+                                <div class="customwordbreak">@supplier.BusinessAddress</div>
+                            }
+                        </td>
+                        <td class="f-20 textRight pd-5"> Invoice Date : @Convert.ToDateTime(supplier.InvoiceDate).ToShortDateString()</td>
+                    </tr>
+                    <tr>
+                        <td class="f-20 textRight pd-5">Invoice Reference : @supplier.SupplierReference-@supplier.InvoiceReferenceId</td>
+                    </tr>
+                    <tr>
+                        <td class="pd-5"><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td class="f-20 textRight pd-5">
+                            @if (supplier.TaxReference != null)
+                            {
+                                <div>TAX Reference : @supplier.TaxReference</div>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="f-20 textRight pd-5">
+                            @if (supplier.VATNumber != null)
+                            {
+                                <div>VAT Number : @supplier.VATNumber</div>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="f-20 pd-5 verti-bottom" colspan="2">
+                            <div>
+                                <b>To : @Model.companyProfile.CompanyName</b>
+                            </div>
+                            <div class="address2Div">
+                                <div class="customwordbreak">@Model.companyProfile.AddressLine</div>
+                                <div>@Model.companyProfile.City - @Model.companyProfile.ZipCode</div>
+                                <div>@Model.companyProfile.Country</div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="mypadding2">
                 <table class="table-bord" style="width:100%">
                     <thead>
@@ -140,9 +172,9 @@
             </div>
             <div class="customfooter">
                 @if (supplier.CompanyRegisterNumber != null)
-                {   <div><b> Company Reg No : </b>@supplier.CompanyRegisterNumber</div>}
+                {<div><b> Company Reg No : </b>@supplier.CompanyRegisterNumber</div>}
                 @if (supplier.CompanyRegisterAddress != null)
-                {   <div><b> Registered address : </b>@supplier.CompanyRegisterAddress</div>}
+                {<div><b> Registered address : </b>@supplier.CompanyRegisterAddress</div>}
             </div>
         </div>
     </body>

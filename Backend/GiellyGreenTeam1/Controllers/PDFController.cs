@@ -38,14 +38,11 @@ namespace GiellyGreenTeam1.Controllers
                     string base64Pdf = Convert.ToBase64String(controller.getCombinePDF(combinePdfProfile));
                     objResponse = JsonResponseHelper.JsonMessage(1, CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "_" + year + "_Invoices", base64Pdf);
                 }
-                else
-                    objResponse = JsonResponseHelper.JsonMessage(0, "No Records Found", null);
             }
             catch(Exception ex)
             {
                 objResponse = JsonResponseHelper.JsonMessage(0, "Error", ex.Message);
             }
-
             return objResponse;
         }
     }
