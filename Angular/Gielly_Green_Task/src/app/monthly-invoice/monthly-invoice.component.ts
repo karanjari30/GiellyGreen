@@ -25,11 +25,13 @@ export class MonthlyInvoiceComponent implements OnInit {
   invoiceIcon = faFileInvoiceDollar;
   menuIcon = faEllipsisVertical;
   month = null;
-  globalVAT:number = 0;
+  globalVAT: number = 0;
+  showLoader = false;
   invoiceDate: any;
   profileIcon = faUser;
   logoutIcon = faRightFromBracket;
   monthlyInvoiceData: any;
+  netTotal:number = 0;
   isDataSaved: boolean = false;
   tempMonthlyInvoiceData: any[] = [];
   monthForInvoice: any;
@@ -42,6 +44,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   customHeader5: any;
   arrayOfID: any;
   token: any;
+  tempDate: any;
   invoiceReferenceNumber: any;
   isVisible = false;
   checked = false;
@@ -61,15 +64,14 @@ export class MonthlyInvoiceComponent implements OnInit {
   //This method will give month and year for the report printing and also will generate an invoice reference number
   onChange(date: any) {
     this.isVisible = true;
+    this.tempDate = date;
     this.monthToGetInvoice = this.datepipe.transform(date, 'MM');
     this.yearToGetInvoice = date.getFullYear();
-    this.invoiceReferenceNumber = this.datepipe.transform(date, "MMM") + date.getFullYear();
-    // this.invoiceReferenceNumber = this.datepipe.transform(date, 'MMM/yyyy')?.split('/');
     date = new Date();
     this.invoiceDate = this.datepipe.transform(date, 'yyyy/MM/dd');
-    // this.invoiceDate = this.datepipe.transform(date, 'yyyy/MM/dd');
     this.monthForInvoice = String(this.monthToGetInvoice + "/" + this.yearToGetInvoice);
     this.counter++;
+    this.netTotal = 0;
     this.getInvoicesData(this.monthToGetInvoice, this.yearToGetInvoice)
   }
 
@@ -114,6 +116,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   //This method is for sending email
   sendEmail() {
     this.token = sessionStorage.getItem('userSessionToken');
+    this.showLoader = true;
     this.apiService.emailSelectedSuppliers(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice, this.token).subscribe(
       (response: any) => {
         console.log(response)
@@ -124,6 +127,7 @@ export class MonthlyInvoiceComponent implements OnInit {
             icon: 'success',
             confirmButtonText: 'Ok',
           });
+          this.showLoader = false;
         } else {
           Swal.fire({
             title: 'Error!',
@@ -131,6 +135,7 @@ export class MonthlyInvoiceComponent implements OnInit {
             icon: 'error',
             confirmButtonText: 'Ok',
           });
+          this.showLoader = false;
         }
       }
     )
@@ -147,16 +152,25 @@ export class MonthlyInvoiceComponent implements OnInit {
   //This method is for getting all the invoice data from API
   getInvoicesData(month: number, year: number) {
     this.token = sessionStorage.getItem('userSessionToken');
+    this.showLoader = true;
     this.apiService.getMonthlyInvoiceData(month, year, this.token).subscribe((response: any) => {
-      console.log(response.Result);
-      this.monthlyInvoiceData = response.Result;
-      this.customHeader1 = this.monthlyInvoiceData[0].Custom1;
-      this.customHeader2 = this.monthlyInvoiceData[0].Custom2;
-      this.customHeader3 = this.monthlyInvoiceData[0].Custom3;
-      this.customHeader4 = this.monthlyInvoiceData[0].Custom4;
-      this.customHeader5 = this.monthlyInvoiceData[0].Custom5;
-      this.globalVAT = this.monthlyInvoiceData[0].VAT;
-      this.onCurrentPageDataChange(response.Result);
+      if (response.ResponseStatus == 1) {
+        this.monthlyInvoiceData = response.Result;
+        this.customHeader1 = this.monthlyInvoiceData[0].Custom1;
+        this.customHeader2 = this.monthlyInvoiceData[0].Custom2;
+        this.customHeader3 = this.monthlyInvoiceData[0].Custom3;
+        this.customHeader4 = this.monthlyInvoiceData[0].Custom4;
+        this.customHeader5 = this.monthlyInvoiceData[0].Custom5;
+        if(this.monthlyInvoiceData[0].InvoiceReferenceId !=null){
+          this.invoiceReferenceNumber = this.monthlyInvoiceData[0].InvoiceReferenceId
+        } else {
+          this.invoiceReferenceNumber = this.datepipe.transform(this.tempDate, "MMM") + this.tempDate.getFullYear()
+        }
+        this.globalVAT = this.monthlyInvoiceData[0].VAT;
+        this.showLoader = false;
+        this.onCurrentPageDataChange(response.Result);
+      }
+
       // this.invoiceReferenceNumber = this.monthlyInvoiceData[0].InvoiceReferenceId;
     })
   }
@@ -164,6 +178,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   //This method will save the table into database using API
   saveData() {
     this.token = sessionStorage.getItem('userSessionToken');
+    this.showLoader = true;
     var monthlyJSONObject: any = this.setMonthlyInvoiceObjectAPIData();
     this.apiService.addMonthlyInvoicesData(monthlyJSONObject, this.token).subscribe(
       (response: any) => {
@@ -173,17 +188,21 @@ export class MonthlyInvoiceComponent implements OnInit {
             'Success',
             'Data saved successfully!'
           );
+          this.showLoader = false;
           this.isDataSaved = true;
+          this.getInvoicesData(this.monthToGetInvoice, this.yearToGetInvoice);
         } else {
           this.notification.create(
             'error',
             'Error',
             'Failed to save data. Please try again!'
           );
+          this.showLoader = false;
         }
       });
   }
 
+  //This method is called to set the Monthly Invoice Object
   setMonthlyInvoiceObjectAPIData() {
     var body = {
       Custom1: this.customHeader1,
@@ -195,12 +214,13 @@ export class MonthlyInvoiceComponent implements OnInit {
       InvoiceYear: this.yearToGetInvoice,
       InvoiceMonth: this.monthToGetInvoice,
       InvoiceDate: this.invoiceDate,
-      VAT:this.globalVAT,
+      VAT: this.globalVAT,
       InvoiceViewList: this.monthlyInvoiceData
     }
     return body;
   }
 
+  //This method is called whenever the amount in any input field of supplier changes
   onAmountChange(data: any) {
     if (this.tempMonthlyInvoiceData.length != 0) {
       var isIdExist: any = this.tempMonthlyInvoiceData.filter((item: { SupplierId: any }) => item.SupplierId == data.SupplierId);
@@ -214,9 +234,9 @@ export class MonthlyInvoiceComponent implements OnInit {
   //This method is for approving the suppliers usign SupplierId
   approveSelectedSupplier() {
     this.token = sessionStorage.getItem('userSessionToken');
+    this.showLoader = true;
     this.apiService.approveSupplier(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice, this.token).subscribe(
       (response: any) => {
-        // console.log(response)
         if (response.ResponseStatus == 1) {
           Swal.fire({
             title: 'Approved!',
@@ -224,6 +244,7 @@ export class MonthlyInvoiceComponent implements OnInit {
             icon: 'success',
             confirmButtonText: 'Ok',
           });
+          this.showLoader = false;
           this.getInvoicesData(this.monthToGetInvoice, this.yearToGetInvoice);
         } else {
           Swal.fire({
@@ -232,6 +253,7 @@ export class MonthlyInvoiceComponent implements OnInit {
             icon: 'error',
             confirmButtonText: 'Ok',
           });
+          this.showLoader = false;
         }
       }
     )
@@ -259,11 +281,12 @@ export class MonthlyInvoiceComponent implements OnInit {
 
   //This method will return total of net amount column
   totalNetAmount(data: any) {
-    let total = 0;
+    this.netTotal = 0;
     data.forEach((item: { NetAmount: number }) => {
-      total += item.NetAmount;
-    })
-    return total;
+      this.netTotal += item.NetAmount;
+    });
+    console.log(this.netTotal);
+    return this.netTotal;
   }
 
   //This method will return total of VAT amount column
@@ -314,35 +337,39 @@ export class MonthlyInvoiceComponent implements OnInit {
   //This method will return a base64 string
   downloadCombinePDF() {
     this.token = sessionStorage.getItem('userSessionToken');
+    this.showLoader = true;
     this.apiService.downloadPDF(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice, this.token).subscribe(
       (response: any) => {
-        console.log(response)
+        console.log(response);
         if (response.ResponseStatus == 1) {
           this.createPDF(response.Result, response.Message);
+          this.showLoader = false;
         } else {
           this.notification.create(
             'error',
             'Error',
             'You cannot download PDF as the data for supplier is not present.'
           );
+          this.showLoader = false;
         }
       }
     )
   }
 
-  isMenuCollapsed(){
-    if(this.isCollapsed){
+  //This method is for showing or hiding the menu
+  isMenuCollapsed() {
+    if (this.isCollapsed) {
       this.isCollapsed = false;
     } else {
       this.isCollapsed = true;
     }
   }
-  
-  logout(){
+
+  logout() {
     sessionStorage.removeItem('userSessionToken');
     this.router.navigate(['/login']);
   }
-  
+
   constructor(private apiService: ApiDataService, private router: Router, private fb: FormBuilder, public datepipe: DatePipe, private notification: NzNotificationService) { }
 
   ngOnInit(): void {

@@ -30,9 +30,12 @@
                                 <input class="form-control" nz-input formControlName="supplierName"
                                     name="supplierName" />
                                 <ng-template #supplierNameError let-control>
-                                    <ng-container *ngIf="control.hasError('required')">Please enter supplier name</ng-container>
-                                    <ng-container *ngIf="control.hasError('pattern')">Only Alphabets are allowed</ng-container>
-                                    <ng-container *ngIf="control.hasError('maxlength')">Upto 30 characters are allowed</ng-container>
+                                    <ng-container *ngIf="control.hasError('required')">Please enter supplier name
+                                    </ng-container>
+                                    <ng-container *ngIf="control.hasError('pattern')">Only Alphabets are allowed
+                                    </ng-container>
+                                    <ng-container *ngIf="control.hasError('maxlength')">Upto 30 characters are allowed
+                                    </ng-container>
                                 </ng-template>
                             </nz-form-control>
                         </nz-form-item>
@@ -221,7 +224,7 @@
         </ul>
     </nz-sider>
     <nz-layout>
-        <nz-header>
+        <nz-header class="customHeader">
             <div class="row">
                 <div class="col-11">
                     <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
@@ -234,10 +237,14 @@
                     <nz-dropdown-menu #menu="nzDropdownMenu">
                         <ul nz-menu>
                             <li nz-menu-item>
-                                <a routerLink="/profile" class="text-dark text-decoration-none"> <span class="me-2"><fa-icon [icon]="profileIcon" class="customMenuIcons"></fa-icon></span> Profile</a>
+                                <a routerLink="/profile" class="text-dark text-decoration-none"> <span class="me-2">
+                                        <fa-icon [icon]="profileIcon" class="customMenuIcons"></fa-icon>
+                                    </span> Profile</a>
                             </li>
                             <li nz-menu-item>
-                                <a (click)="logout()"><span class="me-2" ><fa-icon [icon]="logoutIcon" class="customMenuIcons"></fa-icon></span> Logout</a>
+                                <a (click)="logout()"><span class="me-2">
+                                        <fa-icon [icon]="logoutIcon" class="customMenuIcons"></fa-icon>
+                                    </span> Logout</a>
                             </li>
                         </ul>
                     </nz-dropdown-menu>
@@ -280,7 +287,7 @@
                         <div class="col-sm-12 col-md-12 col-lg-12 mt-5">
                             <div class="table-responsive">
                                 <nz-table #sortTable [nzPageSize]="100" [nzData]="supplierListData"
-                                    nzTableLayout="fixed" [nzScroll]="{ y:'420px'}" class="customTable" width="100%">
+                                    nzTableLayout="fixed" [nzScroll]="{ y:'420px'}" [nzLoading]="showLoader" class="customTable" width="100%">
                                     <thead>
                                         <tr>
                                             <th [nzSortFn]="sortReferenceNoFn">Supplier Reference</th>
@@ -289,26 +296,26 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr *ngFor="let data of sortTable.data">
-                                            <td>{{data.SupplierReference}}</td>
-                                            <td>{{data.SupplierName}}</td>
-                                            <td>
-                                                <nz-switch [(ngModel)]='data.Isactive' class="customSwitch"
-                                                    (ngModelChange)="changeStatus(data)"></nz-switch>
-                                            </td>
-                                            <td>
-                                                <a (click)="showModal(data)">
-                                                    <fa-icon [icon]="editIcon" class="text-dark"></fa-icon>
-                                                </a>
-                                                <nz-divider nzType="vertical"></nz-divider>
-                                                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?"
-                                                    (nzOnConfirm)="deleteSupplier(data.SupplierId)">
-                                                    <fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                        <tbody>
+                                            <tr *ngFor="let data of sortTable.data">
+                                                <td>{{data.SupplierReference}}</td>
+                                                <td>{{data.SupplierName}}</td>
+                                                <td>
+                                                    <nz-switch [(ngModel)]='data.Isactive' class="customSwitch"
+                                                        (ngModelChange)="changeStatus(data)"></nz-switch>
+                                                </td>
+                                                <td>
+                                                    <a (click)="showModal(data)">
+                                                        <fa-icon [icon]="editIcon" class="text-dark"></fa-icon>
+                                                    </a>
+                                                    <nz-divider nzType="vertical"></nz-divider>
+                                                    <a nz-popconfirm nzPopconfirmTitle="Sure to delete?"
+                                                        (nzOnConfirm)="deleteSupplier(data.SupplierId)">
+                                                        <fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                 </nz-table>
                             </div>
                         </div>

@@ -31,6 +31,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { ToastrModule } from 'ngx-toastr';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { DatePipe, DecimalPipe } from '@angular/common'
 import { NgxPrintModule } from 'ngx-print';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
@@ -73,7 +74,8 @@ registerLocaleData(en);
     NgxPrintModule,
     NzPopconfirmModule,
     NzDatePickerModule,
-    NzDropDownModule
+    NzDropDownModule,
+    NzSpinModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, DatePipe, DecimalPipe],
   bootstrap: [AppComponent]
