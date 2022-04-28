@@ -9,10 +9,10 @@ namespace GiellyGreenTeam1.Helper
 {
     public class HtmlToPdfHelper
     {
-        public static string GetByteData(HtmlToPdf htmlToPdf)
+        public static string DownloadPDfFromstring(HtmlToPdf htmlToPdf)
         {
             RestResponse restResponse = new RestResponse();
-            var client = new RestClient("http://demoapihtmltopdf.satva.solutions/api/ConvertHtmlToPdf");
+            var client = new RestClient(System.Web.Configuration.WebConfigurationManager.AppSettings["ConvertHtmlToPdfUrl"]);
             var request = new RestRequest("", Method.Post);
             request.AddHeader("Content-Type", "application/json");
             request.AddJsonBody(htmlToPdf);

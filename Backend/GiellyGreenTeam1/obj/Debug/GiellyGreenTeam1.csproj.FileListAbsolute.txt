@@ -538,3 +538,23 @@ D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Text.Encodings.Web.xml
 D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Text.Json.xml
 D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.Threading.Tasks.Extensions.xml
 D:\Self Invoice\Backend\GiellyGreenTeam1\bin\System.ValueTuple.xml
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\RestSharp.dll
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Buffers.dll
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Memory.dll
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Numerics.Vectors.dll
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Text.Encodings.Web.dll
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Text.Json.dll
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Threading.Tasks.Extensions.dll
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.ValueTuple.dll
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\Microsoft.Bcl.AsyncInterfaces.xml
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\RestSharp.xml
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Buffers.xml
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Memory.xml
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Numerics.Vectors.xml
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Runtime.CompilerServices.Unsafe.xml
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Text.Encodings.Web.xml
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Text.Json.xml
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.Threading.Tasks.Extensions.xml
+D:\Gieely_Green\Backend\GiellyGreenTeam1\bin\System.ValueTuple.xml
