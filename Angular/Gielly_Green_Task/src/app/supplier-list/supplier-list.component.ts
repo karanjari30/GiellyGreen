@@ -20,9 +20,11 @@ export class SupplierListComponent implements OnInit {
   isEmailDuplicate: boolean = false;
   token: any;
   tempLogoData: any;
+  tempListData: any;
   editIcon = faPen;
   uploadIcon = faArrowUpFromBracket;
   plusIcon = faPlus;
+  showLoader = false;
   deleteIcon = faTrash;
   iconDelete = faXmark;
   profileIcon = faUser;
@@ -39,7 +41,6 @@ export class SupplierListComponent implements OnInit {
   validateForm!: FormGroup;
   fileData: any;
   @ViewChild('logoUpload') logoUpload: any;
-
 
   //this method is for showing modal at the time adding/updating the data
   showModal($event: any): void {
@@ -85,6 +86,7 @@ export class SupplierListComponent implements OnInit {
   addSupplier() {
     this.setDataOfAPIModel();
     this.token = sessionStorage.getItem('userSessionToken');
+    this.showLoader = true;
     this.apiService.addSupplier(this.token).subscribe(
       (response: any) => {
         if (response.ResponseStatus == 1) {
@@ -98,6 +100,7 @@ export class SupplierListComponent implements OnInit {
           this.tempLogoData = null;
           this.isVisible = false;
           this.getDataInTable();
+          this.showLoader = false;
         }
         else {
           this.showStatusNotification(response);
@@ -118,8 +121,16 @@ export class SupplierListComponent implements OnInit {
   //This method will fetch the data from the API into the table
   getDataInTable() {
     this.token= sessionStorage.getItem('userSessionToken');
+    this.showLoader = true;
     this.apiService.getDataSuppliers(this.token).subscribe((data: any) => {
-      this.supplierListData = data.Result;
+      if(data.ResponseStatus == 1){
+        this.supplierListData = data.Result;
+        this.tempListData = data.Result;
+        this.showLoader = false;
+      }
+      else{
+        this.showLoader = false;
+      }
     })
   }
 
@@ -140,19 +151,10 @@ export class SupplierListComponent implements OnInit {
 
   //This method is for searching a record in the table by using SupplierName
   searchBySupplierOrReference() {
-    let searchBySupplier = this.supplierListData.filter(
+    this.supplierListData = this.tempListData.filter(
       (item: any) => item.SupplierName.toLowerCase().indexOf(this.searchSupplier.toLowerCase()) !== -1
     );
-
-    if (this.searchSupplier.length <= 0) {
-      searchBySupplier = null;
-      if (searchBySupplier == null) {
-        this.getDataInTable();
-      }
-    }
-    else {
-      this.supplierListData = searchBySupplier;
-    }
+    
   }
 
   //This method will delete the supplier from database
@@ -207,6 +209,7 @@ export class SupplierListComponent implements OnInit {
   //This method is for editing the Supplier record
   editSupplier(supplierId: number) {
     this.setDataOfAPIModel();
+    this.showLoader = true;
     this.token = sessionStorage.getItem('userSessionToken');
     this.apiService.editSupplier(supplierId, this.token).subscribe(
       (response: any) => {
@@ -218,7 +221,9 @@ export class SupplierListComponent implements OnInit {
           );
           this.getDataInTable();
           this.handleCancel();
+          this.showLoader = false;
         } else {
+          this.showLoader = false;
           this.showStatusNotification(response);
         }
       }
@@ -266,6 +271,7 @@ export class SupplierListComponent implements OnInit {
   //This method is for changing the Supplier Status from the table
   changeStatus(supplierData: any) {
     this.token = sessionStorage.getItem('userSessionToken');
+    this.showLoader = true;
     this.apiService.updateSupplierStatus(supplierData.SupplierId, supplierData.Isactive, this.token).subscribe(
       (response: any) => {
         if (response.ResponseStatus == 1) {
@@ -274,12 +280,15 @@ export class SupplierListComponent implements OnInit {
             'Success',
             'Status updated successfully!'
           );
+          this.getDataInTable();
+          this.showLoader = false;
         } else {
           this.notification.create(
             'error',
             'Error',
             'Failed to update the status'
           );
+          this.showLoader = false;
         }
       }
     );

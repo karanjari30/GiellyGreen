@@ -44,7 +44,7 @@
           </nz-header>
         <nz-content>
             <div class="inner-content">
-                <div class="container customContainer">
+                <div class="container-fluid customContainer">
                     <div class="row">
                         <div class="col-sm-12 col-md-3 col-lg-3 mt-3">
                             <h3>Monthly Invoice</h3>
@@ -92,29 +92,29 @@
                                 <div class="col-12">
                                     <div class="table-responsive">
                                         <nz-table [nzShowPagination]="false" [nzPageSize]="100" #rowSelectionTable
-                                            [nzScroll]="{ x: '1900px', y: '500px'}" [nzData]="monthlyInvoiceData">
+                                            [nzLoading]="showLoader" [nzData]="monthlyInvoiceData">
                                             <thead>
                                                 <tr>
                                                     <th [(nzChecked)]="checked" [nzIndeterminate]="indeterminate"
                                                         (nzCheckedChange)="onAllChecked($event)" nzLeft></th>
-                                                    <th>Supplier Name</th>
-                                                    <th>Hair Services</th>
-                                                    <th>Beauty Services</th>
-                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader1"
+                                                    <th nzWidth="100px">Supplier Name</th>
+                                                    <th nzWidth="100px"> Hair Services</th>
+                                                    <th nzWidth="100px">Beauty Services</th>
+                                                    <th nzWidth="100px"><input class="w-100" nz-input [(ngModel)]="customHeader1"
                                                             placeholder="Custom-1"></th>
-                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader2"
+                                                    <th nzWidth="100px"><input class="w-100" nz-input [(ngModel)]="customHeader2"
                                                             placeholder="Custom-2"></th>
-                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader3"
+                                                    <th nzWidth="100px"><input class="w-100" nz-input [(ngModel)]="customHeader3"
                                                             placeholder="Custom-3"></th>
-                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader4"
+                                                    <th nzWidth="100px"><input class="w-100" nz-input [(ngModel)]="customHeader4"
                                                             placeholder="Custom-4"></th>
-                                                    <th><input class="w-100" nz-input [(ngModel)]="customHeader5"
+                                                    <th nzWidth="100px"><input class="w-100" nz-input [(ngModel)]="customHeader5"
                                                             placeholder="Custom-5"></th>
-                                                    <th>Net</th>
-                                                    <th>VAT</th>
-                                                    <th>Gross</th>
-                                                    <th>Advance Paid</th>
-                                                    <th>Balance Due</th>
+                                                    <th nzWidth="100px">Net</th>
+                                                    <th nzWidth="100px">VAT</th>
+                                                    <th nzWidth="100px">Gross</th>
+                                                    <th nzWidth="100px">Advance Paid</th>
+                                                    <th nzWidth="100px">Balance Due</th>
                                                     <th nzRight>Approved</th>
                                                 </tr>
                                             </thead>
@@ -187,20 +187,14 @@
                                 </div>
                             </div>
                             <div class="row mt-3" *ngIf="isVisible">
-                                <div class="col-sm-12 col-md-3 col-lg-3" *ngIf="isDataSaved">
-                                    <button nz-button class="btn customFooterButton"
-                                        (click)="approveSelectedSupplier()"><img src="assets/Vectorapprove.png"
-                                            class="approveImage me-2">APPROVE SELECTED INVOICES</button>
+                                <div class="col-sm-12 col-md-3 col-lg-3" >
+                                    <button nz-button class="btn customFooterButton" [ngClass]="netTotal > 0.00 ? 'showButtons':'hideButtons'" (click)="approveSelectedSupplier()"><img src="assets/Vectorapprove.png" class="approveImage me-2">APPROVE SELECTED INVOICES</button>
                                 </div>
-                                <div class="col-sm-12 col-md-3 col-lg-3" *ngIf="isDataSaved">
-                                    <button nz-button class="btn customFooterButton downloadButton"
-                                        (click)="downloadCombinePDF()"> <img src="assets/VectorcombineDownload.png"
-                                            class="approveImage me-2">COMBINE & DOWNLOAD SELECTED INVOICES</button>
+                                <div class="col-sm-12 col-md-3 col-lg-3" >
+                                    <button nz-button class="btn customFooterButton downloadButton" [ngClass]="netTotal > 0.00 ? 'showHideButtons':'hideButtons'" (click)="downloadCombinePDF()"> <img src="assets/VectorcombineDownload.png" class="approveImage me-2" >COMBINE & DOWNLOAD SELECTED INVOICES</button>
                                 </div>
-                                <div class="col-sm-12 col-md-3 col-lg-3" *ngIf="isDataSaved">
-                                    <button nz-button class="btn customFooterButton" (click)="sendEmail()"><img
-                                            src="assets/Vectoremail.png" class="approveImage me-2">EMAIL SELECTED
-                                        INVOICES</button>
+                                <div class="col-sm-12 col-md-3 col-lg-3" >
+                                    <button nz-button class="btn customFooterButton" [ngClass]="netTotal > 0 ? 'showHideButtons':'hideButtons'" (click)="sendEmail()"><img src="assets/Vectoremail.png" class="approveImage me-2">EMAIL SELECTED INVOICES</button>
                                 </div>
                                 <div class="col-sm-12 col-md-3 col-lg-3 d-flex justify-content-end">
                                     <button nz-button class="btn saveButton" (click)="saveData()">SAVE</button>

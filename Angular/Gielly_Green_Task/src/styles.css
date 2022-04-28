@@ -50,3 +50,7 @@ body {
   cursor: pointer;
   transition: color 0.3s;
 }
+
+.ant-layout-header{
+  position: sticky !important;
+}
