@@ -33,9 +33,8 @@ export class ApiDataService {
       "Isactive": true
     }
 
-
   loginUser(): Observable<LoginModel> {
-    return this.http.post<LoginModel>(`http://dd98-106-201-236-89.ngrok.io/api/LogIn`, this.user, { responseType: 'json' })
+    return this.http.post<LoginModel>(`http://apiteam1.azurewebsites.net/api/LogIn`, this.user, { responseType: 'json' })
   }
 
   getToken(email: string, password: string): Observable<LoginModel> {
@@ -44,71 +43,71 @@ export class ApiDataService {
     body.set('password', password);
     body.set('grant_type', "password");
     let header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-    return this.http.post<LoginModel>(`http://dd98-106-201-236-89.ngrok.io/Token`, body, { headers: header });
+    return this.http.post<LoginModel>(`http://apiteam1.azurewebsites.net/Token`, body, { headers: header });
   }
 
   addSupplier(token: string): Observable<Supplier> {
     let addSupplierHeader = new HttpHeaders().set('Authorization', 'bearer ' + token)
-    return this.http.post<Supplier>(`http://dd98-106-201-236-89.ngrok.io/api/Suppliers`, this.supplier, { headers: addSupplierHeader });
+    return this.http.post<Supplier>(`http://apiteam1.azurewebsites.net/api/Suppliers`, this.supplier, { headers: addSupplierHeader });
   }
 
   editSupplier(id: number, token: string): Observable<Supplier> {
     let supplierHeader = new HttpHeaders().set('Authorization', 'bearer ' + token)
-    return this.http.put<Supplier>(`http://dd98-106-201-236-89.ngrok.io/api/Suppliers/` + id, this.supplier, { headers: supplierHeader });
+    return this.http.put<Supplier>(`http://apiteam1.azurewebsites.net/api/Suppliers` + id, this.supplier, { headers: supplierHeader });
   }
 
   getDataSuppliers(token: string) {
     let getSupplierHeader = new HttpHeaders().set('Authorization', 'bearer ' + token);
-    return this.http.get(`http://dd98-106-201-236-89.ngrok.io/api/Suppliers`, { headers: getSupplierHeader });
+    return this.http.get(`http://apiteam1.azurewebsites.net/api/Suppliers`, { headers: getSupplierHeader });
   }
 
   deleteSupplier(supplierId: number, token: string) {
     let deleteSupplierHeader = new HttpHeaders().set('Authorization', 'bearer ' + token);
-    return this.http.delete(`http://dd98-106-201-236-89.ngrok.io/api/Suppliers/` + supplierId, { headers: deleteSupplierHeader });
+    return this.http.delete(`http://apiteam1.azurewebsites.net/api/Suppliers/` + supplierId, { headers: deleteSupplierHeader });
   }
 
   updateSupplierStatus(id: number, status: boolean, token: string) {
     let updateSupplierStatusHeader = new HttpHeaders().set('Authorization', 'bearer ' + token);
-    let url = `http://dd98-106-201-236-89.ngrok.io/api/Suppliers/?id=` + id + `&isActive=` + status;
-    return this.http.patch(url, this.supplier, { headers: updateSupplierStatusHeader });
+    let url = `http://apiteam1.azurewebsites.net/api/Suppliers/?id=` + id + `&isActive=` + status;
+    return this.http.patch(url, {}, { headers: updateSupplierStatusHeader });
   }
 
   getMonthlyInvoiceData(month: number, year: number, token: string) {
     let getMonthlyInvoiceDataHeader = new HttpHeaders().set('Authorization', 'bearer ' + token);
-    return this.http.get(`http://dd98-106-201-236-89.ngrok.io/api/MonthlyInvoices?month=` + month + `&year=` + year, { headers: getMonthlyInvoiceDataHeader })
+    return this.http.get(`http://apiteam1.azurewebsites.net/api/MonthlyInvoices?month=` + month + `&year=` + year, { headers: getMonthlyInvoiceDataHeader })
   }
 
   addMonthlyInvoicesData(monthlyJsonObject: any, token: string): Observable<Monthlyinvoice> {
     console.log(monthlyJsonObject);
     let addmonthlyInvoiceDataHeader = new HttpHeaders().set('Authorization', 'bearer ' + token);
-    return this.http.post<Monthlyinvoice>(`http://dd98-106-201-236-89.ngrok.io/api/MonthlyInvoices`, monthlyJsonObject, { headers: addmonthlyInvoiceDataHeader });
+    return this.http.post<Monthlyinvoice>(`http://apiteam1.azurewebsites.net/api/MonthlyInvoices`, monthlyJsonObject, { headers: addmonthlyInvoiceDataHeader });
   }
 
   approveSupplier(idArray: any, month: number, year: number, token: string) {
     let approveSupplierHeader = new HttpHeaders().set('Authorization', 'bearer ' + token);
-    let url = `http://dd98-106-201-236-89.ngrok.io/api/MonthlyInvoices?month=` + month + `&year=` + year;
+    let url = `http://apiteam1.azurewebsites.net/api/MonthlyInvoices?month=` + month + `&year=` + year;
     return this.http.patch(url, idArray, { headers: approveSupplierHeader });
   }
 
   emailSelectedSuppliers(arrayOfID: number, month: number, year: number, token: string) {
     let emailSuppliersHeader = new HttpHeaders().set('Authorization', 'bearer ' + token);
-    let url = `http://dd98-106-201-236-89.ngrok.io/api/Email?month=` + month + `&year=` + year;
+    let url = `http://apiteam1.azurewebsites.net/api/Email?month=` + month + `&year=` + year;
     return this.http.post(url, arrayOfID, { headers: emailSuppliersHeader });
   }
 
   downloadPDF(IDArray: number, month: number, year: number, token: string) {
     let downloadPDFHeader = new HttpHeaders().set('Authorization', 'bearer ' + token);
-    let url = `http://dd98-106-201-236-89.ngrok.io/api/PDF?month=` + month + `&year=` + year;
+    let url = `http://apiteam1.azurewebsites.net/api/PDF?month=` + month + `&year=` + year;
     return this.http.post(url, IDArray, { headers: downloadPDFHeader });
   }
 
   getProfileData(){
-    return this.http.get(`http://dd98-106-201-236-89.ngrok.io/api/Profile`);
+    return this.http.get(`http://apiteam1.azurewebsites.net/api/Profile`);
   }
 
   setProfileData(jsonObject:any): Observable<Profile>{
     let id = jsonObject.CId;
-    return this.http.post<Profile>(`http://dd98-106-201-236-89.ngrok.io/api/Profile/`+ id, jsonObject);
+    return this.http.post<Profile>(`http://apiteam1.azurewebsites.net/api/Profile/`+ id, jsonObject);
   }
   constructor(private http: HttpClient) { }
 } 

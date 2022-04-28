@@ -30,10 +30,9 @@
                                 <input class="form-control" nz-input formControlName="supplierName"
                                     name="supplierName" />
                                 <ng-template #supplierNameError let-control>
-                                    <ng-container *ngIf="control.hasError('required')">Please enter supplier name
-                                    </ng-container>
-                                    <ng-container *ngIf="control.hasError('pattern')">Only Alphabets are allowed
-                                    </ng-container>
+                                    <ng-container *ngIf="control.hasError('required')">Please enter supplier name</ng-container>
+                                    <ng-container *ngIf="control.hasError('pattern')">Only Alphabets are allowed</ng-container>
+                                    <ng-container *ngIf="control.hasError('maxlength')">Upto 30 characters are allowed</ng-container>
                                 </ng-template>
                             </nz-form-control>
                         </nz-form-item>
@@ -128,10 +127,18 @@
                     <div class="col-12">
                         <nz-form-label [nzSpan]="14">TAX Reference</nz-form-label>
                         <nz-form-item>
-                            <nz-form-control [nzSpan]="24" nzErrorTip="Only alphabets and digits are allowed">
-                                <input class="form-control" maxlength="15" nz-input formControlName="taxReference"
+                            <nz-form-control [nzSpan]="24" [nzErrorTip]="taxReferenceErr">
+                                <input class="form-control" nz-input formControlName="taxReference"
                                     name="taxReference" />
                             </nz-form-control>
+                            <ng-template #taxReferenceErr let-control>
+                                <ng-container *ngIf="control.hasError('pattern')">
+                                    Only digits and alphabets are allowed
+                                </ng-container>
+                                <ng-container *ngIf="control.hasError('maxlength')">
+                                    Tax Reference must be of 15 characters only
+                                </ng-container>
+                            </ng-template>
                         </nz-form-item>
                     </div>
                 </div>
@@ -206,9 +213,9 @@
             <li nz-menu-item class="text-center">
                 <a routerLink="/suppliers-list" routerLinkActive="active" class="menuItemCustomColor">
                     <span *ngIf="isCollapsed">
-                        <fa-icon [icon]="supplierIcon" class="customMenuIcons"></fa-icon>
+                        <fa-icon [icon]="supplierIcon" class="customMenuIcons active"></fa-icon>
                     </span>
-                    <span *ngIf="isCollapsed == false">SUPPLIERS LIST</span>
+                    <span *ngIf="isCollapsed == false" class="active">SUPPLIERS LIST</span>
                 </a>
             </li>
         </ul>

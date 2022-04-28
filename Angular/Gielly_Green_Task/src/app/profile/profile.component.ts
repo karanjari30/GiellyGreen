@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faTruck, faFileInvoiceDollar, faEllipsisVertical, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { ApiDataService } from '../api-data.service';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -19,6 +20,7 @@ export class ProfileComponent implements OnInit {
   supplierIcon = faTruck;
   invoiceIcon = faFileInvoiceDollar;
 
+  //This method is for collapsing the Menu
   isMenuCollapsed() {
     if (this.isCollapsed) {
       this.isCollapsed = false;
@@ -32,12 +34,38 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  //This method is called whenever the submit button is clicked, to save the data
   onSubmit() {
-    this.apiService.setProfileData(this.createModel()).subscribe(
-      (response: any) => console.log(response)
-    )
+    if (this.profileForm.valid) {
+      this.apiService.setProfileData(this.createModel()).subscribe(
+        (response: any) => {
+          console.log(response)
+          if (response.ResponseStatus == 1) {
+            this.notification.create(
+              'success',
+              'Success',
+              'Data saved successfully!'
+            );
+          } else {
+            this.notification.create(
+              'error',
+              'Error',
+              'Something went wrong. Please try again later!'
+            );
+          }
+        }
+      )
+    } else {
+      Object.values(this.profileForm.controls).forEach((control) => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+    }
   }
 
+  //This method will get the data from API in an object
   getProfileAPIData() {
     this.apiService.getProfileData().subscribe(
       (response: any) => {
@@ -51,6 +79,7 @@ export class ProfileComponent implements OnInit {
     )
   }
 
+  //This method will fill the form fields using the data we got from API in an object
   seProfileAPIDataInForm() {
     this.profileForm.patchValue({
       companyName: this.profileData.CompanyName,
@@ -62,6 +91,7 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  //This method will create a JSON type Object model to pass it in the API call
   createModel() {
     var body = {
       CId: this.profileData.CId,
@@ -75,9 +105,9 @@ export class ProfileComponent implements OnInit {
     return body;
   }
 
-  constructor(private router: Router, private fb: FormBuilder, private apiService: ApiDataService) {
+  constructor(private router: Router, private fb: FormBuilder, private apiService: ApiDataService, private notification: NzNotificationService) {
     this.profileForm = this.fb.group({
-      companyName: '',
+      companyName: [null, Validators.required],
       addressLine: '',
       city: '',
       zipCode: '',
