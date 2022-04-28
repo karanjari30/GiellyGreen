@@ -39,13 +39,13 @@ namespace GiellyGreenTeam1.Controllers
                         if (invoice.NetAmount > 0)
                         {
                             if (invoice.logo != null && invoice.logo != "")
-                                invoice.logo = Path.Combine(HttpContext.Current.Server.MapPath("~/ImageStorage"), invoice.logo);
+                                invoice.logo = System.Web.Configuration.WebConfigurationManager.AppSettings["LogoUrl"] + invoice.logo;
 
                             profile.getSupplierInvoiceForPDF_Result = invoice;
                             profile.companyProfile = db.GetCompanyProfile().FirstOrDefault();
                             string viewstring = controller.RenderRazorViewToString("~/Views/Home/Pdf.cshtml", profile);
                             var base64String = HtmlToPdfHelper.Base64Encode(viewstring);
-                            var result = HtmlToPdfHelper.GetByteData(new HtmlToPdf() { FileName = "demo.pdf", HtmlData = new List<string>() { base64String } }).Replace('"', ' ').Trim();
+                            var result = HtmlToPdfHelper.DownloadPDfFromstring(new HtmlToPdf() { FileName = "demo.pdf", HtmlData = new List<string>() { base64String } }).Replace('"', ' ').Trim();
                             Attachment attPDF = new Attachment(new MemoryStream(Convert.FromBase64String(result)), invoice.SupplierName + "_Invoice.pdf");
                             EmailHelper.SendEmailToSupplier(invoice.EmailAddress, month, year, attPDF);
                         }
