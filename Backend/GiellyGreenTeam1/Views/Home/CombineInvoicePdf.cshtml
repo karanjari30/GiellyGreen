@@ -1,0 +1,301 @@
+﻿@model GiellyGreenTeam1.Models.CombinePdfProfile
+
+@{
+    Layout = "";
+}
+@foreach (var supplier in Model.getSupplierInvoiceForPDF_Result)
+{
+    if (supplier.logo != null && supplier.logo != "")
+    {
+        supplier.logo = Path.Combine(HttpContext.Current.Server.MapPath("~/ImageStorage"), supplier.logo);
+    }
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            body {
+                font-size: 24px;
+            }
+
+            .custompagebreak {
+                page-break-after: always;
+            }
+
+                .custompagebreak:last-child {
+                    page-break-after: auto;
+                }
+
+            .column {
+                float: left;
+                width: 50%;
+                padding: 10px;
+                height: 150px;
+            }
+
+            .columnHeader {
+                float: left;
+                width: 50%;
+                padding: 10px;
+                height: 70px;
+            }
+
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+            table {
+                border: none;
+                border-collapse: collapse;
+                font-size: 20px;
+            }
+
+            th, td {
+                padding: 6px;
+            }
+
+            .customdescription {
+                width: 60%;
+            }
+
+            .mytablecell {
+                border: 1px solid gray;
+                border-collapse: collapse;
+            }
+
+            .amountalignheader {
+                text-align: right;
+                font-weight: bold;
+            }
+
+            .amountalign {
+                text-align: right;
+            }
+
+            .customfooter {
+                text-align: left;
+            }
+
+            .address2Div {
+                width: 30%;
+                padding-top: 8px;
+            }
+
+            .pt-5 {
+                padding-top: 5px;
+            }
+
+            .pb-5 {
+                padding-bottom: 5px;
+            }
+
+            .Customheader {
+                width: 100%;
+            }
+
+            .mypadding2 {
+                padding-top: 1rem;
+                height: 45rem;
+            }
+
+            .f-25 {
+                font-size: 25px;
+                font-weight: bold;
+            }
+
+            .f-20 {
+                font-size: 20px;
+            }
+
+            .pd-5 {
+                padding: 5px;
+            }
+
+            .verti-bottom {
+                vertical-align: bottom;
+            }
+
+            .verti-top {
+                vertical-align: top;
+            }
+
+            .textRight {
+                text-align: right;
+            }
+
+            .font-bold {
+                font-weight: bold;
+            }
+
+            .customwordbreak {
+                word-break: break-word;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="custompagebreak">
+            <table class="Customheader">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th width="70%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @if (supplier.logo != null && supplier.logo != "")
+                            {
+                                <img src="@supplier.logo" width="200" height="100" />
+                            }
+                            else
+                            {
+                                <h3>@supplier.SupplierName</h3>
+                                <div class="customwordbreak">@supplier.BusinessAddress</div>
+                            }
+                        </td>
+                        <td class="f-25 textRight">Self-Billed Invoice</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="5" class="f-20 pd-5 verti-top">
+                            @if (supplier.logo != null && supplier.logo != "")
+                            {
+                                <h3>@supplier.SupplierName</h3>
+                                <div class="customwordbreak">@supplier.BusinessAddress</div>
+                            }
+                        </td>
+                        <td class="f-20 textRight pd-5"> Invoice Date : @Convert.ToDateTime(supplier.InvoiceDate).ToShortDateString()</td>
+                    </tr>
+                    <tr>
+                        <td class="f-20 textRight pd-5">Invoice Reference : @supplier.SupplierReference-@supplier.InvoiceReferenceId</td>
+                    </tr>
+                    <tr>
+                        <td class="pd-5"><br /><br /></td>
+                    </tr>
+                    <tr>
+                        <td class="f-20 textRight pd-5">
+                            @if (supplier.TaxReference != null)
+                            {
+                                <div>TAX Reference : @supplier.TaxReference</div>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="f-20 textRight pd-5">
+                            @if (supplier.VATNumber != null)
+                            {
+                                <div>VAT Number : @supplier.VATNumber</div>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="f-20 pd-5 verti-bottom" colspan="2">
+                            <div>
+                                <b>To : @Model.companyProfile.CompanyName</b>
+                            </div>
+                            <div class="address2Div">
+                                <div class="customwordbreak">@Model.companyProfile.AddressLine</div>
+                                <div>@Model.companyProfile.City - @Model.companyProfile.ZipCode</div>
+                                <div>@Model.companyProfile.Country</div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="mypadding2">
+                <table class="table-bord" style="width:100%">
+                    <thead>
+                        <tr style="padding:3px;" class="mytablecell">
+                            <th class="mytablecell" colspan="3" style="margin-left:10px;border-right:0px">Description</th>
+                            <th class="mytablecell" style="text-align:right;border-left:0px">Amount(GBP)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="mytablecell">
+                            <td colspan="2" class="customdescription mytablecell">Hair Services</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.HairService).ToString("N2")</td>
+                        </tr>
+                        <tr class="mytablecell">
+                            <td class="mytablecell" colspan="2">Beauty Services</td>
+                            <td class="mytablecell"></td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.BeautyService).ToString("N2")</td>
+                        </tr>
+                        @if (supplier.CustomHeader1 != 0 && supplier.CustomHeader1 != null)
+                        {
+                            <tr class="mytablecell">
+                                <td class="mytablecell" colspan="2">@supplier.Custom1</td>
+                                <td class="mytablecell"></td>
+                                <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.CustomHeader1).ToString("N2")</td>
+                            </tr>
+                        }
+                        @if (supplier.CustomHeader2 != 0 && supplier.CustomHeader2 != null)
+                        {
+                            <tr class="mytablecell">
+                                <td class="mytablecell" colspan="2">@supplier.Custom2</td>
+                                <td class="mytablecell"></td>
+                                <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.CustomHeader2).ToString("N2")</td>
+                            </tr>
+                        }
+                        @if (supplier.CustomHeader3 != 0 && supplier.CustomHeader3 != null)
+                        {
+                            <tr class="mytablecell">
+                                <td class="mytablecell" colspan="2">@supplier.Custom3</td>
+                                <td class="mytablecell"></td>
+                                <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.CustomHeader3).ToString("N2")</td>
+                            </tr>
+                        }
+                        @if (supplier.CustomHeader4 != 0 && supplier.CustomHeader4 != null)
+                        {
+                            <tr class="mytablecell">
+                                <td class="mytablecell" colspan="2">@supplier.Custom4</td>
+                                <td class="mytablecell"></td>
+                                <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.CustomHeader4).ToString("N2")</td>
+                            </tr>
+                        }
+                        @if (supplier.CustomHeader5 != 0 && supplier.CustomHeader5 != null)
+                        {
+                            <tr class="mytablecell">
+                                <td class="mytablecell" colspan="2">@supplier.Custom5</td>
+                                <td class="mytablecell"></td>
+                                <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.CustomHeader5).ToString("N2")</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="2" style="border:0px"></td>
+                            <td class="amountalignheader">Subtotal(Net)</td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.NetAmount).ToString("N2")</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td class="amountalignheader">VAT</td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.VATAmount).ToString("N2")</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td class="amountalignheader">Advance Paid</td>
+                            <td class="mytablecell amountalign">(@Convert.ToDecimal(supplier.AdvancePay).ToString("N2"))</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td class="amountalignheader">Balance Due</td>
+                            <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.BalanceDue).ToString("N2")</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="customfooter">
+                @if (supplier.CompanyRegisterNumber != null)
+                {<div><b> Company Reg No : </b>@supplier.CompanyRegisterNumber</div>}
+                @if (supplier.CompanyRegisterAddress != null)
+                {<div><b> Registered address : </b>@supplier.CompanyRegisterAddress</div>}
+            </div>
+        </div>
+    </body>
+</html>
+}

@@ -1,7 +1,9 @@
 ﻿using DataAccessLayer.Model;
 using GiellyGreenTeam1.Helper;
 using GiellyGreenTeam1.Models;
+using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -25,7 +27,7 @@ namespace GiellyGreenTeam1.Controllers
                 var supplierLIstForPdf = db.GetSupplierInvoiceForPDF(String.Join(",", ids), month, year).ToList();
                 HomeController controller = new HomeController();
                 RouteData route = new RouteData();
-                route.Values.Add("action", "getPDF"); // ActionName
+                route.Values.Add("action", "RenderRazorViewToString"); // ActionName
                 route.Values.Add("controller", "Home"); // Controller Name
                 ControllerContext newContext = new ControllerContext(new HttpContextWrapper(HttpContext.Current), route, controller);
                 controller.ControllerContext = newContext;
@@ -37,12 +39,14 @@ namespace GiellyGreenTeam1.Controllers
                         if (invoice.NetAmount > 0)
                         {
                             if (invoice.logo != null && invoice.logo != "")
-                            {
                                 invoice.logo = Path.Combine(HttpContext.Current.Server.MapPath("~/ImageStorage"), invoice.logo);
-                            }
+
                             profile.getSupplierInvoiceForPDF_Result = invoice;
                             profile.companyProfile = db.GetCompanyProfile().FirstOrDefault();
-                            Attachment attPDF = new Attachment(new MemoryStream(controller.getPDF(profile)), invoice.SupplierName + "_Invoice.pdf");
+                            string viewstring = controller.RenderRazorViewToString("~/Views/Home/Pdf.cshtml", profile);
+                            var base64String = HtmlToPdfHelper.Base64Encode(viewstring);
+                            var result = HtmlToPdfHelper.GetByteData(new HtmlToPdf() { FileName = "demo.pdf", HtmlData = new List<string>() { base64String } }).Replace('"', ' ').Trim();
+                            Attachment attPDF = new Attachment(new MemoryStream(Convert.FromBase64String(result)), invoice.SupplierName + "_Invoice.pdf");
                             EmailHelper.SendEmailToSupplier(invoice.EmailAddress, month, year, attPDF);
                         }
                     }

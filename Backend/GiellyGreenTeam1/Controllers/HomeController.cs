@@ -1,10 +1,6 @@
-﻿using DataAccessLayer.Model;
-using GiellyGreenTeam1.Models;
-using iTextSharp.text;
+﻿using GiellyGreenTeam1.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.IO;
 using System.Web.Mvc;
 
 namespace GiellyGreenTeam1.Controllers
@@ -26,7 +22,20 @@ namespace GiellyGreenTeam1.Controllers
 
         public Byte[] getCombinePDF(CombinePdfProfile list)
         {
-            return new Rotativa.ViewAsPdf("~/Views/Home/getCombinePDF.cshtml", list).BuildFile(ControllerContext); ;
+            return new Rotativa.ViewAsPdf("~/Views/Home/CombineInvoicePdf.cshtml", list).BuildFile(ControllerContext); ;
+        }
+
+        public string RenderRazorViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
         }
     }
 }
