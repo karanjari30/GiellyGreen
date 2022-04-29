@@ -170,13 +170,14 @@
                                     <button nz-button (click)="fileUpload.click()">
                                         <fa-icon [icon]="uploadIcon" class="text-dark me-1"></fa-icon> Upload here
                                     </button><br>
-                                    <img [src]="tempLogoData" [ngClass]="tempLogoData == null ? 'hideImageBox':''"
-                                        class="mt-2 me-2" height="200" width="200">
-                                    <br>
-                                    <button [ngClass]="tempLogoData == null ? 'hideImageBox':''" class="btn text-danger"
-                                        (click)="removeImage()">
-                                        <fa-icon [icon]="iconDelete"></fa-icon> Delete
-                                    </button>
+                                    <div *ngIf="tempLogoData != null">
+                                        <img [src]="tempLogoData" class="mt-2 me-2" height="200" width="200">
+                                        <br>
+                                        <button [ngClass]="tempLogoData == null ? 'hideImageBox':''"
+                                            class="btn text-danger" (click)="removeImage()">
+                                            <fa-icon [icon]="iconDelete"></fa-icon> Delete
+                                        </button>
+                                    </div>
                                 </div>
                             </nz-form-control>
                         </nz-form-item>
@@ -287,7 +288,8 @@
                         <div class="col-sm-12 col-md-12 col-lg-12 mt-5">
                             <div class="table-responsive">
                                 <nz-table #sortTable [nzPageSize]="100" [nzData]="supplierListData"
-                                    nzTableLayout="fixed" [nzScroll]="{ y:'420px'}" [nzLoading]="showLoader" class="customTable" width="100%">
+                                    nzTableLayout="fixed" [nzScroll]="{ y:'420px'}" [nzLoading]="showLoader"
+                                    class="customTable" width="100%">
                                     <thead>
                                         <tr>
                                             <th [nzSortFn]="sortReferenceNoFn">Supplier Reference</th>
@@ -296,26 +298,26 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                        <tbody>
-                                            <tr *ngFor="let data of sortTable.data">
-                                                <td>{{data.SupplierReference}}</td>
-                                                <td>{{data.SupplierName}}</td>
-                                                <td>
-                                                    <nz-switch [(ngModel)]='data.Isactive' class="customSwitch"
-                                                        (ngModelChange)="changeStatus(data)"></nz-switch>
-                                                </td>
-                                                <td>
-                                                    <a (click)="showModal(data)">
-                                                        <fa-icon [icon]="editIcon" class="text-dark"></fa-icon>
-                                                    </a>
-                                                    <nz-divider nzType="vertical"></nz-divider>
-                                                    <a nz-popconfirm nzPopconfirmTitle="Sure to delete?"
-                                                        (nzOnConfirm)="deleteSupplier(data.SupplierId)">
-                                                        <fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
+                                    <tbody>
+                                        <tr *ngFor="let data of sortTable.data">
+                                            <td>{{data.SupplierReference}}</td>
+                                            <td>{{data.SupplierName}}</td>
+                                            <td>
+                                                <nz-switch [(ngModel)]='data.Isactive' class="customSwitch"
+                                                    (ngModelChange)="changeStatus(data)"></nz-switch>
+                                            </td>
+                                            <td>
+                                                <a (click)="showModal(data)">
+                                                    <fa-icon [icon]="editIcon" class="text-dark"></fa-icon>
+                                                </a>
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?"
+                                                    (nzOnConfirm)="deleteSupplier(data.SupplierId)">
+                                                    <fa-icon [icon]="deleteIcon" class="text-dark"></fa-icon>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </nz-table>
                             </div>
                         </div>
