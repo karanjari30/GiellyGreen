@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DatePipe, DecimalPipe } from '@angular/common';
@@ -12,6 +12,7 @@ interface ItemData {
   age: number;
   address: string;
 }
+
 @Component({
   selector: 'app-monthly-invoice',
   templateUrl: './monthly-invoice.component.html',
@@ -31,7 +32,7 @@ export class MonthlyInvoiceComponent implements OnInit {
   profileIcon = faUser;
   logoutIcon = faRightFromBracket;
   monthlyInvoiceData: any;
-  netTotal:number = 0;
+  netTotal: number = 0;
   isDataSaved: boolean = false;
   tempMonthlyInvoiceData: any[] = [];
   monthForInvoice: any;
@@ -67,7 +68,7 @@ export class MonthlyInvoiceComponent implements OnInit {
     this.tempDate = date;
     this.monthToGetInvoice = this.datepipe.transform(date, 'MM');
     this.yearToGetInvoice = date.getFullYear();
-    date = new Date();
+    date = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     this.invoiceDate = this.datepipe.transform(date, 'yyyy/MM/dd');
     this.monthForInvoice = String(this.monthToGetInvoice + "/" + this.yearToGetInvoice);
     this.counter++;
@@ -128,10 +129,18 @@ export class MonthlyInvoiceComponent implements OnInit {
             confirmButtonText: 'Ok',
           });
           this.showLoader = false;
+        } else if (response.ResponseStatus == 2) {
+          Swal.fire({
+            title: 'Error!',
+            text: 'No Record Found!',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+          });
+          this.showLoader = false;
         } else {
           Swal.fire({
             title: 'Error!',
-            text: 'Error in sending mail!',
+            text: 'Something went wrong. Please try again later!',
             icon: 'error',
             confirmButtonText: 'Ok',
           });
@@ -161,7 +170,7 @@ export class MonthlyInvoiceComponent implements OnInit {
         this.customHeader3 = this.monthlyInvoiceData[0].Custom3;
         this.customHeader4 = this.monthlyInvoiceData[0].Custom4;
         this.customHeader5 = this.monthlyInvoiceData[0].Custom5;
-        if(this.monthlyInvoiceData[0].InvoiceReferenceId !=null){
+        if (this.monthlyInvoiceData[0].InvoiceReferenceId != null) {
           this.invoiceReferenceNumber = this.monthlyInvoiceData[0].InvoiceReferenceId
         } else {
           this.invoiceReferenceNumber = this.datepipe.transform(this.tempDate, "MMM") + this.tempDate.getFullYear()
@@ -276,7 +285,11 @@ export class MonthlyInvoiceComponent implements OnInit {
 
   //This method will return balance due
   getBalanceDue(data: any) {
-    return data.BalanceDue = data.GrossAmount - data.AdvancePay;
+    try {
+      return data.BalanceDue = data.GrossAmount - data.AdvancePay.replace('(', '').replace(')', '');
+    } catch (e) {
+      return data.BalanceDue = data.GrossAmount;
+    }
   }
 
   //This method will return total of net amount column
@@ -285,7 +298,6 @@ export class MonthlyInvoiceComponent implements OnInit {
     data.forEach((item: { NetAmount: number }) => {
       this.netTotal += item.NetAmount;
     });
-    console.log(this.netTotal);
     return this.netTotal;
   }
 
@@ -340,15 +352,21 @@ export class MonthlyInvoiceComponent implements OnInit {
     this.showLoader = true;
     this.apiService.downloadPDF(this.arrayOfID, this.monthToGetInvoice, this.yearToGetInvoice, this.token).subscribe(
       (response: any) => {
-        console.log(response);
         if (response.ResponseStatus == 1) {
           this.createPDF(response.Result, response.Message);
+          this.showLoader = false;
+        } else if (response.ResponseStatus == 2) {
+          this.notification.create(
+            'error',
+            'Error',
+            'You cannot download PDF as the data for supplier is not present.'
+          );
           this.showLoader = false;
         } else {
           this.notification.create(
             'error',
             'Error',
-            'You cannot download PDF as the data for supplier is not present.'
+            'Something went wrong. Please try again later!'
           );
           this.showLoader = false;
         }
@@ -378,5 +396,6 @@ export class MonthlyInvoiceComponent implements OnInit {
     }
     this.isDataSaved = false;
     this.isCollapsed = false;
+    this.monthlyInvoiceData = [];
   }
 }

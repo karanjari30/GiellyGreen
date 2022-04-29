@@ -24,6 +24,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -36,6 +37,7 @@ import { DatePipe, DecimalPipe } from '@angular/common'
 import { NgxPrintModule } from 'ngx-print';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { ProfileComponent } from './profile/profile.component';
+import { AdvancePayBracketsDirective } from './advance-pay-brackets.directive';
 
 registerLocaleData(en);
 
@@ -46,6 +48,7 @@ registerLocaleData(en);
     SupplierListComponent,
     MonthlyInvoiceComponent,
     ProfileComponent,
+    AdvancePayBracketsDirective,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +78,8 @@ registerLocaleData(en);
     NzPopconfirmModule,
     NzDatePickerModule,
     NzDropDownModule,
-    NzSpinModule
+    NzSpinModule,
+    NzTypographyModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, DatePipe, DecimalPipe],
   bootstrap: [AppComponent]

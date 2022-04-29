@@ -120,7 +120,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let data of rowSelectionTable.data" id="data.SupplierId">
-                                                    <td nzLeft class="text-center">
+                                                    <td nzLeft class="text-center" >
                                                         <input type="checkbox" class="customCheckBox"
                                                             [checked]="setOfCheckedId.has(data.SupplierId)"
                                                             (change)="onItemChecked(data.SupplierId)">
@@ -149,7 +149,7 @@
                                                     </td>
                                                     <td><input type="number" nz-input class="w-100"
                                                             [(ngModel)]="data.CustomHeader4"
-                                                            (change)="onAmountChange(data)" [disabled]="data.IsApprove">
+                                                            (change)="onAmountChange(data)"  [disabled]="data.IsApprove">
                                                     </td>
                                                     <td><input type="number" nz-input class="w-100"
                                                             [(ngModel)]="data.CustomHeader5"
@@ -159,10 +159,11 @@
                                                     <td>{{getNetAmount(data) | number : '1.2-2'}}</td>
                                                     <td>{{getVATAmount(data) | number : '1.2-2'}}</td>
                                                     <td>{{getGrossAmount(data) | number : '1.2-2'}}</td>
-                                                    <td><input type="number" nz-input class="w-100"
+                                                    <td><input appAdvancePayBrackets nz-input class="w-100"
                                                             [(ngModel)]="data.AdvancePay"
-                                                            (change)="onAmountChange(data)" [disabled]="data.IsApprove">
+                                                            (change)="onAmountChange(data)" id="advancePay" [disabled]="data.IsApprove">
                                                     </td>
+                                                    <!-- <td>{{getBalanceDue(data)}}</td> -->
                                                     <td>{{getBalanceDue(data) >= 0 ? (getBalanceDue(data) | number :
                                                         '1.2-2') : '(' + getBalanceDue(data).toFixed(2) + ')'}}</td>
                                                     <td nzRight><input disabled [checked]="data.IsApprove" class="check"
@@ -170,11 +171,11 @@
                                                 </tr>
                                                 <tr>
                                                     <td [colSpan]="9" class="fs-6 text-center"><b>Total</b></td>
-                                                    <td>{{totalNetAmount(rowSelectionTable.data) | number : '1.2-2'}}
+                                                    <td >{{totalNetAmount(rowSelectionTable.data) | number : '1.2-2'}}
                                                     </td>
                                                     <td>{{totalVATAmount(rowSelectionTable.data) | number : '1.2-2'}}
                                                     </td>
-                                                    <td>{{totalGrossAmount(rowSelectionTable.data) | number : '1.2-2'}}
+                                                    <td >{{totalGrossAmount(rowSelectionTable.data) | number : '1.2-2'}}
                                                     </td>
                                                     <td>{{totalAdvancePayment(rowSelectionTable.data) | number :
                                                         '1.2-2'}}</td>
@@ -252,8 +253,12 @@
                         <td>{{data.NetAmount | number : '1.2-2'}}</td>
                         <td>{{data.GrossAmount | number : '1.2-2'}}</td>
                         <td>{{data.VATAmount | number : '1.2-2'}}</td>
-                        <td>{{data.AdvancePay | number : '1.2-2'}}</td>
+                        <td>{{data.AdvancePay}}</td>
                         <td>{{data.BalanceDue | number : '1.2-2'}}</td>
+
+                        <!-- getBalanceDue(data) >= 0 ? (getBalanceDue(data) | number :
+                                                        '1.2-2') : '(' + getBalanceDue(data).toFixed(2) + ')' -->
+
                     </tr>
                     <tr>
                         <td [colSpan]="8" class="fs-6 fw-bold text-center">Total</td>

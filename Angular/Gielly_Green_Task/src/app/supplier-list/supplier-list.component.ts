@@ -317,9 +317,9 @@ export class SupplierListComponent implements OnInit {
 
   //This method will remove the uploaded image on button click when the user the is adding/editing the supplier
   removeImage() {
-    this.tempLogoData = '';
-    this.fileData = null;
-    this.logoUpload.nativeElement.value = "";
+    this.tempLogoData = null;
+    this.fileData = '';
+    this.logoUpload.nativeElement.value = '';
     // console.log(this .tempLogoData);
     // this.fileData = this.tempLogoData;
   }
