@@ -23,8 +23,15 @@ namespace DataAccessLayer.Services
             {
                 if (!String.IsNullOrEmpty(supplier.logo) && supplier.logo != "null")
                 {
-                    byte[] imageByte = File.ReadAllBytes(Path.Combine(path, supplier.logo));
-                    supplier.logo = Convert.ToBase64String(imageByte);
+                    try
+                    {
+                        byte[] imageByte = File.ReadAllBytes(Path.Combine(path, supplier.logo));
+                        supplier.logo = Convert.ToBase64String(imageByte);
+                    }
+                    catch
+                    {
+                        supplier.logo = Convert.ToBase64String(File.ReadAllBytes(Path.Combine(HttpContext.Current.Server.MapPath(@"~\Content\image\imagenotfound.jpg"))));
+                    }
                 }
             });
             return objSuppilerlists;

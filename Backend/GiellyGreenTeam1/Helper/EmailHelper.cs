@@ -11,7 +11,7 @@ namespace GiellyGreenTeam1.Models
 {
     public class EmailHelper
     {
-        public static void SendEmailToSupplier(String ToEmail, int month, int year, Attachment attPDF)
+        public static void SendEmailToSupplier(String ToEmail, int month, int year, Attachment attPDF, string companyname)
         {
             var HostAdd = ConfigurationManager.AppSettings["Host"].ToString();
             var FromEmail = ConfigurationManager.AppSettings["FromMail"].ToString();
@@ -20,7 +20,7 @@ namespace GiellyGreenTeam1.Models
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(FromEmail, "Gielly Green");
             mailMessage.Subject = "Your invoice for the " + CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "-" + year;
-            mailMessage.Body = "Please find attached a self-billed invoice to Gielly Green Limited, prepared on your behalf, as per the agreement. <br> Regard.<br> Gielly Green Limited";
+            mailMessage.Body = "Please find attached a self-billed invoice to <b>" + companyname + " </b> , prepared on your behalf, as per the agreement. <br> Regard.<br> Gielly Green Limited";
             mailMessage.Attachments.Add(attPDF);
             mailMessage.IsBodyHtml = true;
             mailMessage.To.Add(new MailAddress(ToEmail));

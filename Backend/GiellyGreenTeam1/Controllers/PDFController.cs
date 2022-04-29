@@ -37,9 +37,11 @@ namespace GiellyGreenTeam1.Controllers
                     combinePdfProfile.companyProfile = db.GetCompanyProfile().FirstOrDefault();
                     string viewstring = controller.RenderRazorViewToString("~/Views/Home/CombineInvoicePdf.cshtml", combinePdfProfile);
                     var base64String = HtmlToPdfHelper.Base64Encode(viewstring);
-                    var base64Pdf = HtmlToPdfHelper.DownloadPDfFromstring(new HtmlToPdf() { FileName = "demo.pdf", HtmlData = new List<string>() { base64String } }).Replace('"', ' ').Trim();
+                    var base64Pdf = HtmlToPdfHelper.DownloadPDfFromstring(new HtmlToPdf() { FileName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "_" + year + "_Invoices.pdf", HtmlData = new List<string>() { base64String } }).Replace('"', ' ').Trim();
                     objResponse = JsonResponseHelper.JsonMessage(1, CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + "_" + year + "_Invoices", base64Pdf);
                 }
+                else
+                    objResponse = JsonResponseHelper.JsonMessage(2, "No Record Found", null);
             }
             catch(Exception ex)
             {

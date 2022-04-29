@@ -1,5 +1,7 @@
 ﻿@model GiellyGreenTeam1.Models.PdfProfile
 
+@using System.Globalization
+
 @{
     Layout = "";
 }
@@ -12,6 +14,8 @@
     <style>
         body {
             font-size: 24px;
+            font-family: 'Dax', sans-serif;
+            font-family: 'Dax-Regular', sans-serif;
         }
 
         .custompagebreak {
@@ -141,14 +145,13 @@
         <tbody>
             <tr>
                 <td>
-                    @if (Model.getSupplierInvoiceForPDF_Result.logo != null && Model.getSupplierInvoiceForPDF_Result.logo != "")
+                    @if (!string.IsNullOrEmpty(Model.getSupplierInvoiceForPDF_Result.logo))
                     {
                         <img src="@Model.getSupplierInvoiceForPDF_Result.logo" width="200" height="100" alt="logo" />
                     }
                     else
                     {
                         <h3>@Model.getSupplierInvoiceForPDF_Result.SupplierName</h3>
-                        <div class="customwordbreak">@Model.getSupplierInvoiceForPDF_Result.BusinessAddress</div>
                     }
                 </td>
                 <td class="f-25 textRight">Self-Billed Invoice</td>
@@ -160,8 +163,12 @@
                         <h3>@Model.getSupplierInvoiceForPDF_Result.SupplierName</h3>
                         <div class="customwordbreak">@Model.getSupplierInvoiceForPDF_Result.BusinessAddress</div>
                     }
+                    else
+                    {
+                        <div class="customwordbreak">@Model.getSupplierInvoiceForPDF_Result.BusinessAddress</div>
+                    }
                 </td>
-                <td class="f-20 textRight pd-5"> Invoice Date : @Convert.ToDateTime(Model.getSupplierInvoiceForPDF_Result.InvoiceDate).ToShortDateString()</td>
+                <td class="f-20 textRight pd-5"> Invoice Date : @Convert.ToDateTime(Model.getSupplierInvoiceForPDF_Result.InvoiceDate).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</td>
             </tr>
             <tr>
                 <td class="f-20 textRight pd-5">Invoice Reference : @Model.getSupplierInvoiceForPDF_Result.SupplierReference-@Model.getSupplierInvoiceForPDF_Result.InvoiceReferenceId</td>
@@ -221,7 +228,14 @@
                 @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader1 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader1 != null)
                 {
                     <tr class="mytablecell">
-                        <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom1</td>
+                        @if (!string.IsNullOrEmpty(Model.getSupplierInvoiceForPDF_Result.Custom1))
+                        {
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom1</td>
+                        }
+                        else
+                        {
+                            <td class="mytablecell" colspan="2">Custom 1</td>
+                        }
                         <td class="mytablecell"></td>
                         <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader1).ToString("N2")1</td>
                     </tr>
@@ -229,7 +243,14 @@
                 @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader2 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader2 != null)
                 {
                     <tr class="mytablecell">
-                        <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom2</td>
+                        @if (!string.IsNullOrEmpty(Model.getSupplierInvoiceForPDF_Result.Custom2))
+                        {
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom2</td>
+                        }
+                        else
+                        {
+                            <td class="mytablecell" colspan="2">Custom 2</td>
+                        }
                         <td class="mytablecell"></td>
                         <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader2).ToString("N2")</td>
                     </tr>
@@ -237,7 +258,14 @@
                 @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader3 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader3 != null)
                 {
                     <tr class="mytablecell">
-                        <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom3</td>
+                        @if (!string.IsNullOrEmpty(Model.getSupplierInvoiceForPDF_Result.Custom3))
+                        {
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom3</td>
+                        }
+                        else
+                        {
+                            <td class="mytablecell" colspan="2">Custom 3</td>
+                        }
                         <td class="mytablecell"></td>
                         <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader3).ToString("N2")</td>
                     </tr>
@@ -245,7 +273,14 @@
                 @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader4 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader4 != null)
                 {
                     <tr class="mytablecell">
-                        <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom4</td>
+                        @if (!string.IsNullOrEmpty(Model.getSupplierInvoiceForPDF_Result.Custom4))
+                        {
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom4</td>
+                        }
+                        else
+                        {
+                            <td class="mytablecell" colspan="2">Custom 4</td>
+                        }
                         <td class="mytablecell"></td>
                         <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader4).ToString("N2")</td>
                     </tr>
@@ -253,7 +288,14 @@
                 @if (Model.getSupplierInvoiceForPDF_Result.CustomHeader5 != 0 && Model.getSupplierInvoiceForPDF_Result.CustomHeader5 != null)
                 {
                     <tr class="mytablecell">
-                        <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom5</td>
+                        @if (!string.IsNullOrEmpty(Model.getSupplierInvoiceForPDF_Result.Custom5))
+                        {
+                            <td class="mytablecell" colspan="2">@Model.getSupplierInvoiceForPDF_Result.Custom5</td>
+                        }
+                        else
+                        {
+                            <td class="mytablecell" colspan="2">Custom 5</td>
+                        }
                         <td class="mytablecell"></td>
                         <td class="mytablecell amountalign">@Convert.ToDecimal(Model.getSupplierInvoiceForPDF_Result.CustomHeader5).ToString("N2")</td>
                     </tr>
