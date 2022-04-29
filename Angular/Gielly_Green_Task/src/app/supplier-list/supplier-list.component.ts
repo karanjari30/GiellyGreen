@@ -280,7 +280,6 @@ export class SupplierListComponent implements OnInit {
             'Success',
             'Status updated successfully!'
           );
-          this.getDataInTable();
           this.showLoader = false;
         } else {
           this.notification.create(
