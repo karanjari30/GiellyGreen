@@ -45,7 +45,7 @@ namespace GiellyGreenTeam1.Controllers
                             profile.companyProfile = db.GetCompanyProfile().FirstOrDefault();
                             string viewstring = controller.RenderRazorViewToString("~/Views/Home/Pdf.cshtml", profile);
                             var base64String = HtmlToPdfHelper.Base64Encode(viewstring);
-                            var result = HtmlToPdfHelper.DownloadPDfFromstring(new HtmlToPdf() { FileName = "demo.pdf", HtmlData = new List<string>() { base64String } }).Replace('"', ' ').Trim();
+                            var result = HtmlToPdfHelper.DownloadPDfFromstring(new HtmlToPdf() { FileName = invoice.SupplierReference + "_Invoice.pdf", HtmlData = new List<string>() { base64String } }).Replace('"', ' ').Trim();
                             Attachment attPDF = new Attachment(new MemoryStream(Convert.FromBase64String(result)), invoice.SupplierReference + "_Invoice.pdf");
                             EmailHelper.SendEmailToSupplier(invoice.EmailAddress, month, year, attPDF, profile.companyProfile.CompanyName);
                         }
@@ -53,7 +53,7 @@ namespace GiellyGreenTeam1.Controllers
                     objResponse = JsonResponseHelper.JsonMessage(1, "Successfully send mail", 1);
                 }
                 else
-                    objResponse = JsonResponseHelper.JsonMessage(0, "No Record Found", null);
+                    objResponse = JsonResponseHelper.JsonMessage(2, "No Record Found", null);
             }
             catch (Exception ex)
             {
