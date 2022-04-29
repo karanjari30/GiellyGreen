@@ -5,7 +5,7 @@
 }
 @foreach (var supplier in Model.getSupplierInvoiceForPDF_Result)
 {
-    if (supplier.logo != null && supplier.logo != "")
+    if (!string.IsNullOrEmpty(supplier.logo))
     {
         supplier.logo = System.Web.Configuration.WebConfigurationManager.AppSettings["LogoUrl"] + supplier.logo;
     }
@@ -149,14 +149,13 @@
                 <tbody>
                     <tr>
                         <td>
-                            @if (supplier.logo != null && supplier.logo != "")
+                            @if (!string.IsNullOrEmpty(supplier.logo))
                             {
                                 <img src="@supplier.logo" width="200" height="100" />
                             }
                             else
                             {
                                 <h3>@supplier.SupplierName</h3>
-                                <div class="customwordbreak">@supplier.BusinessAddress</div>
                             }
                         </td>
                         <td class="f-25 textRight">Self-Billed Invoice</td>
@@ -166,6 +165,10 @@
                             @if (supplier.logo != null && supplier.logo != "")
                             {
                                 <h3>@supplier.SupplierName</h3>
+                                <div class="customwordbreak">@supplier.BusinessAddress</div>
+                            }
+                            else
+                            {
                                 <div class="customwordbreak">@supplier.BusinessAddress</div>
                             }
                         </td>

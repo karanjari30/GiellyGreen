@@ -128,6 +128,10 @@
         .customwordbreak {
             word-break: break-word;
         }
+
+        .custompadding {
+            padding-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -141,14 +145,13 @@
         <tbody>
             <tr>
                 <td>
-                    @if (Model.getSupplierInvoiceForPDF_Result.logo != null && Model.getSupplierInvoiceForPDF_Result.logo != "")
+                    @if (!string.IsNullOrEmpty(Model.getSupplierInvoiceForPDF_Result.logo))
                     {
                         <img src="@Model.getSupplierInvoiceForPDF_Result.logo" width="200" height="100" alt="logo" />
                     }
                     else
                     {
                         <h3>@Model.getSupplierInvoiceForPDF_Result.SupplierName</h3>
-                        <div class="customwordbreak">@Model.getSupplierInvoiceForPDF_Result.BusinessAddress</div>
                     }
                 </td>
                 <td class="f-25 textRight">Self-Billed Invoice</td>
@@ -158,6 +161,10 @@
                     @if (Model.getSupplierInvoiceForPDF_Result.logo != null && Model.getSupplierInvoiceForPDF_Result.logo != "")
                     {
                         <h3>@Model.getSupplierInvoiceForPDF_Result.SupplierName</h3>
+                        <div class="customwordbreak">@Model.getSupplierInvoiceForPDF_Result.BusinessAddress</div>
+                    }
+                    else
+                    {
                         <div class="customwordbreak">@Model.getSupplierInvoiceForPDF_Result.BusinessAddress</div>
                     }
                 </td>
