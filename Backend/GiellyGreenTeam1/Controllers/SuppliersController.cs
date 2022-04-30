@@ -45,9 +45,9 @@ namespace GiellyGreenTeam1.Controllers
                 if (ModelState.IsValid)
                 {
                     model.logo = LogoHelper.StoreLogoInFileSystem(model.logo, model.SupplierName);
-                    var Productmapper = config.CreateMapper().Map<Supplier>(model);
-                    supplierRepository.PostSupplier(Productmapper);
-                    objResponse = JsonResponseHelper.JsonMessage(1, "Record Created Successfully", Productmapper);
+                    var Suppliermapper = config.CreateMapper().Map<Supplier>(model);
+                    supplierRepository.PostSupplier(Suppliermapper);
+                    objResponse = JsonResponseHelper.JsonMessage(1, "Record Created Successfully", Suppliermapper);
                 }
                 else
                     objResponse = JsonResponseHelper.JsonMessage(0, "Error", ModelState.Values.SelectMany(E => E.Errors).Select(E => E.ErrorMessage).ToList());
@@ -73,9 +73,9 @@ namespace GiellyGreenTeam1.Controllers
                     {
                         model.SupplierId = id;
                         model.logo = LogoHelper.StoreLogoInFileSystem(model.logo, model.SupplierName);
-                        var Productmapper = config.CreateMapper().Map<Supplier>(model);
-                        supplierRepository.PutSupplier(Productmapper, id);
-                        objResponse = JsonResponseHelper.JsonMessage(1, "Record Updated Successfully", Productmapper);
+                        var Suppliermapper = config.CreateMapper().Map<Supplier>(model);
+                        supplierRepository.PutSupplier(Suppliermapper, id);
+                        objResponse = JsonResponseHelper.JsonMessage(1, "Record Updated Successfully", Suppliermapper);
                     }
                     else
                         objResponse = JsonResponseHelper.JsonMessage(2, "No Record found", null);

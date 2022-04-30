@@ -481,6 +481,7 @@
         </ComplexType>
         <ComplexType Name="GetAllInvoice_Result">
           <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="VATNumber" Nullable="true" MaxLength="15" />
           <Property Type="Int32" Name="MontlyInvoiceId" Nullable="true" />
           <Property Type="Decimal" Name="HairService" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="BeautyService" Nullable="true" Precision="18" Scale="2" />
@@ -584,6 +585,7 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="GiellyGreen_Team1Model.GetAllInvoice_Result">
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="VATNumber" ColumnName="VATNumber" />
                 <ScalarProperty Name="MontlyInvoiceId" ColumnName="MontlyInvoiceId" />
                 <ScalarProperty Name="HairService" ColumnName="HairService" />
                 <ScalarProperty Name="BeautyService" ColumnName="BeautyService" />

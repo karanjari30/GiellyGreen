@@ -311,11 +311,15 @@
                             <td class="amountalignheader">Subtotal(Net)</td>
                             <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.NetAmount).ToString("N2")</td>
                         </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td class="amountalignheader">VAT</td>
-                            <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.VATAmount).ToString("N2")</td>
-                        </tr>
+                        @if (!string.IsNullOrEmpty(supplier.VATNumber))
+                        {
+                            <tr>
+                                <td colspan="2"></td>
+                                <td class="amountalignheader">VAT</td>
+                                <td class="mytablecell amountalign">@Convert.ToDecimal(supplier.VATAmount).ToString("N2")</td>
+                            </tr>
+                        }
+
                         <tr>
                             <td colspan="2"></td>
                             <td class="amountalignheader">Advance Paid</td>
